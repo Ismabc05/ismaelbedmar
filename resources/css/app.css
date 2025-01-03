@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.navbar {
+    display: flex; 
+    /* Configura el contenedor como un contenedor flexiblepara organizar los elementos */
+    flex-direction: row;
+    /*se organizan en una fila horizontal*/
+    gap: 16px;
+    /* Establece un espacio de 16px entre los elementos*/
+    align-items: center;
+    /* Alinea los elementos verticalmente en el centro */
+    justify-content: center;
+    /* Centra los elementos horizontalmente. */
+    width: 100%;
+    /* La barra de navegación ocupa el 100% del ancho */
+    border-bottom: 1px solid #CCCCCC;
+    /* Agrega una línea inferior de color gris claro de 1 pixel*/
+    padding: 0 8px;
+    /* Añade un espacio horizontal interno de 8px en los lados izquierdo y derecho. */
+}
+
+.left-menu {
+    flex: 1 1 0;
+     /* El menú de la izquierda ocupa una fracción del espacio disponible (1 parte) */
+}
+
+.right-menu {
+    flex: 1 1 0;
+    /* El menú de la derecha ocupa una fracción del espacio disponible (1 parte) */
+    list-style: none;
+    /* Elimina las viñetas o números de la lista */
+    padding: 0;
+    /* Elimina el relleno interno predeterminado */
+    display: flex;
+    /* Configura el menú de la derecha como flexible. */
+    justify-content: flex-end;
+    /* Alinea los elementos  hacia el borde derecho. */
+    gap: 16px;
+    /* Establece un espacio de 16px entre los elementos de la lista. */
+}
+
+.logo {
+    height: 80px;
+    /* Fija la altura de la imagen del logo a 80px */
+}
+
+.left-side{
+    flex: 1 1 0;
+}
+.right-side{
+    flex: 1 1 0;
+    padding-top: 80px;
+    margin-top:  16px;
+}
+
+.object-right{
+    text-align: right;
+}
+
+body{
+    font-family: 'Playfair Display', serif;
+    color: #535b61;
+    
+}
+h1{
+    color: black;
+}
