@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->enum('state', ['pending', 'out_for_delivery', 'delivered']);
-            
             $table->unsignedBigInteger('user_id');
             $table->softDeletes();
             $table->timestamps();

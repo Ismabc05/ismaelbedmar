@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .navbar {
-    display: flex; 
+    display: flex;
     /* Configura el contenedor como un contenedor flexiblepara organizar los elementos */
     flex-direction: row;
     /*se organizan en una fila horizontal*/
@@ -16,8 +16,8 @@
     width: 100%;
     /* La barra de navegación ocupa el 100% del ancho */
     border-bottom: 1px solid #CCCCCC;
+    height: 60px,
     /* Agrega una línea inferior de color gris claro de 1 pixel*/
-    padding: 0 8px;
     /* Añade un espacio horizontal interno de 8px en los lados izquierdo y derecho. */
 }
 
@@ -62,8 +62,51 @@
 body{
     font-family: 'Playfair Display', serif;
     color: #535b61;
-    
+
 }
 h1{
     color: black;
+}
+
+.cart-button{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-radius: 10px; /* Rounded corners */
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    max-width: 650px; /* Adjust width as needed */
+}
+.cart-button-primary {
+    color: #fff; /* White text */
+    background-color: #2d2d2d; /* Dark background */
+}
+
+.cart-button-primary:hover {
+    background-color: #1e1e1e; /* Darker on hover */
+}
+
+.price {
+    font-weight: bold;
+}
+
+.cart-button-secondary {
+    background-color: #616161; /* Dark background */
+    color: #fff; /* White text */
+}
+
+.cart-button-secondary:hover{
+    background-color: #535b61
+}
+
+button:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+    opacity: 0.6;
 }

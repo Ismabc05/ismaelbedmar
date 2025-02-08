@@ -20,7 +20,7 @@ class ProductFactory extends Factory
             'name' => $this->buildName(),
             'description' => $this->faker->paragraph,
             'price' => $this->faker->randomFloat(2, 10, 100),
-            'images' => json_encode([$this->faker->imageUrl(), $this->faker->imageUrl()]),
+            'images' => json_encode(['https://picsum.photos/600?random='.$this->faker->randomFloat(0, 10, 100), 'https://picsum.photos/600?random='.$this->faker->randomFloat(0, 10, 100)]),
             'sizes' => json_encode(['S', 'M', 'L', 'XL']),
             'colors' => json_encode(['Red', 'Blue', 'Green', 'Yellow']),
         ];
