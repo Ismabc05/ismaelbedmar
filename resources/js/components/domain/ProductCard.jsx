@@ -16,15 +16,18 @@ export default function ProductCard({ product }) {
                 <Link href={`/products/${product.id}`}>
                 <img
                     src={product.images[0]}
-                    width="100ssform duration-300 ease-in-out group-hover:scale-105"
+                    width="600"
+                    className="transform duration-300 ease-in-out group-hover:scale-105"
                 />
                 </Link>
             </div>
-            <h2 className="text-center group-hover:underline">{product.name}</h2>
+
+            <Link href={`/products/${product.id}`} className="text-center group-hover:underline">
+                <h2>{product.name}</h2>
+            </Link>
+
             <div className="text-center">
-                <span className="text-[13px] group-hover:underline">
-                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(product.price)}
-                </span>
+                <span className="text-[13px]">{new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(product.price)}</span>
             </div>
 
             {/* BOTÓN PARA AÑADIR A FAVORITOS */}

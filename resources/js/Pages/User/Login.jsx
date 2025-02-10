@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from '@inertiajs/react';
 
 export default function Login({ users }) {
     const [isHovered, setIsHovered] = useState(false);
@@ -127,11 +128,6 @@ export default function Login({ users }) {
         }
     };
 
-    // Definición de la función para redirigir a la página "Crear Cuenta"
-    const handleCreateAccount = () => {
-        window.location.href = 'users/create'; // Redirige a la ruta "/create"
-    };
-
     return (
         <>
             <nav style={navStyle}>
@@ -169,14 +165,16 @@ export default function Login({ users }) {
                     {/* Sección de Crear Cuenta */}
                     <div style={sectionStyle}>
                         <h2 style={textStyle}>¿Nuevo aquí?</h2>
-                        <button
+
+                        <Link
+                            href="/users/create"
                             style={CreateButtonStyle}
                             onMouseEnter={() => setIsHovered(true)}
                             onMouseLeave={() => setIsHovered(false)}
-                            onClick={handleCreateAccount}
-                        >
+                            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition-colors"
+                            >
                             Crear Cuenta
-                        </button>
+                        </Link>
                     </div>
                 </div>
             </div>

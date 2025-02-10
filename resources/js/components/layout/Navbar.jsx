@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { LuShoppingCart, LuSearch, LuHeart, LuUserRound, LuTrash2 } from "react-icons/lu";
+import { Link } from '@inertiajs/react';
 export default function Navbar({ products }) {
     const [activeModal, setActiveModal] = useState(null);
     const [favorites, setFavorites] = useState([]);
