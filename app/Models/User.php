@@ -53,4 +53,20 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class);
     }
+
+    /**
+     * Relación con el modelo Cart.
+     */
+    public function cart()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+    /**
+     * Relación con el modelo Favourite.
+     */
+    public function favourites()
+    {
+        return $this->hasMany(Favourite::class);
+    }
 }

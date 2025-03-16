@@ -176,7 +176,6 @@ export default function Create({ user }) {
                             />
                             {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
                             {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
-                            <a className="text-xs" href="" style={{ marginTop: '50px', textAlign: 'left', textDecoration: 'underline', textDecorationColor: '#535b61' }}>He olvidado mi contraseña</a>
                             <button type="submit" style={buttonStyle} disabled={isLoading}>
                                 Crear Cuenta
                             </button>

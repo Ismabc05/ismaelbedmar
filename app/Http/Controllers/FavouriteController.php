@@ -7,7 +7,6 @@ use Inertia\Inertia;
 use App\Models\Favourite;
 use Illuminate\Support\Facades\Auth;
 
-
 class FavouriteController extends Controller {
 
     public function Favorite() {
@@ -16,12 +15,10 @@ class FavouriteController extends Controller {
     }
 
     public function store(Request $request) {
-         dd(Auth::user());
         $request->validate([
             'product_id' => 'required|exists:products,id',
         ]);
 
-        // Verificar si ya existe el favorito para evitar duplicados
         $exists = Favourite::where('user_id', Auth::id())
             ->where('product_id', $request->product_id)
             ->exists();
@@ -44,6 +41,11 @@ class FavouriteController extends Controller {
             $favorite->delete();
         }
         return redirect()->back();
+    }
+
+    public function apiIndex() {
+        $favorites = Favourite::where('user_id', Auth::id())->with('product')->get();
+        return response()->json(['favourites' => $favorites]);
     }
 
 }

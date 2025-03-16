@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { LuShoppingCart, LuSearch, LuHeart, LuUserRound, LuTrash2 } from "react-icons/lu";
 import { Link } from '@inertiajs/react';
-export default function Navbar({ products }) {
+import { usePage } from '@inertiajs/react'
+import axios from 'axios';
+
+export default function Navbar({ products, selectedProduct }) {
+    const page = usePage();
+    const loggedUser = page.props.user;
     const [activeModal, setActiveModal] = useState(null);
     const [favorites, setFavorites] = useState([]);
     const [cart, setCart] = useState([]);
@@ -69,19 +74,46 @@ export default function Navbar({ products }) {
 
 
     useEffect(() => {
-        setFavorites(JSON.parse(localStorage.getItem('favorites')) || []);
-        setCart(JSON.parse(localStorage.getItem('cart')) || []);
+        if (loggedUser) {
+            // Se recuperan datos del servidor para usuarios autenticados
+            axios.get('/api/favourites')
+                .then(response => { setFavorites(response.data.favourites); })
+                .catch(err => console.error(err));
+            axios.get('/api/cart')
+                .then(response => { setCart(response.data.cart); })
+                .catch(err => console.error(err));
 
-        const updateCart = () => setCart(JSON.parse(localStorage.getItem('cart')) || []);
-        const updateFavorites = () => setFavorites(JSON.parse(localStorage.getItem('favorites')) || []);
+            // ---- INICIO: Fusionar carrito y favoritos del localStorage ----
+            const localFav = JSON.parse(localStorage.getItem('favorites')) || [];
+            localFav.forEach(favItem => {
+                axios.post('/favourite', { product_id: favItem.id })
+                     .catch(err => console.error("Error al fusionar favorito", err));
+            });
+            localStorage.removeItem('favorites');
 
-        window.addEventListener('cartUpdated', updateCart);
-        window.addEventListener('favoritesUpdated', updateFavorites);
+            const localCart = JSON.parse(localStorage.getItem('cart')) || [];
+            localCart.forEach(cartItem => {
+                axios.post('/cart', { product_id: cartItem.id, quantity: cartItem.quantity })
+                     .catch(err => console.error("Error al fusionar carrito", err));
+            });
+            localStorage.removeItem('cart');
+            // ---- FIN: Fusionar carrito y favoritos del localStorage ----
+        } else {
+            // Se usa localStorage para usuarios no autenticados
+            setFavorites(JSON.parse(localStorage.getItem('favorites')) || []);
+            setCart(JSON.parse(localStorage.getItem('cart')) || []);
 
-        return () => {
-            window.removeEventListener('cartUpdated', updateCart);
-            window.removeEventListener('favoritesUpdated', updateFavorites);
-        };
+            const updateCart = () => setCart(JSON.parse(localStorage.getItem('cart')) || []);
+            const updateFavorites = () => setFavorites(JSON.parse(localStorage.getItem('favorites')) || []);
+
+            window.addEventListener('cartUpdated', updateCart);
+            window.addEventListener('favoritesUpdated', updateFavorites);
+
+            return () => {
+                window.removeEventListener('cartUpdated', updateCart);
+                window.removeEventListener('favoritesUpdated', updateFavorites);
+            };
+        }
     }, []);
 
     const handleIconClick = (modalName) => {
@@ -111,12 +143,72 @@ export default function Navbar({ products }) {
         transition: "color 0.3s ease",
     });
 
-    const handleSearch = () => {
-        // Simulamos una búsqueda en la base de datos
-        const results = products.filter(product =>
-            product.name.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        setSearchResults(results);
+    const handleSearch = async () => {
+        const trimmedTerm = searchTerm.trim();
+        console.log("Search term:", trimmedTerm);
+        if (!trimmedTerm) {
+            setSearchResults([]);
+            setActiveModal("search");
+            return;
+        }
+        try {
+            const response = await axios.get(`/api/productos/search?query=${encodeURIComponent(trimmedTerm)}`);
+            console.log("Search results:", response.data);
+            setSearchResults(response.data);
+        } catch (error) {
+            console.error("Error searching products:", error);
+            setSearchResults([]);
+        }
+        setActiveModal("search");
+    };
+
+    // Nueva función para agregar a favoritos, actualizada para usuarios logueados.
+    const addToFavorites = (product) => {
+        if (!product) return;
+        if (loggedUser) {
+            // Para usuarios autenticados, se añade el favorito vía API y se actualiza el estado.
+            axios.post('/favourite', { product_id: product.id })
+                .then(response => {
+                    // Suponiendo que response.data.favorite contiene el producto con nombre y precio.
+                    const newFav = response.data.favorite;
+                    if (!favorites.some(fav => fav.id === newFav.id)) {
+                        setFavorites([...favorites, newFav]);
+                    }
+                })
+                .catch(err => console.error("Error al agregar favorito", err));
+        } else {
+            // Lógica existente para usuarios no autenticados.
+            const exists = favorites.some(fav => fav.id === product.id);
+            if (!exists) {
+                const updatedFavorites = [...favorites, product];
+                setFavorites(updatedFavorites);
+                localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+                window.dispatchEvent(new Event('favoritesUpdated'));
+            }
+        }
+    };
+
+    // Actualizamos la función para el icono del corazón
+    const handleFavoriteClick = () => {
+        // Si no hay producto seleccionado, simplemente muestra el panel de favoritos sin agregar nada.
+        if (selectedProduct) {
+            addToFavorites(selectedProduct);
+        }
+        handleIconClick("favorites");
+    };
+
+    // Agregar la función de logout
+    const handleLogout = () => {
+        axios.post('/logout')
+            .then(() => {
+                localStorage.clear();
+                window.location.href = "/users";
+            })
+            .catch(err => {
+                console.error("Error closing session", err);
+                localStorage.clear();
+                window.location.href = "/users";
+            });
     };
 
     return (
@@ -130,7 +222,7 @@ export default function Navbar({ products }) {
 
                 <div className="right-menu" style={{ display: "flex", gap: "15px" }}>
                     <LuSearch size={20} style={iconStyle(activeModal === "search")} onClick={() => handleIconClick("search")} />
-                    <LuHeart size={20} style={iconStyle(activeModal === "favorites")} onClick={() => handleIconClick("favorites")} />
+                    <LuHeart size={20} style={iconStyle(activeModal === "favorites")} onClick={handleFavoriteClick} />
                     <div style={{ position: "relative" }}>
                         <LuShoppingCart size={20} style={iconStyle(activeModal === "cart")} onClick={() => handleIconClick("cart")} />
                         {cartTotalItems > 0 && (
@@ -148,7 +240,13 @@ export default function Navbar({ products }) {
                             </span>
                         )}
                     </div>
-                    <LuUserRound size={20} style={iconStyle(activeModal === "user")} onClick={() => handleIconClick("user")} />
+                    {loggedUser && (
+                        <LuUserRound
+                            size={20}
+                            style={iconStyle(activeModal === "user")}
+                            onClick={() => handleIconClick("user")}
+                        />
+                    )}
                 </div>
             </nav>
 
@@ -211,7 +309,21 @@ export default function Navbar({ products }) {
                                     }}onClick={handleSearch}onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#222"}  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#333"}>Buscar
                                 </button>
                             </div>
-                            {/* Aquí podrías añadir una lista de resultados de búsqueda */}
+                            {/* Mostrar resultados de búsqueda sin redirigir */}
+                            <div style={{ flex: 1, overflowY: "auto" }}>
+                                {searchResults.length > 0 ? (
+                                    searchResults.map(product => (
+                                        <div key={product.id} style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
+                                            <p style={{ margin: 0, fontWeight: "bold" }}>{product.name}</p>
+                                            <p style={{ margin: 0 }}>
+                                                {new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(product.price)}
+                                            </p>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p>No se encontraron productos.</p>
+                                )}
+                            </div>
                             <button
                                 onClick={() => setActiveModal(null)}
                                 style={{
@@ -380,16 +492,29 @@ export default function Navbar({ products }) {
                     )}
                     {activeModal === "user" && (
                         <div style={modalContainerStyle}>
+                            {/* Se muestra el nombre del usuario logueado */}
+                            <p style={{ textAlign: "center", fontSize: "1.2rem", fontWeight: "bold", marginBottom: "20px" }}>
+                                Bienvenid@{ loggedUser && (loggedUser.nombre || loggedUser.name) ? `, ${loggedUser.nombre || loggedUser.name}` : ", Invitado" }
+                            </p>
                             <div style={topButtonsContainerStyle}>
                                 <button style={profileButtonStyle} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#d0d0d0"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#f0f0f0"} onClick={() => {window.location.href = "/cart"; }}>Ver mis pedidos</button>
                                 <button style={profileButtonStyle} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#d0d0d0"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#f0f0f0"} onClick={() => {window.location.href = "/favourite"; }}>Ver mis favoritos</button>
-                                <button style={profileButtonStyle} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#d0d0d0"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#f0f0f0"}>Cambiar nombre</button>
-                                <button style={profileButtonStyle} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#d0d0d0"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#f0f0f0"}>Cambiar correo</button>
-                                <button style={profileButtonStyle} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#d0d0d0"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#f0f0f0"}>Cambiar contraseña</button>
+                                <button style={profileButtonStyle} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#d0d0d0"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#f0f0f0"} onClick={() => { window.location.href = "/users/name/edit"; }}>Cambiar nombre</button>
+                                <button style={profileButtonStyle} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#d0d0d0"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#f0f0f0"} onClick={() => { window.location.href = "/users/email/edit"; }}>Cambiar correo</button>
+                                <button style={profileButtonStyle} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#d0d0d0"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#f0f0f0"} onClick={() => {window.location.href = "/users/password/edit";}}>Cambiar contraseña</button>
                             </div>
                             <div style={bottomButtonsContainerStyle}>
-                            <button style={logoutButtonStyle} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#cc0000"}onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "red"}>Cerrar sesion</button>
-                            <button onClick={() => setActiveModal(null)} style={closeButtonStyle } onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#222"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#333" }>Cerrar</button>
+                                <button
+                                    style={logoutButtonStyle}
+                                    onClick={handleLogout}
+                                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#cc0000"}
+                                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "red"}
+                                >
+                                    Cerrar sesion
+                                </button>
+                                <button onClick={() => setActiveModal(null)} style={closeButtonStyle} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#222"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#333"}>
+                                    Cerrar
+                                </button>
                             </div>
                         </div>
                     )}

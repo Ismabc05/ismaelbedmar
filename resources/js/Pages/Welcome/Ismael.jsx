@@ -112,7 +112,7 @@ export default function Ismael() {
 
             <div style={sectionStyle}>
                 <div style={backgroundStyle}></div>
-                <img src="/images/hombre-removebg-preview.png" alt="Sección Derecha" style={imageStyle} />
+                <img src="/images/hombre.png" alt="Sección Derecha" style={imageStyle} />
                 <div style={textStyle}>ROPA HOMBRE</div>
                 <div
                     style={linkStyle}

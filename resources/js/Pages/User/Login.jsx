@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { Link } from '@inertiajs/react';
 
 export default function Login({ users }) {
-    const [isHovered, setIsHovered] = useState(false);
+    const [forgotHovered, setForgotHovered] = useState(false);
+    const [nombre, setNombre] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [createHovered, setCreateHovered] = useState(false);
+    const [guestHovered, setGuestHovered] = useState(false);
 
     const navStyle = {
         display: 'flex',
@@ -72,11 +75,23 @@ export default function Login({ users }) {
         marginBottom: '30px',
     };
 
-    const CreateButtonStyle = {
+    const createButtonStyle = {
         width: '100%',
         padding: '10px',
-        backgroundColor: isHovered ? 'black' : '#ffffff',
-        color: isHovered ? 'white' : 'black',
+        backgroundColor: createHovered ? 'black' : '#ffffff',
+        color: createHovered ? 'white' : 'black',
+        border: '1px solid black',
+        borderRadius: '4px',
+        cursor: 'pointer',
+        fontSize: '13px',
+        marginTop: '10px',
+    };
+
+    const guestButtonStyle = {
+        width: '100%',
+        padding: '10px',
+        backgroundColor: guestHovered ? 'black' : '#ffffff',
+        color: guestHovered ? 'white' : 'black',
         border: '1px solid black',
         borderRadius: '4px',
         cursor: 'pointer',
@@ -87,6 +102,11 @@ export default function Login({ users }) {
     const textStyle = {
         fontSize: '13px',
         marginBottom: '10px',
+    };
+
+    const handleNombreChange = (e) => {
+        setNombre(e.target.value);
+        setErrorMessage('');
     };
 
     const handleEmailChange = (e) => {
@@ -101,6 +121,10 @@ export default function Login({ users }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!nombre.trim()) {
+            setErrorMessage('Debes ingresar un nombre válido');
+            return;
+        }
         const emailPattern = /^[^@]+@[^@]+\.[^@]+$/;
         const passwordPattern = /^(?=.*[A-Z])(?=.*[!@#$%^&*_]).{6,}$/;
 
@@ -113,10 +137,16 @@ export default function Login({ users }) {
 
             // Check if the user exists in the database
 
+            axios.get('/sanctum/csrf-cookie').then(response => {
+
+
             window.axios.post('/users', {
+                nombre: nombre,
                 email: email,
                 password: password,
             }).then((data) => {
+                // Store the user data in localStorage for Navbar to use
+                localStorage.setItem('user', JSON.stringify(data.data.user));
                 window.location.href = '/products';
             }).catch(error => {
                 console.log(error)
@@ -124,8 +154,16 @@ export default function Login({ users }) {
             }).finally(() => {
                 setIsLoading(false);
             })
+        });
             setIsLoading(true)
         }
+    };
+
+    // Actualiza la función para login como invitado
+    const handleGuestLogin = (e) => {
+        e.preventDefault(); // Evita que se envíe el formulario
+        localStorage.removeItem('user'); // Limpia cualquier dato de usuario previo
+        window.location.href = '/products';
     };
 
     return (
@@ -142,6 +180,13 @@ export default function Login({ users }) {
                         <form onSubmit={handleSubmit}>
                             <input
                                 type="text"
+                                placeholder="Nombre"
+                                value={nombre}
+                                onChange={handleNombreChange}
+                                style={inputStyle}
+                            />
+                            <input
+                                type="text"
                                 placeholder="Correo Electrónico"
                                 value={email}
                                 onChange={handleEmailChange}
@@ -155,7 +200,21 @@ export default function Login({ users }) {
                                 style={inputStyle}
                             />
                             {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-                            <a className="text-xs" href="" style={{ marginTop: '50px', textAlign: 'left', textDecoration: 'underline', textDecorationColor: '#535b61' }}>He olvidado mi contraseña</a>
+                            {/* Enlace actualizado para restablecer contraseña */}
+                            <Link
+                                href="/users/password-reset"
+                                className="text-xs"
+                                onMouseEnter={() => setForgotHovered(true)}
+                                onMouseLeave={() => setForgotHovered(false)}
+                                style={{
+                                    marginTop: '50px',
+                                    textAlign: 'left',
+                                    textDecoration: 'underline',
+                                    textDecorationColor: forgotHovered ? 'black' : '#535b61',
+                                    color: forgotHovered ? 'black' : 'inherit'
+                                }}>
+                                He olvidado mi contraseña
+                            </Link>
                             <button type="submit" style={buttonStyle} disabled={isLoading}>
                                 Conectarse
                             </button>
@@ -165,16 +224,25 @@ export default function Login({ users }) {
                     {/* Sección de Crear Cuenta */}
                     <div style={sectionStyle}>
                         <h2 style={textStyle}>¿Nuevo aquí?</h2>
-
                         <Link
                             href="/users/create"
-                            style={CreateButtonStyle}
-                            onMouseEnter={() => setIsHovered(true)}
-                            onMouseLeave={() => setIsHovered(false)}
+                            style={createButtonStyle}
+                            onMouseEnter={() => setCreateHovered(true)}
+                            onMouseLeave={() => setCreateHovered(false)}
                             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition-colors"
                             >
                             Crear Cuenta
                         </Link>
+                        {/* Nueva opción para entrar como invitado */}
+                        <button
+                            type="button" // Evita que el botón actúe como submit
+                            onClick={(e) => handleGuestLogin(e)}
+                            style={{ ...guestButtonStyle, marginTop: '10px' }}
+                            onMouseEnter={() => setGuestHovered(true)}
+                            onMouseLeave={() => setGuestHovered(false)}
+                        >
+                            Entrar como Invitado
+                        </button>
                     </div>
                 </div>
             </div>
