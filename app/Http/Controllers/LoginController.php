@@ -69,7 +69,7 @@ class LoginController extends Controller {
         User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
-            'password' => bcrypt($validatedData['password']),
+            'password' => Hash::make($validatedData['password']),
         ]);
 
         return to_route('users.login')->with('success', 'User created successfully.');
@@ -84,20 +84,23 @@ class LoginController extends Controller {
 
     public function updatePassword(Request $request) {
         $request->validate([
-            'new_password'     => 'required|string|min:8|confirmed',
+            'new_password' => 'required|string|min:8|confirmed',
         ], [
             'new_password.min'       => 'La contraseña debe tener al menos 8 caracteres.',
             'new_password.confirmed' => 'La confirmación de la contraseña no coincide.',
         ]);
 
-        $user = Auth::user();
+        // Verificar si el usuario está autenticado
+        if (!Auth::check()) {
+            return redirect('/users')->with('error', 'Debes iniciar sesión para cambiar la contraseña.');
+        }
 
-        $user->password = bcrypt($request->new_password);
+        $user = Auth::user();
+        $user->password = Hash::make($request->new_password);
         $user->save();
 
-        // Cerrar la sesión para forzar a que el usuario inicie de nuevo
-        Auth::logout();
-        return redirect('/login')->with('success', 'Contraseña actualizada correctamente. Por favor inicia sesión con la nueva contraseña.');
+        Auth::logout(); // Cierra la sesión después de cambiar la contraseña
+        return redirect('/users')->with('success', 'Contraseña actualizada correctamente. Por favor inicia sesión con la nueva contraseña.');
     }
 
     public function editEmail(Request $request)
