@@ -32,8 +32,8 @@ const ChangePassword = ({ user, success, errors }) => {
       return;
     }
     setIsLoading(true);
-    Inertia.post('/password/update', formData, { // Updated URL
-      onSuccess: () => Inertia.visit('/users'), // redirect after successful update to the login view at '/users'
+    Inertia.post('/users/password/update', formData, { // updated URL to match the route
+      onSuccess: () => Inertia.visit('/users'), // redirect after successful update to '/users'
       onFinish: () => setIsLoading(false)
     });
   };

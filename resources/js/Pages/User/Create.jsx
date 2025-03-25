@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link } from "@inertiajs/react";
+import {LuArrowLeft } from "react-icons/lu";
 
 export default function Create({ user }) {
     const [isHovered, setIsHovered] = useState(false);
@@ -144,6 +146,13 @@ export default function Create({ user }) {
             <nav style={navStyle}>
                 <img src="/images/logo-1 (1).png" alt="Logo" style={logoStyle} />
             </nav>
+            <Link
+          href="/users"
+          style={{ marginLeft: '20px' }} // margen ajustado
+          className="self-start mb-2 text-gray-500 hover:text-black"
+        >
+          <LuArrowLeft size={28} />
+        </Link>
 
             <div style={containerStyle}>
                 <div style={formContainerStyle}>

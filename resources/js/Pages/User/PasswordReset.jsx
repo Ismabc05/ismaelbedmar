@@ -7,6 +7,7 @@ export default function PasswordReset() {
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [linkHover, setLinkHover] = useState(false);
 
     const containerStyle = {
         display: 'flex',
@@ -51,7 +52,7 @@ export default function PasswordReset() {
     const linkStyle = {
         display: 'block',
         marginTop: '20px',
-        color: '#332f2c',
+        color: linkHover ? '#000' : '#332f2c',
         textDecoration: 'underline'
     };
 
@@ -102,7 +103,12 @@ export default function PasswordReset() {
                         {isLoading ? 'Enviando...' : 'Enviar Correo'}
                     </button>
                 </form>
-                <Link href="/users" style={linkStyle}>
+                <Link
+                    href="/users"
+                    style={linkStyle}
+                    onMouseEnter={() => setLinkHover(true)}
+                    onMouseLeave={() => setLinkHover(false)}
+                >
                     Volver al inicio
                 </Link>
             </div>

@@ -199,7 +199,7 @@ export default function Navbar({ products, selectedProduct }) {
 
     // Agregar la función de logout
     const handleLogout = () => {
-        axios.post('/logout')
+        axios.post('/users/logout')
             .then(() => {
                 localStorage.clear();
                 window.location.href = "/users";
