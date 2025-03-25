@@ -10,12 +10,6 @@ use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PasswordResetController; // Actualizar la importación
 
-Route::get('test', function() {
-    return [
-        'name' => 'isma',
-        'lastname' => 'bedmar'
-    ];
-});
 Route::get('/', [WelcomeController::class, 'ismael']);
 
 Route::prefix('users')->group(function () {
@@ -61,6 +55,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/users/email/update', [LoginController::class, 'updateEmail'])->name('users.email.update');
     Route::get('/users/name/edit', [LoginController::class, 'editName'])->name('users.name.edit');
     Route::post('/users/name/update', [LoginController::class, 'updateName'])->name('users.name.update');
+    Route::get('/users/password/update', [LoginController::class, 'editPassword'])->name('users.password.edit');
+    Route::post('/users/password/update', [LoginController::class, 'updatePassword'])->name('users.password.update');
 
     // Routes for user-specific cart and favorites
     Route::get('/cart', [CartController::class, 'Cart'])->name('cart.index');
