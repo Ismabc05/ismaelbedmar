@@ -1,6 +1,8 @@
 import React from 'react';
 import MainLayout from "../../layouts/MainLayout";
 import { usePage } from '@inertiajs/react';
+import {LuArrowLeft } from "react-icons/lu";
+import { Link } from "@inertiajs/react";
 
 export default function Favorite() {
     const { favorites } = usePage().props; // Recibe los favoritos desde Laravel
@@ -18,6 +20,12 @@ export default function Favorite() {
 
     return (
         <MainLayout>
+            <Link
+          href="/products"
+          className="self-start mb-4 text-gray-600 hover:text-black"
+        >
+          <LuArrowLeft size={28} />
+        </Link>
             <div style={{ textAlign: "center", padding: "20px" }}>
                 <h1 style={{ fontSize: "2.5rem", marginBottom: "20px" }}>Mis Favoritos</h1>
 
