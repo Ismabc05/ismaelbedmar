@@ -28,12 +28,13 @@ class ProductFactory extends Factory
 
     public function buildName(): string
     {
-        $categories = ['Camisa', 'Pantalón', 'Jersey', 'Vestido', 'Chaqueta', 'Abrigo', 'Falda', 'Blazer', 'Top', 'Sudadera'];
+        $categories = self::getCategories();
         $styles = ['Slim fit', 'Oversize', 'Recto', 'Ajustado', 'Holgado', 'Cropped', 'Skinny', 'Regular fit', 'Boyfriend', 'Mom fit'];
         $materials = ['Algodón', 'Lino', 'Denim', 'Seda', 'Lana', 'Cuero', 'Punto', 'Popelín', 'Terciopelo', 'Satén'];
         $details = ['con botones', 'con cremallera', 'con cuello mao', 'con volantes', 'con bordados', 'con lentejuelas', 'con estampado', 'de rayas', 'de cuadros', 'con bolsillos'];
-        $colors = ['negro', 'blanco', 'gris', 'azul marino', 'beige', 'verde oliva', 'burdeos', 'camel', 'rosa palo', 'lavanda'];
+        $colors = self::getColors();
         $collections = ['Limited Edition', 'Studio', 'Basic', 'TRF', 'Join Life', 'Premium'];
+        $tallas = self::getTallas();
 
         $name = $this->faker->randomElement($categories) . ' ';
         $name .= $this->faker->randomElement($styles) . ' ';
@@ -46,7 +47,25 @@ class ProductFactory extends Factory
             $name .= ' | ' . $this->faker->randomElement($collections);
         }
 
+
         return ucfirst($name);
+    }
+
+    // Nuevo: método para obtener las categorías
+    public static function getCategories(): array
+    {
+        return ['Camisa', 'Pantalón', 'Jersey', 'Vestido', 'Chaqueta', 'Abrigo', 'Falda', 'Blazer', 'Top', 'Sudadera'];
+    }
+
+    // Nuevo: método para obtener los colores
+    public static function getColors(): array
+    {
+        return ['negro', 'blanco', 'gris', 'azul marino', 'beige', 'verde oliva', 'burdeos', 'camel', 'rosa palo', 'lavanda'];
+    }
+
+    public static function getTallas(): array
+    {
+        return ['S', 'M', 'L', 'XL'];
     }
 
 }

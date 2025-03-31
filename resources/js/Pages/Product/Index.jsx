@@ -2,8 +2,15 @@ import React, { useState, useEffect } from 'react';
 import ProductCard from "../../components/domain/ProductCard";
 import MainLayout from "../../layouts/MainLayout";
 
-export default function Index({ products, categories }) { // Añadir 'categories' como prop
+export default function Index({ products, categories }) {
     const [sortedProducts, setSortedProducts] = useState(products);
+    const [selectedCategory, setSelectedCategory] = useState("Categorías");
+    const [selectedColor, setSelectedColor] = useState("Color");
+    const [selectedTalla, setSelectedTalla] = useState("Talla");
+
+    const categoriesList = ['Camisa', 'Pantalón', 'Jersey', 'Vestido', 'Chaqueta', 'Abrigo', 'Falda', 'Blazer', 'Top', 'Sudadera'];
+    const colorsList = ['negro', 'blanco', 'gris', 'azul marino', 'beige', 'verde oliva', 'burdeos', 'camel', 'rosa palo', 'lavanda'];
+    const tallasList = ['S', 'M', 'L', 'XL'];
 
     useEffect(() => {
         setSortedProducts(products);
@@ -33,17 +40,35 @@ export default function Index({ products, categories }) { // Añadir 'categories
         <MainLayout>
            <div className="flex justify-between items-center text-[13px] w-full mb-6">
             <div className="flex space-x-8">
-                <select className="pl-8" style={headingStyle}>
-                    <option value="" hidden>Categorías</option>
-                    {categories && categories.map((cat) => (
-                        <option key={cat.id} value={cat.id}>{cat.name}</option>
+                <select
+                    value={selectedCategory}
+                    onChange={e => setSelectedCategory(e.target.value)}
+                    className="bg-white border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:border-black focus:ring-2 focus:ring-black"
+                    style={{ ...headingStyle, paddingLeft: `${selectedCategory.length * 8 + 16}px` }}>
+                    <option value="Categorías" disabled>Categorías</option>
+                    {categoriesList.map(cat => (
+                        <option key={cat} value={cat}>{cat}</option>
                     ))}
                 </select>
-                <select className="pl-8" style={headingStyle}>
-                    <option value="" hidden>Color</option>
+                <select
+                    value={selectedColor}
+                    onChange={e => setSelectedColor(e.target.value)}
+                    className="bg-white border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:border-black focus:ring-2 focus:ring-black"
+                    style={{ ...headingStyle, paddingLeft: `${selectedColor.length * 8 + 16}px` }}>
+                    <option value="Color" disabled>Color</option>
+                    {colorsList.map(color => (
+                        <option key={color} value={color}>{color}</option>
+                    ))}
                 </select>
-                <select className="pl-8" style={headingStyle}>
-                    <option value="" hidden>Talla</option>
+                <select
+                    value={selectedTalla}
+                    onChange={e => setSelectedTalla(e.target.value)}
+                    className="bg-white border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:border-black focus:ring-2 focus:ring-black"
+                    style={{ ...headingStyle, paddingLeft: `${selectedTalla.length * 8 + 16}px` }}>
+                    <option value="Talla" disabled>Color</option>
+                    {tallasList.map(talla => (
+                        <option key={talla} value={talla}>{talla}</option>
+                    ))}
                 </select>
             </div>
             <div className="pr-8" style={{ ...headingStyle, display: "flex", alignItems: "center" }}>
