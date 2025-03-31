@@ -65,7 +65,7 @@ export default function Index({ products, categories }) {
                     onChange={e => setSelectedTalla(e.target.value)}
                     className="bg-white border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:outline-none focus:border-black focus:ring-2 focus:ring-black"
                     style={{ ...headingStyle, paddingLeft: `${selectedTalla.length * 8 + 16}px` }}>
-                    <option value="Talla" disabled>Color</option>
+                    <option value="Talla" disabled>Talla</option>
                     {tallasList.map(talla => (
                         <option key={talla} value={talla}>{talla}</option>
                     ))}
