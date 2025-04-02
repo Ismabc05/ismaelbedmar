@@ -74,31 +74,6 @@ export default function Navbar({ products, selectedProduct }) {
 
 
     useEffect(() => {
-        if (loggedUser) {
-            // Se recuperan datos del servidor para usuarios autenticados
-            axios.get('/api/favourites')
-                .then(response => { setFavorites(response.data.favourites); })
-                .catch(err => console.error(err));
-            axios.get('/api/cart')
-                .then(response => { setCart(response.data.cart); })
-                .catch(err => console.error(err));
-
-            // ---- INICIO: Fusionar carrito y favoritos del localStorage ----
-            const localFav = JSON.parse(localStorage.getItem('favorites')) || [];
-            localFav.forEach(favItem => {
-                axios.post('/favourite', { product_id: favItem.id })
-                     .catch(err => console.error("Error al fusionar favorito", err));
-            });
-            localStorage.removeItem('favorites');
-
-            const localCart = JSON.parse(localStorage.getItem('cart')) || [];
-            localCart.forEach(cartItem => {
-                axios.post('/cart', { product_id: cartItem.id, quantity: cartItem.quantity })
-                     .catch(err => console.error("Error al fusionar carrito", err));
-            });
-            localStorage.removeItem('cart');
-            // ---- FIN: Fusionar carrito y favoritos del localStorage ----
-        } else {
             // Se usa localStorage para usuarios no autenticados
             setFavorites(JSON.parse(localStorage.getItem('favorites')) || []);
             setCart(JSON.parse(localStorage.getItem('cart')) || []);
@@ -113,7 +88,6 @@ export default function Navbar({ products, selectedProduct }) {
                 window.removeEventListener('cartUpdated', updateCart);
                 window.removeEventListener('favoritesUpdated', updateFavorites);
             };
-        }
     }, []);
 
     const handleIconClick = (modalName) => {
@@ -165,26 +139,13 @@ export default function Navbar({ products, selectedProduct }) {
     // Nueva función para agregar a favoritos, actualizada para usuarios logueados.
     const addToFavorites = (product) => {
         if (!product) return;
-        if (loggedUser) {
-            // Para usuarios autenticados, se añade el favorito vía API y se actualiza el estado.
-            axios.post('/favourite', { product_id: product.id })
-                .then(response => {
-                    // Suponiendo que response.data.favorite contiene el producto con nombre y precio.
-                    const newFav = response.data.favorite;
-                    if (!favorites.some(fav => fav.id === newFav.id)) {
-                        setFavorites([...favorites, newFav]);
-                    }
-                })
-                .catch(err => console.error("Error al agregar favorito", err));
-        } else {
             // Lógica existente para usuarios no autenticados.
-            const exists = favorites.some(fav => fav.id === product.id);
-            if (!exists) {
-                const updatedFavorites = [...favorites, product];
-                setFavorites(updatedFavorites);
-                localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-                window.dispatchEvent(new Event('favoritesUpdated'));
-            }
+        const exists = favorites.some(fav => fav.id === product.id);
+        if (!exists) {
+            const updatedFavorites = [...favorites, product];
+            setFavorites(updatedFavorites);
+            localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+            window.dispatchEvent(new Event('favoritesUpdated'));
         }
     };
 
@@ -381,9 +342,7 @@ export default function Navbar({ products, selectedProduct }) {
                                                 <p
                                                     style={{ fontWeight: "bold", flex: 1, cursor: "pointer", transition: "all 0.3s ease" }}
                                                     onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
-                                                    onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
-                                                    onClick={() => window.location.href = `/products/${item.id}`}
-                                                >
+                                                    onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}                                                >
                                                     {item.name} (x{item.quantity})
                                                 </p>
                                                 <p style={{ minWidth: "100px", textAlign: "right", fontWeight: "bold" }}>
@@ -418,7 +377,13 @@ export default function Navbar({ products, selectedProduct }) {
                                         }}
                                         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#45a049"}
                                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#4CAF50"}
-                                        onClick={() => {window.location.href = "/payment"; }}>
+                                        onClick={() => {
+                                            if (!loggedUser) {
+                                                window.location.href = "/users"; // Redirige a /users para invitados
+                                            } else {
+                                                window.location.href = "/payment";
+                                            }
+                                        }}>
                                             Proceder al pago
                                         </button>
                                         <button onClick={() => setActiveModal(null)} style={{

@@ -60,7 +60,7 @@ class ProductFactory extends Factory
     // Nuevo: método para obtener los colores
     public static function getColors(): array
     {
-        return ['negro', 'blanco', 'gris', 'azul marino', 'beige', 'verde oliva', 'burdeos', 'camel', 'rosa palo', 'lavanda'];
+        return ['negro', 'blanco', 'gris', 'azul', 'beige', 'verde oliva', 'burdeos', 'camel', 'rosa palo', 'lavanda'];
     }
 
     public static function getTallas(): array

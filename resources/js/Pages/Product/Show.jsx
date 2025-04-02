@@ -49,7 +49,7 @@ export default function Show({ product }) {
         >
           <LuArrowLeft size={28} />
         </Link>
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row w-full max-w-4xl">
+        <div className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row w-full max-w-6xl">
           <div className="md:w-1/2 bg-gray-200 flex justify-center items-center p-4">
             <img
               src={product.images[0]}

@@ -26,7 +26,6 @@ class FavouriteController extends Controller {
         if ($exists) {
             return response()->json(['message' => 'Este producto ya está en tus favoritos'], 409);
         }
-
         Favourite::create([
             'user_id' => Auth::id(),
             'product_id' => $request->product_id,
@@ -43,10 +42,7 @@ class FavouriteController extends Controller {
         return redirect()->back();
     }
 
-    public function apiIndex() {
-        $favorites = Favourite::where('user_id', Auth::id())->with('product')->get();
-        return response()->json(['favourites' => $favorites]);
-    }
+
 
 }
 
