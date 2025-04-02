@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Inertia\Inertia; // Si usas Inertia
 use App\Mail\ResetPasswordMail;
