@@ -84,8 +84,8 @@ export default function Show({ product }) {
             <div className="mt-6">
               <button
                 onClick={addToCart}
-                className="w-full py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors"
-              >
+                className="w-full py-3 bg-black text-white rounded-lg font-medium hover:bg-gray-900 transition-colors"
+                >
                 Añadir a la cesta
               </button>
               <button className="w-full py-3 mt-4 bg-yellow-400 text-gray-800 rounded-lg font-medium hover:bg-yellow-500 transition-colors">

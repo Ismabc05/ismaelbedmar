@@ -189,13 +189,13 @@ export default function Navbar({ products, selectedProduct }) {
                         {cartTotalItems > 0 && (
                             <span style={{
                                 position: "absolute",
-                                top: "-8px",
-                                right: "-8px",
-                                background: "red",
-                                color: "white",
+                                top: "-15px",
+                                right: "-12px",
+                                color: "black",
                                 borderRadius: "50%",
                                 padding: "2px 6px",
-                                fontSize: "12px",
+                                fontSize: "16px",
+                                fontWeight: "bold" ,
                             }}>
                                 {cartTotalItems}
                             </span>
@@ -349,7 +349,7 @@ export default function Navbar({ products, selectedProduct }) {
                                                     {new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(item.price * item.quantity)}
                                                 </p>
                                                 <button onClick={() => removeFromCart(item.id)} style={{ background: "none", border: "none", cursor: "pointer", marginLeft: "20px" }}>
-                                                    <LuTrash2 size={18} color="red" />
+                                                    <LuTrash2 size={18} color="black" />
                                                 </button>
                                             </div>
                                         ))}
@@ -432,7 +432,7 @@ export default function Navbar({ products, selectedProduct }) {
                                                 {new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(fav.price)}
                                             </p>
                                             <button onClick={() => removeFromFavorites(fav.id)} style={{ background: "none", border: "none", cursor: "pointer", marginLeft: "20px" }}>
-                                                <LuTrash2 size={18} color="red" />
+                                                <LuTrash2 size={18} color="black" />
                                             </button>
                                         </div>
                                     ))}
