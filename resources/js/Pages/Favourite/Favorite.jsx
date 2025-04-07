@@ -7,7 +7,6 @@ import { Link } from "@inertiajs/react";
 export default function Favorite() {
     const { favorites } = usePage().props; // Recibe los favoritos desde Laravel
 
-
     const removeFromFavorites = async (id) => {
         try {
             await axios.delete(`/favourites/${id}`); // Llama a la API para eliminar
@@ -17,15 +16,14 @@ export default function Favorite() {
         }
     };
 
-
     return (
         <MainLayout>
             <Link
-          href="/products"
-          className="self-start mb-4 text-gray-600 hover:text-black"
-        >
-          <LuArrowLeft size={28} />
-        </Link>
+                href="/products"
+                className="self-start mb-4 text-gray-600 hover:text-black"
+            >
+                <LuArrowLeft size={28} />
+            </Link>
             <div style={{ textAlign: "center", padding: "20px" }}>
                 <h1 style={{ fontSize: "2.5rem", marginBottom: "20px" }}>Mis Favoritos</h1>
 
