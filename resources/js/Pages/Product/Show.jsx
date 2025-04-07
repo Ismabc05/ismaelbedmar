@@ -88,7 +88,7 @@ export default function Show({ product }) {
                 >
                 Añadir a la cesta
               </button>
-              <button className="w-full py-3 mt-4 bg-yellow-400 text-gray-800 rounded-lg font-medium hover:bg-yellow-500 transition-colors">
+              <button className="w-full py-3 mt-4 bg-blue-400 text-gray-800 rounded-lg font-medium hover:bg-yellow-500 transition-colors">
                 Pago Express
               </button>
               <p className="mt-4 text-right text-lg font-semibold text-gray-800">
