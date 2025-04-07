@@ -102,6 +102,7 @@ export default function Login({ users }) {
     const textStyle = {
         fontSize: '13px',
         marginBottom: '10px',
+
     };
 
     const handleNombreChange = (e) => {

@@ -458,15 +458,85 @@ export default function Navbar({ products, selectedProduct }) {
                     {activeModal === "user" && (
                         <div style={modalContainerStyle}>
                             {/* Se muestra el nombre del usuario logueado */}
-                            <p style={{ textAlign: "center", fontSize: "1.2rem", fontWeight: "bold", marginBottom: "20px" }}>
+                            <p style={{ textAlign: "center", fontSize: "1.2rem", fontWeight: "bold", marginBottom: "80px" }}>
                                 Bienvenid@{ loggedUser && (loggedUser.nombre || loggedUser.name) ? `, ${loggedUser.nombre || loggedUser.name}` : ", Invitado" }
                             </p>
                             <div style={topButtonsContainerStyle}>
-                                <button style={profileButtonStyle} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#d0d0d0"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#f0f0f0"} onClick={() => {window.location.href = "/cart"; }}>Ver mis pedidos</button>
-                                <button style={profileButtonStyle} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#d0d0d0"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#f0f0f0"} onClick={() => {window.location.href = "/favourite"; }}>Ver mis favoritos</button>
-                                <button style={profileButtonStyle} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#d0d0d0"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#f0f0f0"} onClick={() => { window.location.href = "/users/name/edit"; }}>Cambiar nombre</button>
-                                <button style={profileButtonStyle} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#d0d0d0"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#f0f0f0"} onClick={() => { window.location.href = "/users/email/edit"; }}>Cambiar correo</button>
-                                <button style={profileButtonStyle} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#d0d0d0"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#f0f0f0"} onClick={() => {window.location.href = "/users/password/edit";}}>Cambiar contraseña</button>
+                                <a
+                                    href="/cart"
+                                    style={{
+                                        textAlign: "center",
+                                        fontSize: "1rem",
+                                        marginBottom: "10px",
+                                        textDecoration: "none",
+                                        color: "black",
+                                        transition: "color 0.3s ease"
+                                    }}
+                                    onMouseEnter={(e) => e.currentTarget.style.color = "gray"}
+                                    onMouseLeave={(e) => e.currentTarget.style.color = "black"}
+                                >
+                                    Ver mis pedidos
+                                </a>
+                                <a
+                                    href="/favourite"
+                                    style={{
+                                        textAlign: "center",
+                                        fontSize: "1rem",
+                                        marginBottom: "10px",
+                                        textDecoration: "none",
+                                        color: "black",
+                                        transition: "color 0.3s ease"
+                                    }}
+                                    onMouseEnter={(e) => e.currentTarget.style.color = "gray"}
+                                    onMouseLeave={(e) => e.currentTarget.style.color = "black"}
+                                >
+                                    Ver mis favoritos
+                                </a>
+                                <a
+                                    href="/users/name/edit"
+                                    style={{
+                                        textAlign: "center",
+                                        fontSize: "1rem",
+                                        marginBottom: "10px",
+                                        textDecoration: "none",
+                                        color: "black",
+                                        transition: "color 0.3s ease"
+                                    }}
+                                    onMouseEnter={(e) => e.currentTarget.style.color = "gray"}
+                                    onMouseLeave={(e) => e.currentTarget.style.color = "black"}
+                                >
+                                    Cambiar nombre
+                                </a>
+                                <a
+                                    href="/users/email/edit"
+                                    style={{
+                                        textAlign: "center",
+                                        fontSize: "1rem",
+                                        marginBottom: "10px",
+                                        textDecoration: "none",
+                                        color: "black",
+                                        transition: "color 0.3s ease"
+                                    }}
+                                    onMouseEnter={(e) => e.currentTarget.style.color = "gray"}
+                                    onMouseLeave={(e) => e.currentTarget.style.color = "black"}
+                                >
+                                    Cambiar correo
+                                </a>
+                                <a
+                                    href="/users/password/edit"
+                                    style={{
+                                        textAlign: "center",
+                                        fontSize: "1rem",
+                                        marginBottom: "10px",
+                                        textDecoration: "none",
+                                        color: "black",
+                                        transition: "color 0.3s ease"
+                                    }}
+                                    onMouseEnter={(e) => e.currentTarget.style.color = "gray"}
+                                    onMouseLeave={(e) => e.currentTarget.style.color = "black"}
+                                >
+                                    Cambiar contraseña
+                                </a>
                             </div>
                             <div style={bottomButtonsContainerStyle}>
                                 <button

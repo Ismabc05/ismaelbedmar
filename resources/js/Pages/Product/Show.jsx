@@ -82,14 +82,24 @@ export default function Show({ product }) {
               </p>
             </div>
             <div className="mt-6">
+              <label htmlFor="size" className="block text-gray-700 font-medium mb-2">
+                Selecciona una talla:
+              </label>
+              <select
+                id="size"
+                className="w-full p-3 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-black text-black"
+              >
+                {product.sizes.map((size) => (
+                  <option key={size} value={size} className="text-black">
+                    {size}
+                  </option>
+                ))}
+              </select>
               <button
                 onClick={addToCart}
                 className="w-full py-3 bg-black text-white rounded-lg font-medium hover:bg-gray-900 transition-colors"
-                >
+              >
                 Añadir a la cesta
-              </button>
-              <button className="w-full py-3 mt-4 bg-blue-400 text-gray-800 rounded-lg font-medium hover:bg-yellow-500 transition-colors">
-                Pago Express
               </button>
               <p className="mt-4 text-right text-lg font-semibold text-gray-800">
                 {new Intl.NumberFormat("es-ES", {
