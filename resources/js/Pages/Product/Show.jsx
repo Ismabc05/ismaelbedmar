@@ -29,12 +29,13 @@ export default function Show({ product }) {
 
   const addToCart = () => {
     if (!product) return;
+    const selectedSize = document.getElementById("size").value; // Get the selected size
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const existingProduct = cart.find((item) => item.id === product.id);
+    const existingProduct = cart.find((item) => item.id === product.id && item.size === selectedSize);
     if (existingProduct) {
       existingProduct.quantity += 1;
     } else {
-      cart.push({ ...product, quantity: 1 });
+      cart.push({ ...product, quantity: 1, size: selectedSize });
     }
     localStorage.setItem("cart", JSON.stringify(cart));
     window.dispatchEvent(new Event("cartUpdated"));

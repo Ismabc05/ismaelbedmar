@@ -9,7 +9,7 @@ export default function Favorite() {
 
     const removeFromFavorites = async (id) => {
         try {
-            await axios.delete(`/favourites/${id}`); // Llama a la API para eliminar
+            await axios.delete(`/favourite/${id}`); // Llama a la API para eliminar
             router.reload(); // Recargar la página para actualizar la lista sin hacer un refresh completo
         } catch (error) {
             console.error("Error al eliminar el favorito", error);

@@ -308,7 +308,13 @@ export default function Navbar({ products, selectedProduct }) {
                     )}
 
                     {activeModal === "cart" && (
-                        <div style={{ padding: "0 20px", display: "flex", flexDirection: "column", height: "100%" }}>
+                        <div style={{
+                            padding: "0 20px",
+                            display: "flex",
+                            flexDirection: "column",
+                            height: "100%",
+                            overflowY: "auto" // Allow the entire modal to scroll
+                        }}>
                             {cart.length === 0 ? (
                                 <>
                                     <p style={{ textAlign: "center", fontSize: "1.2rem", color: "#666" }}>Tu carrito está vacío.</p>
@@ -330,9 +336,9 @@ export default function Navbar({ products, selectedProduct }) {
                                 </>
                             ) : (
                                 <>
-                                    <div style={{ flex: 1, overflowY: "auto" }}>
+                                    <div>
                                         {cart.map(item => (
-                                            <div key={item.id} style={{
+                                            <div key={`${item.id}-${item.size}`} style={{
                                                 display: "flex",
                                                 justifyContent: "space-between",
                                                 alignItems: "center",
@@ -342,8 +348,10 @@ export default function Navbar({ products, selectedProduct }) {
                                                 <p
                                                     style={{ fontWeight: "bold", flex: 1, cursor: "pointer", transition: "all 0.3s ease" }}
                                                     onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
-                                                    onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}                                                >
-                                                    {item.name} (x{item.quantity})
+                                                    onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
+                                                    onClick={() => window.location.href = `/products/${item.id}`}
+                                                >
+                                                    {item.name} (x{item.quantity}) - Talla: {item.size}
                                                 </p>
                                                 <p style={{ minWidth: "100px", textAlign: "right", fontWeight: "bold" }}>
                                                     {new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(item.price * item.quantity)}
@@ -354,7 +362,7 @@ export default function Navbar({ products, selectedProduct }) {
                                             </div>
                                         ))}
                                     </div>
-                                    <div style={{ marginTop: "auto", borderTop: "2px solid #ddd", paddingTop: "15px", display: "flex", flexDirection: "column", gap: "15px" }}>
+                                    <div style={{ borderTop: "2px solid #ddd", paddingTop: "15px", display: "flex", flexDirection: "column", gap: "15px" }}>
                                         <p style={{
                                             textAlign: "right",
                                             fontSize: "1.2rem",
@@ -363,27 +371,29 @@ export default function Navbar({ products, selectedProduct }) {
                                         }}>
                                             Total: {new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(cartTotalPrice)}
                                         </p>
-                                        <button style={{
-                                            width: "100%",
-                                            padding: "12px",
-                                            backgroundColor: "#4CAF50",
-                                            color: "white",
-                                            border: "none",
-                                            borderRadius: "4px",
-                                            fontSize: "1rem",
-                                            fontWeight: "bold",
-                                            cursor: "pointer",
-                                            transition: "background-color 0.3s ease"
-                                        }}
-                                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#45a049"}
-                                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#4CAF50"}
-                                        onClick={() => {
-                                            if (!loggedUser) {
-                                                window.location.href = "/users"; // Redirige a /users para invitados
-                                            } else {
-                                                window.location.href = "/payment";
-                                            }
-                                        }}>
+                                        <button
+                                            style={{
+                                                width: "100%",
+                                                padding: "12px",
+                                                backgroundColor: "#4CAF50",
+                                                color: "white",
+                                                border: "none",
+                                                borderRadius: "4px",
+                                                fontSize: "1rem",
+                                                fontWeight: "bold",
+                                                cursor: "pointer",
+                                                transition: "background-color 0.3s ease"
+                                            }}
+                                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#45a049"}
+                                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#4CAF50"}
+                                            onClick={() => {
+                                                if (!loggedUser) {
+                                                    window.location.href = "/users"; // Redirige a /users para invitados
+                                                } else {
+                                                    window.location.href = "/payment"; // Redirige a la vista de pago
+                                                }
+                                            }}
+                                        >
                                             Proceder al pago
                                         </button>
                                         <button onClick={() => setActiveModal(null)} style={{
@@ -397,9 +407,9 @@ export default function Navbar({ products, selectedProduct }) {
                                             fontSize: "1rem",
                                             transition: "background-color 0.3s ease",
                                             ':hover': {
-                                             backgroundColor: "#222", // Un gris más oscuro
-                                             }
-                                        }}onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#222"}  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#333"}>Cerrar</button>
+                                                backgroundColor: "#222", // Un gris más oscuro
+                                            }
+                                        }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#222"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#333"}>Cerrar</button>
                                     </div>
                                 </>
                             )}
