@@ -417,37 +417,40 @@ export default function Navbar({ products, selectedProduct }) {
                     )}
 
                     {activeModal === "favorites" && (
-                        <div style={{ padding: "0 20px", display: "flex", flexDirection: "column", height: "100%" }}>
+                        <div style={{
+                            padding: "20px",
+                            display: "flex",
+                            flexDirection: "column",
+                            height: "100%",
+                            overflowY: "auto" // Apply scroll to the entire modal
+                        }}>
                             {favorites.length === 0 ? (
                                 <p style={{ textAlign: "center", fontSize: "1.2rem", color: "#666" }}>No tienes favoritos aún.</p>
-                            ) : (
-                                <div style={{ flex: 1, overflowY: "auto" }}>
-                                    {favorites.map(fav => (
-                                        <div key={fav.id} style={{
-                                            display: "flex",
-                                            justifyContent: "space-between",
-                                            alignItems: "center",
-                                            padding: "15px 0",
-                                            borderBottom: "1px solid #eee",
-                                        }}>
-                                            <p
-                                                style={{ fontWeight: "bold", flex: 1, cursor: "pointer", transition: "all 0.3s ease" }}
-                                                onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
-                                                onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
-                                                onClick={() => window.location.href = `/products/${fav.id}`}
-                                            >
-                                                {fav.name}
-                                            </p>
-                                            <p style={{ minWidth: "100px", textAlign: "right", fontWeight: "bold" }}>
-                                                {new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(fav.price)}
-                                            </p>
-                                            <button onClick={() => removeFromFavorites(fav.id)} style={{ background: "none", border: "none", cursor: "pointer", marginLeft: "20px" }}>
-                                                <LuTrash2 size={18} color="black" />
-                                            </button>
-                                        </div>
-                                    ))}
+                            ) : null}
+                            {favorites.map(fav => (
+                                <div key={fav.id} style={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                    padding: "15px 0",
+                                    borderBottom: "1px solid #eee",
+                                }}>
+                                    <p
+                                        style={{ fontWeight: "bold", flex: 1, cursor: "pointer", transition: "all 0.3s ease" }}
+                                        onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
+                                        onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
+                                        onClick={() => window.location.href = `/products/${fav.id}`}
+                                    >
+                                        {fav.name}
+                                    </p>
+                                    <p style={{ minWidth: "100px", textAlign: "right", fontWeight: "bold" }}>
+                                        {new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(fav.price)}
+                                    </p>
+                                    <button onClick={() => removeFromFavorites(fav.id)} style={{ background: "none", border: "none", cursor: "pointer", marginLeft: "20px" }}>
+                                        <LuTrash2 size={18} color="black" />
+                                    </button>
                                 </div>
-                            )}
+                            ))}
                             <button onClick={() => setActiveModal(null)} style={{
                                 width: "100%",
                                 padding: "10px 15px",
@@ -457,12 +460,12 @@ export default function Navbar({ products, selectedProduct }) {
                                 borderRadius: "4px",
                                 cursor: "pointer",
                                 fontSize: "1rem",
-                                marginTop: "auto",
+                                marginTop: "20px",
                                 transition: "background-color 0.3s ease",
                                 ':hover': {
-                                backgroundColor: "#222",
+                                    backgroundColor: "#222",
                                 }
-                            }}onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#222"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#333"}>Cerrar</button>
+                            }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#222"} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#333"}>Cerrar</button>
                         </div>
                     )}
                     {activeModal === "user" && (

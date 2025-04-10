@@ -7,6 +7,8 @@ export default function Create({ user }) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [phone, setPhone] = useState('');
+    const [birthDate, setBirthDate] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
@@ -26,6 +28,16 @@ export default function Create({ user }) {
         setErrorMessage('');
     };
 
+    const handlePhoneChange = (e) => {
+        setPhone(e.target.value);
+        setErrorMessage('');
+    };
+
+    const handleBirthDateChange = (e) => {
+        setBirthDate(e.target.value);
+        setErrorMessage('');
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const emailPattern = /^[^@]+@[^@]+\.[^@]+$/;
@@ -39,6 +51,21 @@ export default function Create({ user }) {
             setErrorMessage('La contraseña debe contener al menos una letra mayúscula y un símbolo especial');
             return;
         }
+        if (phone.length < 9) {
+            setErrorMessage('El número de teléfono debe tener al menos 9 caracteres');
+            return;
+        }
+
+        const birthDateObj = new Date(birthDate);
+        const today = new Date();
+        const age = today.getFullYear() - birthDateObj.getFullYear();
+        const monthDiff = today.getMonth() - birthDateObj.getMonth();
+        const dayDiff = today.getDate() - birthDateObj.getDate();
+
+        if (age < 18 || (age === 18 && (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)))) {
+            setErrorMessage('Debes tener al menos 18 años para registrarte');
+            return;
+        }
 
         setIsLoading(true); // Bloquea el botón
 
@@ -46,7 +73,9 @@ export default function Create({ user }) {
             const response = await window.axios.post('/users/store', {
                 name,
                 email,
-                password
+                password,
+                phone,
+                birthDate
             });
 
             if (response.status === 200) {
@@ -180,6 +209,22 @@ export default function Create({ user }) {
                                 placeholder="Contraseña"
                                 value={password}
                                 onChange={handlePasswordChange}
+                                style={inputStyle}
+                                required
+                            />
+                            <input
+                                type="text"
+                                placeholder="Número de Teléfono"
+                                value={phone}
+                                onChange={handlePhoneChange}
+                                style={inputStyle}
+                                required
+                            />
+                            <input
+                                type="date"
+                                placeholder="Fecha de Nacimiento"
+                                value={birthDate}
+                                onChange={handleBirthDateChange}
                                 style={inputStyle}
                                 required
                             />
