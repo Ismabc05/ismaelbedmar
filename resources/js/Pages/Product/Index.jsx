@@ -15,6 +15,7 @@ export default function Index({ products, categories }) {
 
     useEffect(() => {
         let filtered = products;
+
         if (selectedCategory !== "Categorías" || selectedColor !== "Color") {
             filtered = products.filter(p => {
                 const matchCategory = selectedCategory !== "Categorías" && p.category && p.category.toLowerCase() === selectedCategory.toLowerCase();

@@ -435,6 +435,7 @@ export default function Navbar({ products, selectedProduct }) {
                                     padding: "15px 0",
                                     borderBottom: "1px solid #eee",
                                 }}>
+
                                     <p
                                         style={{ fontWeight: "bold", flex: 1, cursor: "pointer", transition: "all 0.3s ease" }}
                                         onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}

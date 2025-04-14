@@ -1,71 +1,112 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import MainLayout from "../../layouts/MainLayout";
-import { usePage } from '@inertiajs/react';
-import {LuArrowLeft } from "react-icons/lu";
+import { LuArrowLeft } from "react-icons/lu";
 import { Link } from "@inertiajs/react";
 
 export default function Cart() {
-    const { carts = [] } = usePage().props; // Provide a default value for carts
+    const [cart, setCart] = useState([]);
 
-    const removeFromCart = async (id) => {
-        try {
-            await axios.delete(`/cart/${id}`); // Llama a la API para eliminar
-            router.reload(); // Recargar la página para actualizar la lista sin hacer un refresh completo
-        } catch (error) {
-            console.error("Error al eliminar el favorito", error);
-        }
+    useEffect(() => {
+        // Recuperar los productos del carrito desde el localStorage
+        const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+        setCart(storedCart);
+    }, []);
+
+    const removeFromCart = (id) => {
+        const updatedCart = cart.filter(item => item.id !== id);
+        setCart(updatedCart);
+        localStorage.setItem('cart', JSON.stringify(updatedCart)); // Actualizar el localStorage
+    };
+
+    const calculateTotal = () => {
+        return cart.reduce((total, item) => total + item.price * item.quantity, 0);
     };
 
     return (
         <MainLayout>
-            <Link
-                href="/products"
-                className="self-start mb-4 text-gray-600 hover:text-black"
-            >
-                <LuArrowLeft size={28} />
-            </Link>
-            <div style={{ textAlign: "center", padding: "20px" }}>
-                <h1 style={{ fontSize: "2.5rem", marginBottom: "20px" }}>Mi Carrito</h1>
+            <div className="p-6">
+                <Link
+                    href="/products"
+                    className="flex items-center mb-6 text-gray-600 hover:text-black transition"
+                >
+                    <LuArrowLeft size={28} className="mr-2" />
+                    <span>Volver a productos</span>
+                </Link>
 
-                {carts.length === 0 ? (
-                    <p style={{ fontSize: "1.5rem", color: "#666" }}>No tienes carrito aún.</p>
+                <h1 className="text-3xl font-bold mb-6 text-center text-black">Mis Pedidos</h1>
+
+                {cart.length === 0 ? (
+                    <p className="text-center text-gray-500 text-lg">No tienes productos en el carrito.</p>
                 ) : (
-                    <div style={{
-                        display: "grid",
-                        gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-                        gap: "20px"
-                    }}>
-                        {carts.map(car => (
-                            <div key={car.id} style={{
-                                padding: "20px",
-                                borderRadius: "10px",
-                                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-                                textAlign: "center",
-                                backgroundColor: "#fff",
-                                transition: "transform 0.3s ease",
-                            }} onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.05)"}
-                               onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}>
-                                <h2 style={{ fontSize: "1.8rem", marginBottom: "10px", cursor: "pointer" }}>
-                                    {car.product.name}
-                                </h2>
-                                <p style={{ fontSize: "1.5rem", fontWeight: "bold", color: "#333" }}>
-                                    {new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(car.product.price)}
-                                </p>
-                                <button onClick={() => removeFromCart(car.id)} style={{
-                                    marginTop: "10px",
-                                    padding: "10px 15px",
-                                    backgroundColor: "red",
-                                    color: "white",
-                                    border: "none",
-                                    borderRadius: "5px",
-                                    cursor: "pointer",
-                                    transition: "background-color 0.3s ease"
-                                }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#cc0000"}
-                                   onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "red"}>
-                                    Eliminar
-                                </button>
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        {/* Lista de productos */}
+                        <div className="lg:col-span-2 space-y-6">
+                            {cart.map((item) => (
+                                <div
+                                    key={`${item.id}-${item.size}`}
+                                    className="flex items-center bg-white shadow-md rounded-lg p-4"
+                                >
+                                    <img
+                                        src={item.image || "/images/placeholder.png"}
+                                        alt={item.name}
+                                        className="w-20 h-20 object-cover rounded-md mr-4"
+                                    />
+                                    <div className="flex-1">
+                                        <h2 className="font-semibold text-lg text-black">{item.name}</h2>
+                                        <p className="text-sm text-gray-500">
+                                            Talla: {item.size} | Cantidad: {item.quantity}
+                                        </p>
+                                        <p className="font-bold text-gray-800 mt-2">
+                                            {new Intl.NumberFormat("es-ES", {
+                                                style: "currency",
+                                                currency: "EUR",
+                                            }).format(item.price * item.quantity)}
+                                        </p>
+                                    </div>
+                                    <button
+                                        onClick={() => removeFromCart(item.id)}
+                                        className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition"
+                                    >
+                                        Eliminar
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Resumen del carrito */}
+                        <div className="bg-gray-100 p-6 rounded-lg shadow-md">
+                            <h2 className="text-2xl font-bold mb-4 text-black">Resumen del Pedido</h2>
+                            <div className="space-y-2">
+                                <div className="flex justify-between">
+                                    <span className="text-gray-600">Subtotal:</span>
+                                    <span className="font-bold text-gray-800">
+                                        {new Intl.NumberFormat("es-ES", {
+                                            style: "currency",
+                                            currency: "EUR",
+                                        }).format(calculateTotal())}
+                                    </span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-gray-600">Envío:</span>
+                                    <span className="font-bold text-gray-800">Gratis</span>
+                                </div>
+                                <div className="flex justify-between border-t pt-2">
+                                    <span className="text-lg font-bold">Total:</span>
+                                    <span className="text-lg font-bold text-gray-800">
+                                        {new Intl.NumberFormat("es-ES", {
+                                            style: "currency",
+                                            currency: "EUR",
+                                        }).format(calculateTotal())}
+                                    </span>
+                                </div>
                             </div>
-                        ))}
+                            <Link
+                                href="/payment"
+                                className="w-full bg-black text-white py-3 rounded-md text-lg font-semibold hover:bg-gray-800 transition mt-6 text-center block"
+                            >
+                                Proceder al Pago
+                            </Link>
+                        </div>
                     </div>
                 )}
             </div>
