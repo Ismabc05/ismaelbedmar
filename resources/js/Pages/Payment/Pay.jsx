@@ -12,6 +12,10 @@ export default function Pay() {
         setCart(storedCart);
     }, []);
 
+    const calculateTotal = () => {
+        return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+    };
+
     return (
         <MainLayout>
             <div className="p-6">
@@ -61,16 +65,16 @@ export default function Pay() {
                             {new Intl.NumberFormat("es-ES", {
                                 style: "currency",
                                 currency: "EUR",
-                            }).format(
-                                cart.reduce((total, item) => total + item.price * item.quantity, 0)
-                            )}
+                            }).format(calculateTotal())}
                         </div>
 
-                        <button
-                            className="w-full bg-black text-white py-3 rounded-md text-lg font-semibold hover:bg-gray-800 transition"
+                        {/* Botón para redirigir a la vista Checkout */}
+                        <Link
+                            href="/checkout"
+                            className="w-full bg-black text-white py-3 rounded-md text-lg font-semibold hover:bg-gray-800 transition text-center block"
                         >
                             Reservar
-                        </button>
+                        </Link>
                     </div>
                 )}
             </div>

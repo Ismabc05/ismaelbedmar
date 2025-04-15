@@ -176,8 +176,13 @@ export default function Navbar({ products, selectedProduct }) {
         <>
             <nav className="navbar px-4" style={{ position: "relative", zIndex: 1001 }}>
                 <div className="left-menu"></div>
-                <div className="logo" onClick={() => window.location.href = '/'} style={{ cursor: 'pointer', transition: 'transform 0.3s ease '}}
-                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.10)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}>
+                <div
+                    className="logo"
+                    onClick={() => window.location.reload()} // Recarga la página
+                    style={{ cursor: 'pointer', transition: 'transform 0.3s ease' }}
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.10)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                >
                     <img src="/images/logo-1 (1).png" alt="Logo" />
                 </div>
 
@@ -476,81 +481,36 @@ export default function Navbar({ products, selectedProduct }) {
                                 Bienvenid@{ loggedUser && (loggedUser.nombre || loggedUser.name) ? `, ${loggedUser.nombre || loggedUser.name}` : ", Invitado" }
                             </p>
                             <div style={topButtonsContainerStyle}>
-                                <a
+                                <Link
                                     href="/cart"
-                                    style={{
-                                        textAlign: "center",
-                                        fontSize: "1rem",
-                                        marginBottom: "10px",
-                                        textDecoration: "none",
-                                        color: "black",
-                                        transition: "color 0.3s ease"
-                                    }}
-                                    onMouseEnter={(e) => e.currentTarget.style.color = "gray"}
-                                    onMouseLeave={(e) => e.currentTarget.style.color = "black"}
+                                    className="text-center text-black text-lg mb-2 hover:text-gray-600 transition"
                                 >
                                     Ver mis pedidos
-                                </a>
-                                <a
+                                </Link>
+                                <Link
                                     href="/favourite"
-                                    style={{
-                                        textAlign: "center",
-                                        fontSize: "1rem",
-                                        marginBottom: "10px",
-                                        textDecoration: "none",
-                                        color: "black",
-                                        transition: "color 0.3s ease"
-                                    }}
-                                    onMouseEnter={(e) => e.currentTarget.style.color = "gray"}
-                                    onMouseLeave={(e) => e.currentTarget.style.color = "black"}
+                                    className="text-center text-black text-lg mb-2 hover:text-gray-600 transition"
                                 >
                                     Ver mis favoritos
-                                </a>
-                                <a
+                                </Link>
+                                <Link
                                     href="/users/name/edit"
-                                    style={{
-                                        textAlign: "center",
-                                        fontSize: "1rem",
-                                        marginBottom: "10px",
-                                        textDecoration: "none",
-                                        color: "black",
-                                        transition: "color 0.3s ease"
-                                    }}
-                                    onMouseEnter={(e) => e.currentTarget.style.color = "gray"}
-                                    onMouseLeave={(e) => e.currentTarget.style.color = "black"}
+                                    className="text-center text-black text-lg mb-2 hover:text-gray-600 transition"
                                 >
                                     Cambiar nombre
-                                </a>
-                                <a
+                                </Link>
+                                <Link
                                     href="/users/email/edit"
-                                    style={{
-                                        textAlign: "center",
-                                        fontSize: "1rem",
-                                        marginBottom: "10px",
-                                        textDecoration: "none",
-                                        color: "black",
-                                        transition: "color 0.3s ease"
-                                    }}
-                                    onMouseEnter={(e) => e.currentTarget.style.color = "gray"}
-                                    onMouseLeave={(e) => e.currentTarget.style.color = "black"}
+                                    className="text-center text-black text-lg mb-2 hover:text-gray-600 transition"
                                 >
                                     Cambiar correo
-                                </a>
-                                <a
+                                </Link>
+                                <Link
                                     href="/users/password/edit"
-                                    style={{
-                                        textAlign: "center",
-                                        fontSize: "1rem",
-                                        marginBottom: "10px",
-                                        textDecoration: "none",
-                                        color: "black",
-                                        transition: "color 0.3s ease"
-                                    }}
-                                    onMouseEnter={(e) => e.currentTarget.style.color = "gray"}
-                                    onMouseLeave={(e) => e.currentTarget.style.color = "black"}
+                                    className="text-center text-black text-lg mb-2 hover:text-gray-600 transition"
                                 >
                                     Cambiar contraseña
-                                </a>
+                                </Link>
                             </div>
                             <div style={bottomButtonsContainerStyle}>
                                 <button

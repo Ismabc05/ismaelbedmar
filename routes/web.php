@@ -9,6 +9,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PasswordResetController; // Actualizar la importación
+use App\Http\Controllers\CheckoutController;
 
 Route::get('/', [WelcomeController::class, 'ismael']);
 
@@ -67,4 +68,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/favourites', [FavouriteController::class, 'store'])->name('favourites.store');
     Route::delete('/favourites/{id}', [FavouriteController::class, 'destroy'])->name('favourites.destroy');
 });
+
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 
