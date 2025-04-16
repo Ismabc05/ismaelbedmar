@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import MainLayout from "../../layouts/MainLayout";
 import { LuArrowLeft } from "react-icons/lu";
 import { Link } from "@inertiajs/react";
+import { FaTrash } from "react-icons/fa"; // Importa el icono de la papelera
 
 export default function Cart() {
     const [cart, setCart] = useState([]);
@@ -70,9 +71,10 @@ export default function Cart() {
                                     </div>
                                     <button
                                         onClick={() => removeFromCart(item.id)}
-                                        className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition"
+                                        className="text-black hover:text-gray-800 transition"
+                                        title="Eliminar"
                                     >
-                                        Eliminar
+                                        <FaTrash size={20} /> {/* Icono de papelera */}
                                     </button>
                                 </div>
                             ))}
