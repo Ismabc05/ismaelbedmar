@@ -58,18 +58,15 @@ export default function Ismael() {
         fontSize: '1rem',
         textDecoration: 'underline',
         cursor: 'pointer',
-        backgroundColor: 'rgba(0,0,0,0.5)',
-        padding: '10px 20px',
-        borderRadius: '5px',
-        transition: 'background-color 0.3s ease',
+        transition: 'color 0.3s ease',
     };
 
     const handleLinkHover = (e) => {
-        e.target.style.backgroundColor = 'rgba(255,255,255,0.2)';
+        e.target.style.color = 'lightgray'; // Cambiar el color al pasar el mouse
     };
 
     const handleLinkLeave = (e) => {
-        e.target.style.backgroundColor = 'rgba(0,0,0,0.5)';
+        e.target.style.color = 'white'; // Restaurar el color original
     };
 
     // Función para manejar redirección al hacer clic en "Descubrir"
