@@ -395,7 +395,7 @@ export default function Navbar({ products, selectedProduct }) {
                                                 if (!loggedUser) {
                                                     window.location.href = "/users"; // Redirige a /users para invitados
                                                 } else {
-                                                    window.location.href = "/payment"; // Redirige a la vista de pago
+                                                    window.location.href = "/cart"; // Redirige a la vista de pago
                                                 }
                                             }}
                                         >

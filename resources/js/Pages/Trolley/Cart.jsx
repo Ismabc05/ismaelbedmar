@@ -52,7 +52,12 @@ export default function Cart() {
                                         className="w-20 h-20 object-cover rounded-md mr-4"
                                     />
                                     <div className="flex-1">
-                                        <h2 className="font-semibold text-lg text-black">{item.name}</h2>
+                                        <h2
+                                            className="font-semibold text-lg text-black cursor-pointer hover:underline"
+                                            onClick={() => window.location.href = `/products/${item.id}`}
+                                        >
+                                            {item.name}
+                                        </h2>
                                         <p className="text-sm text-gray-500">
                                             Talla: {item.size} | Cantidad: {item.quantity}
                                         </p>
@@ -101,7 +106,7 @@ export default function Cart() {
                                 </div>
                             </div>
                             <Link
-                                href="/payment"
+                                href="/checkout"
                                 className="w-full bg-black text-white py-3 rounded-md text-lg font-semibold hover:bg-gray-800 transition mt-6 text-center block"
                             >
                                 Proceder al Pago

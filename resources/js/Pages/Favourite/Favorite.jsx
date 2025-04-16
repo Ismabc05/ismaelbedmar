@@ -12,12 +12,6 @@ export default function Favorite() {
         setFavorites(storedFavorites);
     }, []);
 
-    const removeFromFavorites = (id) => {
-        const updatedFavorites = favorites.filter(fav => fav.id !== id);
-        setFavorites(updatedFavorites);
-        localStorage.setItem('favorites', JSON.stringify(updatedFavorites)); // Actualizar el localStorage
-    };
-
     return (
         <MainLayout>
             <Link
@@ -44,16 +38,15 @@ export default function Favorite() {
                                     alt={fav.name}
                                     className="w-full h-40 object-cover rounded-md mb-4"
                                 />
-                                <h2 className="text-lg font-semibold mb-2 text-black">{fav.name}</h2>
-                                <p className="text-gray-500 mb-4">
+                                <h2
+                                    className="text-lg font-semibold mb-2 text-black cursor-pointer hover:underline"
+                                    onClick={() => window.location.href = `/products/${fav.id}`}
+                                >
+                                    {fav.name}
+                                </h2>
+                                <p className="text-center text-gray-700 mb-4">
                                     {new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(fav.price)}
                                 </p>
-                                <button
-                                    onClick={() => removeFromFavorites(fav.id)}
-                                    className="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition"
-                                >
-                                    Eliminar
-                                </button>
                             </div>
                         ))}
                     </div>
