@@ -62,7 +62,8 @@ export default function Index({ products, categories }) {
                     value={selectedCategory}
                     onChange={e => setSelectedCategory(e.target.value)}
                     className="bg-white rounded-md px-3 py-2 focus:outline-none focus:border-black focus:ring-2 focus:ring-black appearance-none"
-                    style={{ ...headingStyle, paddingLeft: "14px", ...customSelectStyle }}>
+                    style={{ ...headingStyle, paddingLeft: "14px", ...customSelectStyle }}
+                >
                     <option value="Categorías" disabled>Categorías</option>
                     {categoriesList.map(cat => (
                         <option key={cat} value={cat}>{cat}</option>

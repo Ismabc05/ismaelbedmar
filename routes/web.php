@@ -41,6 +41,8 @@ Route::prefix('payment')->group(function () {
     Route::get('/', [PaymentController::class, 'Pay'])->name('payments.pay');
 });
 
+Route::get('/payment-success', [PaymentController::class, 'success'])->name('payment.success');
+
 Route::prefix('cart')->group(function () {
     Route::get('/', [CartController::class, 'Cart'])->name('carts.cart');
 });
