@@ -41,6 +41,8 @@ Route::prefix('payment')->group(function () {
     Route::get('/', [PaymentController::class, 'Pay'])->name('payments.pay');
 });
 
+Route::post('/send-payment-confirmation', [PaymentController::class, 'sendPaymentConfirmation']);
+
 Route::get('/payment-success', [PaymentController::class, 'success'])->name('payment.success');
 
 Route::prefix('cart')->group(function () {
@@ -72,4 +74,3 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-

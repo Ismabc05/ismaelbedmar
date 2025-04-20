@@ -10,7 +10,7 @@ export default function Checkout() {
     const [isPaymentSaved, setIsPaymentSaved] = useState(false);
 
     const [errors, setErrors] = useState({}); // Estado para almacenar errores
-    const [cardNumber, setCardNumber] = useState("ES-"); // Estado para el número de tarjeta
+    const [cardNumber, setCardNumber] = useState("ES"); // Estado inicial sin el guion
 
     const shippingCost = 0;
 
@@ -54,29 +54,33 @@ export default function Checkout() {
     const validatePaymentForm = (data) => {
         const newErrors = {};
 
-        // Validar número de tarjeta (19 números y debe comenzar con "ES")
-        if (!/^ES\d{17}$/.test(data.cardNumber)) {
-            newErrors.cardNumber = "El número de tarjeta debe comenzar con 'ES' y tener 19 caracteres en total.";
+        // Validar número de tarjeta (exactamente 16 números)
+        if (!/^\d{16}$/.test(data.cardNumber)) {
+            newErrors.cardNumber = "El número de tarjeta debe tener exactamente 16 números.";
         }
 
         return newErrors;
     };
 
     const handleCardNumberChange = (e) => {
-        const input = e.target.value;
+        const input = e.target.value.replace(/\s/g, ""); // Eliminar espacios existentes
 
-        // Asegurarse de que el valor siempre comience con "ES-"
-        if (!input.startsWith("ES-")) {
+        // Asegurarse de que el valor siempre comience con "ES"
+        if (!input.startsWith("ES")) {
             return;
         }
 
-        // Limitar el número total de caracteres a 22 (incluyendo "ES-")
-        if (input.length > 22) {
+        // Limitar el número total de caracteres a 32 (incluyendo "ES" y espacios)
+        if (input.length > 32) {
             return;
         }
 
-        // Actualizar el estado con el nuevo valor
-        setCardNumber(input);
+        // Formatear el número para agregar un espacio cada 4 caracteres
+        const formatted = input
+            .replace(/(.{4})(?=.)/g, "$1 ") // Agregar espacio cada 4 caracteres
+            .trim(); // Eliminar espacios adicionales al final
+
+        setCardNumber(formatted); // Actualizar el estado con el valor formateado
     };
 
     const handleShippingSubmit = async (e) => {
@@ -115,17 +119,19 @@ export default function Checkout() {
         setErrors({});
         setIsPaymentSaving(true);
 
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 2000)); // Simular un retraso
 
-        setIsPaymentSaving(false);
-        setIsPaymentSaved(true);
 
-        localStorage.removeItem('cart');
-        setCart([]);
+                setIsPaymentSaving(false);
+                setIsPaymentSaved(true);
 
-        setTimeout(() => {
-            window.location.href = "/payment-success";
-        }, 2000);
+                localStorage.removeItem('cart');
+                setCart([]);
+
+                setTimeout(() => {
+                    window.location.href = "/payment-success";
+                }, 2000);
+
     };
 
     return (
@@ -330,8 +336,7 @@ export default function Checkout() {
                                     <input
                                         type="text"
                                         name="cardNumber"
-                                        value={cardNumber} // Usar el estado como valor
-                                        onChange={handleCardNumberChange} // Controlador para manejar cambios
+                                        maxLength="16" // Limitar la entrada a 16 caracteres
                                         required
                                         className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                                     />
