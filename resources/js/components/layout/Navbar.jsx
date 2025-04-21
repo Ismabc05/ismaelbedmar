@@ -221,7 +221,7 @@ export default function Navbar({ products, selectedProduct }) {
                     position: "fixed",
                     top: "0",
                     right: "0",
-                    width: "30%",
+                    width: "40%", // Cambiar el ancho al 40% de la pantalla
                     height: "100%",
                     backgroundColor: "white",
                     boxShadow: "-4px 0 10px rgba(0, 0, 0, 0.2)",
@@ -350,6 +350,17 @@ export default function Navbar({ products, selectedProduct }) {
                                                 padding: "15px 0",
                                                 borderBottom: "1px solid #eee",
                                             }}>
+                                                <img
+                                                    src={Array.isArray(item.images) ? item.images[0] : JSON.parse(item.images)[0]} // Mostrar la primera imagen
+                                                    alt={item.name}
+                                                    style={{
+                                                        width: "80px", // Aumentar el tamaño
+                                                        height: "80px", // Aumentar el tamaño
+                                                        objectFit: "cover",
+                                                        marginRight: "10px",
+                                                        borderRadius: "0px", // Eliminar bordes redondeados
+                                                    }}
+                                                />
                                                 <p
                                                     style={{ fontWeight: "bold", flex: 1, cursor: "pointer", transition: "all 0.3s ease" }}
                                                     onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
@@ -440,7 +451,17 @@ export default function Navbar({ products, selectedProduct }) {
                                     padding: "15px 0",
                                     borderBottom: "1px solid #eee",
                                 }}>
-
+                                    <img
+                                        src={Array.isArray(fav.images) ? fav.images[0] : JSON.parse(fav.images)[0]} // Mostrar la primera imagen
+                                        alt={fav.name}
+                                        style={{
+                                            width: "80px", // Aumentar el tamaño
+                                            height: "80px", // Aumentar el tamaño
+                                            objectFit: "cover",
+                                            marginRight: "10px",
+                                            borderRadius: "0px", // Eliminar bordes redondeados
+                                        }}
+                                    />
                                     <p
                                         style={{ fontWeight: "bold", flex: 1, cursor: "pointer", transition: "all 0.3s ease" }}
                                         onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
