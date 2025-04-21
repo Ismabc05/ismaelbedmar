@@ -34,9 +34,9 @@ export default function Favorite() {
                                 className="p-4 border rounded-lg shadow-md hover:shadow-lg transition"
                             >
                                 <img
-                                    src={fav.image || "/images/placeholder.png"}
+                                    src={fav.image || `https://picsum.photos/600?random=${Math.random()}`}
                                     alt={fav.name}
-                                    className="w-full h-40 object-cover rounded-md mb-4"
+                                    className="w-full h-96 object-cover mb-4" // Aumentar la altura a h-96
                                 />
                                 <h2
                                     className="text-lg font-semibold mb-2 text-black cursor-pointer hover:underline"

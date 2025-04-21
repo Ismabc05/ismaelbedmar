@@ -161,9 +161,9 @@ export default function Checkout() {
                                     >
                                         <div className="flex items-center space-x-4">
                                             <img
-                                                src={item.image || "/images/placeholder.png"}
+                                                src={item.image || `https://picsum.photos/600?random=${Math.random()}`}
                                                 alt={item.name}
-                                                className="w-16 h-16 object-cover rounded-md"
+                                                className="w-40 h-40 object-cover"
                                             />
                                             <div>
                                                 <p className="font-medium text-lg text-black">{item.name}</p>

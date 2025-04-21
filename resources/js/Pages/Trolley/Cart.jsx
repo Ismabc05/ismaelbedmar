@@ -48,9 +48,9 @@ export default function Cart() {
                                     className="flex items-center bg-white shadow-md rounded-lg p-4"
                                 >
                                     <img
-                                        src={item.image || "/images/placeholder.png"}
+                                        src={item.image || `https://picsum.photos/600?random=${Math.random()}`}
                                         alt={item.name}
-                                        className="w-20 h-20 object-cover rounded-md mr-4"
+                                        className="w-32 h-32 object-cover mr-4"
                                     />
                                     <div className="flex-1">
                                         <h2
