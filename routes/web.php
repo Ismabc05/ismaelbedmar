@@ -10,6 +10,7 @@ use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PasswordResetController; // Actualizar la importación
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', [WelcomeController::class, 'ismael']);
 
@@ -71,6 +72,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/favourites', [FavouriteController::class, 'Favorite'])->name('favourites.index');
     Route::post('/favourites', [FavouriteController::class, 'store'])->name('favourites.store');
     Route::delete('/favourites/{id}', [FavouriteController::class, 'destroy'])->name('favourites.destroy');
-});
 
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+});
+Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
