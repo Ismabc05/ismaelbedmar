@@ -19,7 +19,8 @@ class LoginController extends Controller {
         ]);
     }
 
-    public function login(Request $request){
+    public function login(Request $request)
+    {
         $request->validate([
             'email' => 'required|email',
             'password' => 'required'
@@ -40,10 +41,9 @@ class LoginController extends Controller {
         }
 
         Auth::login($user);
-        return response()->json([
-            'message' => 'Inicio de sesión exitoso',
-            'user' => $user
-        ]);
+
+
+        return $user; // Redirigir a la vista de productos para usuarios normales
     }
 
     public function create() {

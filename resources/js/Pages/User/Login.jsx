@@ -146,15 +146,19 @@ export default function Login({ users }) {
                 email: email,
                 password: password,
             }).then((data) => {
-                // Store the user data in localStorage for Navbar to use
-                localStorage.setItem('user', JSON.stringify(data.data.user));
-                window.location.href = '/products';
-            }).catch(error => {
-                console.log(error)
-                setErrorMessage(error.response.data.message)
+
+                // Verificar si el usuario existe en la respuesta
+                if (data.data) {
+                    // Redirigir según el rol del usuario
+                    if (data.data.rol === 'administrador') {
+                        window.location.href = '/admin/dashboard'; // Redirigir al dashboard del administrador
+                    } else {
+                        window.location.href = '/products'; // Redirigir a la vista de productos
+                    }
+                }
             }).finally(() => {
                 setIsLoading(false);
-            })
+            });
         });
             setIsLoading(true)
         }
