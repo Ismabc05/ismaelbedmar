@@ -1,26 +1,34 @@
+<?php
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\User;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    // ...existing methods...
-
-    public function editEmail(Request $request)
+    public function index()
     {
-        return Inertia::render('Pages/User/ChangeEmail', [
-            'user' => $request->user(),
-            // You can add success or error messages if needed
-        ]);
+        $users = User::all(); // Obtener todos los usuarios
+        return Inertia::render('Administrador/UserList', ['users' => $users]);
     }
 
-    public function updateEmail(Request $request)
+    public function apiIndex()
     {
-        // ...existing code or implement email update logic...
-        // For now, add placeholder logic
-        // Validate and update user email.
+        return response()->json(User::all());
     }
 
-    // ...existing methods...
+    public function update(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->update($request->all());
+        return response()->json($user);
+    }
+
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        return response()->json(null, 204);
+    }
 }

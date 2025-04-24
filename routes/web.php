@@ -11,6 +11,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PasswordResetController; // Actualizar la importación
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminProductController;
 use App\Http\Middleware\AdminMiddleware;
 
 Route::get('/', [WelcomeController::class, 'ismael']);
@@ -79,6 +80,8 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
+    Route::get('/admin/products', [AdminProductController::class, 'index'])->name('admin.products.index');
 });
 
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');

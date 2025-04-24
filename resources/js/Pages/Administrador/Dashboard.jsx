@@ -35,6 +35,7 @@ export default function Dashboard() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-8 max-w-6xl">
                     {/* Cuadrado 1 */}
                     <button
+                        onClick={() => (window.location.href = "/admin/users")}
                         className="bg-white shadow-lg rounded-lg p-6 text-center hover:shadow-xl transition w-[300px] h-40 border hover:border-black hover:border-2"
                     >
                         <h2 className="text-2xl font-bold text-gray-800 mb-2">Usuarios</h2>
@@ -42,10 +43,11 @@ export default function Dashboard() {
                     </button>
                     {/* Cuadrado 2 */}
                     <button
+                        onClick={() => (window.location.href = "/admin/products")}
                         className="bg-white shadow-lg rounded-lg p-6 text-center hover:shadow-xl transition w-[300px] h-40 border hover:border-black hover:border-2"
                     >
                         <h2 className="text-2xl font-bold text-gray-800 mb-2">Productos</h2>
-                        <p>Gestión de productos disponibles en la tiendas</p>
+                        <p>Gestión de productos disponibles en la tienda</p>
                     </button>
                     {/* Cuadrado 3 */}
                     <button

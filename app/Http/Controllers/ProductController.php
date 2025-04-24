@@ -18,14 +18,12 @@ class ProductController extends Controller
         ]);
     }
 
-
     public function show($id) {
         $product = Product::findOrFail($id);
         return Inertia::render('Product/Show', [
             'product' => $product
         ]);
     }
-
 }
 
 
