@@ -1,15 +1,68 @@
 import React from "react";
 
 export default function Dashboard() {
+    const handleLogout = () => {
+        axios.post('/users/logout')
+            .then(() => {
+                localStorage.clear();
+                window.location.href = "/users";
+            })
+            .catch(err => {
+                console.error("Error closing session", err);
+                localStorage.clear();
+                window.location.href = "/users";
+            });
+    };
+
     return (
-        <div className="p-6 max-w-6xl mx-auto">
-            <h1 className="text-3xl font-bold text-gray-800">Bienvenido al Dashboard del Administrador</h1>
-            <button
-                onClick={() => (window.location.href = "/users")}
-                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
-            >
-                Volver a Usuarios
-            </button>
+        <div className="min-h-screen bg-gray-200 flex flex-col items-center">
+            {/* Título centrado arriba */}
+            <header className="w-full bg-gray-200 py-4 px-8 flex flex-col items-center relative">
+                <div className="text-center">
+                    <h1 className="text-3xl font-bold text-gray-800">Panel de Administración</h1>
+                    <p className="text-gray-600">Bienvenido al panel de administración</p>
+                </div>
+                <button
+                    onClick={handleLogout}
+                    className="absolute right-8 top-4 text-black hover:underline transition"
+                >
+                    Cerrar Sesión
+                </button>
+            </header>
+
+            {/* Contenido centrado */}
+            <div className="flex-grow flex items-center justify-center">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-8 max-w-6xl">
+                    {/* Cuadrado 1 */}
+                    <button
+                        className="bg-white shadow-lg rounded-lg p-6 text-center hover:shadow-xl transition w-[300px] h-40 border hover:border-black hover:border-2"
+                    >
+                        <h2 className="text-2xl font-bold text-gray-800 mb-2">Usuarios</h2>
+                        <p>Gestión de usuarios registrados</p>
+                    </button>
+                    {/* Cuadrado 2 */}
+                    <button
+                        className="bg-white shadow-lg rounded-lg p-6 text-center hover:shadow-xl transition w-[300px] h-40 border hover:border-black hover:border-2"
+                    >
+                        <h2 className="text-2xl font-bold text-gray-800 mb-2">Productos</h2>
+                        <p>Gestión de productos disponibles en la tiendas</p>
+                    </button>
+                    {/* Cuadrado 3 */}
+                    <button
+                        className="bg-white shadow-lg rounded-lg p-6 text-center hover:shadow-xl transition w-[300px] h-40 border hover:border-black hover:border-2"
+                    >
+                        <h2 className="text-2xl font-bold text-gray-800 mb-2">Pedidos</h2>
+                        <p>Revisión y control de pedidos realizados</p>
+                    </button>
+                    {/* Cuadrado 4 */}
+                    <button
+                        className="bg-white shadow-lg rounded-lg p-6 text-center hover:shadow-xl transition w-[300px] h-40 border hover:border-black hover:border-2"
+                    >
+                        <h2 className="text-2xl font-bold text-gray-800 mb-2">Pagos</h2>
+                        <p>Historial y verificación de pagos efectuados</p>
+                    </button>
+                </div>
+            </div>
         </div>
     );
 }
