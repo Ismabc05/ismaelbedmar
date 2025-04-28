@@ -11,7 +11,8 @@ export default function Navbar({ products, selectedProduct }) {
     const [favorites, setFavorites] = useState([]);
     const [cart, setCart] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
-    const [searchResults, setSearchResults] = useState([])
+    const [searchResults, setSearchResults] = useState([]);
+    const [suggestedProducts, setSuggestedProducts] = useState([]); // Estado para productos sugeridos
 
     const modalContainerStyle = {
         display: 'flex',
@@ -71,7 +72,14 @@ export default function Navbar({ products, selectedProduct }) {
         }
     };
 
-
+    const fetchSuggestedProducts = async () => {
+        try {
+            const response = await axios.get('/api/productos/suggested'); // Endpoint para productos sugeridos
+            setSuggestedProducts(response.data);
+        } catch (error) {
+            console.error("Error fetching suggested products:", error);
+        }
+    };
 
     useEffect(() => {
             // Se usa localStorage para usuarios no autenticados
@@ -89,6 +97,12 @@ export default function Navbar({ products, selectedProduct }) {
                 window.removeEventListener('favoritesUpdated', updateFavorites);
             };
     }, []);
+
+    useEffect(() => {
+        if (activeModal === "search") {
+            fetchSuggestedProducts(); // Cargar productos sugeridos al abrir el modal de búsqueda
+        }
+    }, [activeModal]);
 
     const handleIconClick = (modalName) => {
         setActiveModal(modalName === activeModal ? null : modalName);
@@ -277,17 +291,48 @@ export default function Navbar({ products, selectedProduct }) {
                             </div>
                             {/* Mostrar resultados de búsqueda sin redirigir */}
                             <div style={{ flex: 1, overflowY: "auto" }}>
-                                {searchResults.length > 0 ? (
-                                    searchResults.map(product => (
-                                        <div key={product.id} style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
-                                            <p style={{ margin: 0, fontWeight: "bold" }}>{product.name}</p>
-                                            <p style={{ margin: 0 }}>
-                                                {new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(product.price)}
-                                            </p>
-                                        </div>
-                                    ))
+                                {searchTerm.trim() === "" ? (
+                                    suggestedProducts.length > 0 ? (
+                                        suggestedProducts.map(product => (
+                                            <div
+                                                key={product.id}
+                                                style={{
+                                                    padding: "10px",
+                                                    borderBottom: "1px solid #ddd",
+                                                    cursor: "pointer",
+                                                    transition: "all 0.3s ease",
+                                                }}
+                                                onMouseEnter={(e) => e.currentTarget.style.textDecoration = "underline"} // Subrayar al pasar el cursor
+                                                onMouseLeave={(e) => e.currentTarget.style.textDecoration = "none"} // Quitar subrayado al salir
+                                                onClick={() => window.location.href = `/products/${product.id}`} // Redirigir al producto
+                                            >
+                                                <p style={{ margin: 0, fontWeight: "bold" }}>{product.name}</p>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <p>Cargando productos sugeridos...</p>
+                                    )
                                 ) : (
-                                    <p>No se encontraron productos.</p>
+                                    searchResults.length > 0 ? (
+                                        searchResults.map(product => (
+                                            <div
+                                                key={product.id}
+                                                style={{
+                                                    padding: "10px",
+                                                    borderBottom: "1px solid #ddd",
+                                                    cursor: "pointer",
+                                                    transition: "all 0.3s ease",
+                                                }}
+                                                onMouseEnter={(e) => e.currentTarget.style.textDecoration = "underline"} // Subrayar al pasar el cursor
+                                                onMouseLeave={(e) => e.currentTarget.style.textDecoration = "none"} // Quitar subrayado al salir
+                                                onClick={() => window.location.href = `/products/${product.id}`} // Redirigir al producto
+                                            >
+                                                <p style={{ margin: 0, fontWeight: "bold" }}>{product.name}</p>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <p>No se encontraron productos.</p>
+                                    )
                                 )}
                             </div>
                             <button

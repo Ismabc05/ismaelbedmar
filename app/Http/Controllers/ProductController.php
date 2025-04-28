@@ -24,6 +24,23 @@ class ProductController extends Controller
             'product' => $product
         ]);
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        if (!$query) {
+            return response()->json([], 200); // Retorna un array vacío si no hay término de búsqueda
+        }
+
+        // Realiza la búsqueda en la tabla `products` y limita los resultados a 10
+        $products = Product::where('name', 'LIKE', "%{$query}%")
+            ->orWhere('description', 'LIKE', "%{$query}%")
+            ->limit(5) // Limitar a 10 resultados
+            ->get();
+
+        return response()->json($products, 200);
+    }
 }
 
 
