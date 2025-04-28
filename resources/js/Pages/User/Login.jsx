@@ -122,46 +122,51 @@ export default function Login({ users }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setErrorMessage(''); // Limpiar cualquier mensaje de error previo
+
         if (!nombre.trim()) {
             setErrorMessage('Debes ingresar un nombre válido');
             return;
         }
+
         const emailPattern = /^[^@]+@[^@]+\.[^@]+$/;
         const passwordPattern = /^(?=.*[A-Z])(?=.*[!@#$%^&*_]).{6,}$/;
 
+        if (!emailPattern.test(email)) {
+            setErrorMessage('Debes introducir un correo electrónico válido');
+            return;
+        }
 
-        if (!emailPattern.test(email) && false) {
-            setErrorMessage('Debes de introducir bien el correo electrónico');
-        } else if (!passwordPattern.test(password) && false) {
+        if (!passwordPattern.test(password)) {
             setErrorMessage('La contraseña debe contener al menos una letra mayúscula y un símbolo especial');
-        } else {
+            return;
+        }
 
-            // Check if the user exists in the database
+        setIsLoading(true);
 
-            axios.get('/sanctum/csrf-cookie').then(response => {
-
-
-            window.axios.post('/users', {
+        axios.get('/sanctum/csrf-cookie').then(() => {
+            axios.post('/users', {
                 nombre: nombre,
                 email: email,
                 password: password,
-            }).then((data) => {
-
-                // Verificar si el usuario existe en la respuesta
+            })
+            .then((data) => {
                 if (data.data) {
-                    // Redirigir según el rol del usuario
                     if (data.data.rol === 'administrador') {
-                        window.location.href = '/admin/dashboard'; // Redirigir al dashboard del administrador
+                        window.location.href = '/admin/dashboard';
                     } else {
-                        window.location.href = '/products'; // Redirigir a la vista de productos
+                        window.location.href = '/products';
                     }
                 }
-            }).finally(() => {
+            })
+            .catch((error) => {
+                console.error('Error al iniciar sesión:', error);
+                setErrorMessage('Error al iniciar sesión. Por favor, verifica tus credenciales.');
+            })
+            .finally(() => {
                 setIsLoading(false);
             });
         });
-            setIsLoading(true)
-        }
     };
 
     // Actualiza la función para login como invitado
