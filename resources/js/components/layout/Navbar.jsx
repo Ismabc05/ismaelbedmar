@@ -98,12 +98,6 @@ export default function Navbar({ products, selectedProduct }) {
             };
     }, []);
 
-    useEffect(() => {
-        if (activeModal === "search") {
-            fetchSuggestedProducts(); // Cargar productos sugeridos al abrir el modal de búsqueda
-        }
-    }, [activeModal]);
-
     const handleIconClick = (modalName) => {
         setActiveModal(modalName === activeModal ? null : modalName);
     };
@@ -291,48 +285,25 @@ export default function Navbar({ products, selectedProduct }) {
                             </div>
                             {/* Mostrar resultados de búsqueda sin redirigir */}
                             <div style={{ flex: 1, overflowY: "auto" }}>
-                                {searchTerm.trim() === "" ? (
-                                    suggestedProducts.length > 0 ? (
-                                        suggestedProducts.map(product => (
-                                            <div
-                                                key={product.id}
-                                                style={{
-                                                    padding: "10px",
-                                                    borderBottom: "1px solid #ddd",
-                                                    cursor: "pointer",
-                                                    transition: "all 0.3s ease",
-                                                }}
-                                                onMouseEnter={(e) => e.currentTarget.style.textDecoration = "underline"} // Subrayar al pasar el cursor
-                                                onMouseLeave={(e) => e.currentTarget.style.textDecoration = "none"} // Quitar subrayado al salir
-                                                onClick={() => window.location.href = `/products/${product.id}`} // Redirigir al producto
-                                            >
-                                                <p style={{ margin: 0, fontWeight: "bold" }}>{product.name}</p>
-                                            </div>
-                                        ))
-                                    ) : (
-                                        <p>Cargando productos sugeridos...</p>
-                                    )
+                                {searchResults.length > 0 ? (
+                                    searchResults.map(product => (
+                                        <div
+                                            key={product.id}
+                                            style={{
+                                                padding: "10px",
+                                                borderBottom: "1px solid #ddd",
+                                                cursor: "pointer",
+                                                transition: "all 0.3s ease",
+                                            }}
+                                            onMouseEnter={(e) => e.currentTarget.style.textDecoration = "underline"} // Subrayar al pasar el cursor
+                                            onMouseLeave={(e) => e.currentTarget.style.textDecoration = "none"} // Quitar subrayado al salir
+                                            onClick={() => window.location.href = `/products/${product.id}`} // Redirigir al producto
+                                        >
+                                            <p style={{ margin: 0, fontWeight: "bold" }}>{product.name}</p>
+                                        </div>
+                                    ))
                                 ) : (
-                                    searchResults.length > 0 ? (
-                                        searchResults.map(product => (
-                                            <div
-                                                key={product.id}
-                                                style={{
-                                                    padding: "10px",
-                                                    borderBottom: "1px solid #ddd",
-                                                    cursor: "pointer",
-                                                    transition: "all 0.3s ease",
-                                                }}
-                                                onMouseEnter={(e) => e.currentTarget.style.textDecoration = "underline"} // Subrayar al pasar el cursor
-                                                onMouseLeave={(e) => e.currentTarget.style.textDecoration = "none"} // Quitar subrayado al salir
-                                                onClick={() => window.location.href = `/products/${product.id}`} // Redirigir al producto
-                                            >
-                                                <p style={{ margin: 0, fontWeight: "bold" }}>{product.name}</p>
-                                            </div>
-                                        ))
-                                    ) : (
-                                        <p>No se encontraron productos.</p>
-                                    )
+                                    <p>No se encontraron productos.</p>
                                 )}
                             </div>
                             <button
