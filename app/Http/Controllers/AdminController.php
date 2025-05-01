@@ -9,7 +9,8 @@ class AdminController extends Controller
     /**
      * Mostrar el dashboard del administrador.
      */
-    public function dashboard()
+
+     public function dashboard()
     {
         return Inertia::render('Administrador/Dashboard');
     }

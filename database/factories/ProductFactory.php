@@ -16,13 +16,15 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
+        $categories = ['Camisa', 'Pantalón', 'Jersey', 'Vestido', 'Chaqueta', 'Abrigo', 'Falda', 'Blazer', 'Top', 'Sudadera'];
         return [
             'name' => $this->buildName(),
             'description' => $this->faker->paragraph,
             'price' => $this->faker->randomFloat(2, 10, 100),
             'images' => json_encode(['https://picsum.photos/600?random='.$this->faker->randomFloat(0, 10, 100), 'https://picsum.photos/600?random='.$this->faker->randomFloat(0, 10, 100)]),
-            'sizes' => json_encode(['S', 'M', 'L', 'XL']),
-            'colors' => json_encode(['Red', 'Blue', 'Green', 'Yellow']),
+            'sizes' => $this->faker->randomElement([['S'], ['M'], ['L'], ['XL'], ['S', 'M'], ['L', 'XL']]),
+            'colors' => $this->faker->randomElement([['Red'], ['Blue'], ['Green'], ['Yellow'], ['Red', 'Blue'], ['Green', 'Yellow']]),
+            'category' => $this->faker->randomElement($categories), // Agregar la propiedad category
         ];
     }
 
