@@ -7,6 +7,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\OrderController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -31,4 +32,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/products', [AdminProductController::class, 'store']); // Crear producto
     Route::put('/products/{id}', [AdminProductController::class, 'update']); // Modificar producto
     Route::delete('/products/{id}', [AdminProductController::class, 'destroy']); // Eliminar producto
+
+    // Endpoint para pedidos
+    Route::post('/orders', [OrderController::class, 'store']); // Guardar pedido
 });
+
+Route::get('/productos/search', [ProductController::class, 'search']);

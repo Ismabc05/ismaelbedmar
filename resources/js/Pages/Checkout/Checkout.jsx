@@ -15,40 +15,37 @@ export default function Checkout() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const formData = new FormData(e.target);
-        const data = Object.fromEntries(formData.entries());
 
-        // Validar datos (puedes combinar las validaciones de envío y pago aquí)
-        const newErrors = {};
-        if (!data.email.includes("@") || !data.email.endsWith(".com")) {
-            newErrors.email = "El correo debe contener un '@' y terminar en '.com'.";
+        const payload = {
+            user_id: 1, // Reemplaza con el ID del usuario autenticado
+            cart: cart.map((item) => ({
+                product_id: item.id,
+                quantity: item.quantity,
+            })),
+        };
+
+        console.log("Payload enviado:", payload); // Depuración
+
+        try {
+            setIsSaving(true);
+            const response = await axios.post("/api/orders", payload);
+            console.log("Pedido guardado:", response.data);
+
+            setIsSaving(false);
+            setIsSaved(true);
+
+            // Limpiar el carrito
+            localStorage.removeItem("cart");
+            setCart([]);
+
+            // Redirigir a la página de éxito
+            setTimeout(() => {
+                window.location.href = "/payment-success";
+            }, 2000);
+        } catch (error) {
+            console.error("Error al guardar el pedido:", error);
+            setIsSaving(false);
         }
-        if (!/^\d{9}$/.test(data.phone)) {
-            newErrors.phone = "El teléfono debe tener 9 números.";
-        }
-        if (!/^\d{16}$/.test(data.cardNumber)) {
-            newErrors.cardNumber = "El número de tarjeta debe tener exactamente 16 números.";
-        }
-
-        if (Object.keys(newErrors).length > 0) {
-            setErrors(newErrors);
-            return;
-        }
-
-        setErrors({});
-        setIsSaving(true);
-
-        await new Promise((resolve) => setTimeout(resolve, 2000)); // Simular un retraso
-
-        setIsSaving(false);
-        setIsSaved(true);
-
-        localStorage.removeItem('cart');
-        setCart([]);
-
-        setTimeout(() => {
-            window.location.href = "/payment-success";
-        }, 2000);
     };
 
     return (
