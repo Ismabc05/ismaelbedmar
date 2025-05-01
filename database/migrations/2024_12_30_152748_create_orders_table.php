@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->enum('state', ['pending', 'out_for_delivery', 'delivered']);
             $table->unsignedBigInteger('user_id');
-            $table->decimal('total', 10, 2)->default(0.00); // Agregar valor por defecto
+            $table->decimal('total', 10, 2);
             $table->softDeletes();
             $table->timestamps();
 
