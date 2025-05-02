@@ -51,6 +51,7 @@ export default function Dashboard() {
                     </button>
                     {/* Cuadrado 3 */}
                     <button
+                         onClick={() => (window.location.href = "/admin/orders")}
                         className="bg-white shadow-lg rounded-lg p-6 text-center hover:shadow-xl transition w-[300px] h-40 border hover:border-black hover:border-2"
                     >
                         <h2 className="text-2xl font-bold text-gray-800 mb-2">Pedidos</h2>

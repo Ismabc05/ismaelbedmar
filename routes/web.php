@@ -84,4 +84,6 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::get('/admin/products', [AdminProductController::class, 'index'])->name('admin.products.index');
 });
 
+Route::get('/admin/orders', [AdminController::class, 'orderList'])->middleware('auth');
+
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
