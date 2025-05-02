@@ -53,7 +53,7 @@ export default function OrderList() {
             <table className="w-full bg-white shadow-lg rounded-lg">
                 <thead>
                     <tr className="bg-gray-100 border-b">
-                        <th className="py-2 px-4 text-left">ID</th>
+                        <th className="py-2 px-4 text-left">Product ID</th>
                         <th className="py-2 px-4 text-left">User ID</th>
                         <th className="py-2 px-4 text-left">Acciones</th>
                     </tr>
