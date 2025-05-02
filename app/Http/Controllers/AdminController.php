@@ -13,12 +13,4 @@ class AdminController extends Controller
     {
         return Inertia::render('Administrador/Dashboard');
     }
-
-    /**
-     * Mostrar la lista de pedidos.
-     */
-    public function orderList()
-    {
-        return Inertia::render('Administrador/OrderList');
-    }
 }

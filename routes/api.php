@@ -32,10 +32,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/products', [AdminProductController::class, 'store']); // Crear producto
     Route::put('/products/{id}', [AdminProductController::class, 'update']); // Modificar producto
     Route::delete('/products/{id}', [AdminProductController::class, 'destroy']); // Eliminar producto
-
-    // Endpoint para pedidos
-    Route::get('/orders', [OrderController::class, 'apiIndex']); // Obtener pedidos
-    Route::delete('/orders/{id}', [OrderController::class, 'destroy']); // Eliminar pedido
 });
 
 Route::get('/productos/search', [ProductController::class, 'search']);
