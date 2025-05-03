@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderLineController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -23,15 +24,20 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/cart', [CartController::class, 'store']);
 
     // Endpoints para usuarios
-    Route::get('/users', [UserController::class, 'apiIndex']); // Obtener usuariosCrear usuario
-    Route::put('/users/{id}', [UserController::class, 'update']); // Modificar usuario
-    Route::delete('/users/{id}', [UserController::class, 'destroy']); // Eliminar usuario
+    Route::get('/users', [UserController::class, 'apiIndex']);
+    Route::put('/users/{id}', [UserController::class, 'update']);
+    Route::delete('/users/{id}', [UserController::class, 'destroy']);
 
     // Endpoints para productos
-    Route::get('/products', [AdminProductController::class, 'apiIndex']); // Obtener productos
-    Route::post('/products', [AdminProductController::class, 'store']); // Crear producto
-    Route::put('/products/{id}', [AdminProductController::class, 'update']); // Modificar producto
-    Route::delete('/products/{id}', [AdminProductController::class, 'destroy']); // Eliminar producto
+    Route::get('/products', [AdminProductController::class, 'apiIndex']);
+    Route::post('/products', [AdminProductController::class, 'store']);
+    Route::put('/products/{id}', [AdminProductController::class, 'update']);
+    Route::delete('/products/{id}', [AdminProductController::class, 'destroy']);
+
+    // Endpoints para orders
+    Route::post('/orders', [OrderController::class, 'store']);
+    Route::get('/orders', [OrderController::class, 'apiIndex']);
+    Route::delete('/orders/{id}', [OrderController::class, 'destroy']);
 });
 
 Route::get('/productos/search', [ProductController::class, 'search']);
