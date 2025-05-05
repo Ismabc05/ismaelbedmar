@@ -1,20 +1,62 @@
 import React, { useEffect, useState } from 'react';
 import MainLayout from "../../layouts/MainLayout";
 import { Link } from "@inertiajs/react";
+import axios from "axios";
 
 export default function Checkout() {
     const [cart, setCart] = useState([]);
     const [isSaving, setIsSaving] = useState(false);
     const [isSaved, setIsSaved] = useState(false);
     const [errors, setErrors] = useState({});
+    const [formData, setFormData] = useState({
+        name: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        birthDate: '',
+        address: '',
+        postalCode: '',
+        province: '',
+        cardNumber: '',
+        expirationDate: '',
+        cvv: '',
+    });
 
     useEffect(() => {
         const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
         setCart(storedCart);
     }, []);
 
+    const validateForm = () => {
+        let newErrors = {};
+
+        // Validar teléfono
+        if (!/^\d{9}$/.test(formData.phone)) {
+            newErrors.phone = "El teléfono debe tener exactamente 9 números.";
+        }
+
+        // Validar fecha de nacimiento (mayor de 18 años)
+        const birthDate = new Date(formData.birthDate);
+        const today = new Date();
+        const age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        if (isNaN(birthDate.getTime()) || age < 18) {
+            newErrors.birthDate = "Debes tener al menos 18 años.";
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0; // Retorna true si no hay errores
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!validateForm()) {
+            return; // Detener el envío si hay errores de validación
+        }
 
         const payload = {
             user_id: 1, // Reemplaza con el ID del usuario autenticado
@@ -46,6 +88,14 @@ export default function Checkout() {
             console.error("Error al guardar el pedido:", error);
             setIsSaving(false);
         }
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
     };
 
     return (
@@ -133,6 +183,8 @@ export default function Checkout() {
                                     name="name"
                                     required
                                     className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                                    value={formData.name}
+                                    onChange={handleInputChange}
                                 />
                             </div>
                             <div>
@@ -142,6 +194,8 @@ export default function Checkout() {
                                     name="lastName"
                                     required
                                     className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                                    value={formData.lastName}
+                                    onChange={handleInputChange}
                                 />
                             </div>
                             <div>
@@ -151,6 +205,8 @@ export default function Checkout() {
                                     name="email"
                                     required
                                     className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                                    value={formData.email}
+                                    onChange={handleInputChange}
                                 />
                                 {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
                             </div>
@@ -161,8 +217,22 @@ export default function Checkout() {
                                     name="phone"
                                     required
                                     className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                                    value={formData.phone}
+                                    onChange={handleInputChange}
                                 />
                                 {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
+                            </div>
+                            <div>
+                                <label className="block text-black font-medium mb-2">Fecha de Nacimiento</label>
+                                <input
+                                    type="date"
+                                    name="birthDate"
+                                    required
+                                    className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                                    value={formData.birthDate}
+                                    onChange={handleInputChange}
+                                />
+                                {errors.birthDate && <p className="text-red-500 text-sm">{errors.birthDate}</p>}
                             </div>
                             <div>
                                 <label className="block text-black font-medium mb-2">Dirección</label>
@@ -171,6 +241,8 @@ export default function Checkout() {
                                     name="address"
                                     required
                                     className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                                    value={formData.address}
+                                    onChange={handleInputChange}
                                 />
                             </div>
                             <div>
@@ -180,6 +252,8 @@ export default function Checkout() {
                                     name="postalCode"
                                     required
                                     className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                                    value={formData.postalCode}
+                                    onChange={handleInputChange}
                                 />
                             </div>
                             <div>
@@ -189,6 +263,8 @@ export default function Checkout() {
                                     name="province"
                                     required
                                     className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                                    value={formData.province}
+                                    onChange={handleInputChange}
                                 />
                             </div>
 
@@ -201,6 +277,8 @@ export default function Checkout() {
                                     maxLength="16"
                                     required
                                     className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                                    value={formData.cardNumber}
+                                    onChange={handleInputChange}
                                 />
                                 {errors.cardNumber && <p className="text-red-500 text-sm">{errors.cardNumber}</p>}
                             </div>
@@ -213,6 +291,8 @@ export default function Checkout() {
                                         placeholder="MM/AA"
                                         required
                                         className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                                        value={formData.expirationDate}
+                                        onChange={handleInputChange}
                                     />
                                 </div>
                                 <div className="flex-1">
@@ -223,6 +303,8 @@ export default function Checkout() {
                                         maxLength="3"
                                         required
                                         className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                                        value={formData.cvv}
+                                        onChange={handleInputChange}
                                     />
                                 </div>
                             </div>
