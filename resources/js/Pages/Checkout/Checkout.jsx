@@ -38,7 +38,7 @@ export default function Checkout() {
         // Validar fecha de nacimiento (mayor de 18 años)
         const birthDate = new Date(formData.birthDate);
         const today = new Date();
-        const age = today.getFullYear() - birthDate.getFullYear();
+        let age = today.getFullYear() - birthDate.getFullYear();
         const monthDiff = today.getMonth() - birthDate.getMonth();
         if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
             age--;
@@ -48,17 +48,18 @@ export default function Checkout() {
         }
 
         setErrors(newErrors);
-        return Object.keys(newErrors).length === 0; // Retorna true si no hay errores
+        return Object.keys(newErrors).length === 0;
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!validateForm()) {
-            return; // Detener el envío si hay errores de validación
+            return;
         }
 
-        const payload = {
+        // Construir la información a enviar en el pedido
+        const orderPayload = {
             user_id: 1, // Reemplaza con el ID del usuario autenticado
             cart: cart.map((item) => ({
                 product_id: item.id,
@@ -66,24 +67,28 @@ export default function Checkout() {
             })),
         };
 
-        console.log("Payload enviado:", payload); // Depuración
-
         try {
             setIsSaving(true);
-            const response = await axios.post("/api/orders", payload);
-            console.log("Pedido guardado:", response.data);
-
-            setIsSaving(false);
-            setIsSaved(true);
+            const response = await axios.post("/api/orders", orderPayload);
+            // Crear un objeto que incluya el pedido guardado, la información del formulario y el resumen del carrito
+            const completeInfo = {
+                order: response.data,
+                formData,
+                cart,
+            };
 
             // Limpiar el carrito
             localStorage.removeItem("cart");
             setCart([]);
 
-            // Redirigir a la página de éxito
-            setTimeout(() => {
-                window.location.href = "/payment-success";
-            }, 2000);
+            console.log("Información guardada y enviada:", completeInfo);
+
+            setIsSaving(false);
+            setIsSaved(true);
+
+            // Redirigir a PaymentSuccess pasando la información como query parameter
+            const infoQuery = encodeURIComponent(JSON.stringify(completeInfo));
+            window.location.href = `/payment-success?info=${infoQuery}`;
         } catch (error) {
             console.error("Error al guardar el pedido:", error);
             setIsSaving(false);
@@ -92,10 +97,10 @@ export default function Checkout() {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setFormData({
-            ...formData,
+        setFormData(prevData => ({
+            ...prevData,
             [name]: value,
-        });
+        }));
     };
 
     return (
@@ -110,9 +115,7 @@ export default function Checkout() {
                         >
                             <span className="mr-2">←</span> Volver a tus pedidos
                         </Link>
-
                         <h1 className="text-3xl font-bold mb-6 text-left">Resumen del Pedido</h1>
-
                         {cart.length === 0 ? (
                             <p className="text-gray-500 text-lg">No hay productos en el carrito.</p>
                         ) : (
@@ -170,12 +173,11 @@ export default function Checkout() {
                             </div>
                         )}
                     </div>
-
                     {/* Formulario combinado */}
                     <div className="bg-white p-6 rounded-lg border border-black">
                         <h2 className="text-2xl font-bold mb-4 text-center text-black">Información de Envío y Pago</h2>
                         <form onSubmit={handleSubmit} className="space-y-6">
-                            {/* Información de envío */}
+                            {/* Campos del formulario */}
                             <div>
                                 <label className="block text-black font-medium mb-2">Nombre</label>
                                 <input
@@ -267,8 +269,6 @@ export default function Checkout() {
                                     onChange={handleInputChange}
                                 />
                             </div>
-
-                            {/* Información de pago */}
                             <div>
                                 <label className="block text-black font-medium mb-2">Número de Tarjeta</label>
                                 <input

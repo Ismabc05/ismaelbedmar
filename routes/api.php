@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderLineController;
+use App\Http\Controllers\PaymentController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -38,6 +39,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/orders', [OrderController::class, 'store']);
     Route::get('/orders', [OrderController::class, 'apiIndex']);
     Route::delete('/orders/{id}', [OrderController::class, 'destroy']);
+
+    // Endpoint para enviar factura
+    Route::post('/send-invoice', [PaymentController::class, 'sendInvoice']);
 });
 
 Route::get('/productos/search', [ProductController::class, 'search']);

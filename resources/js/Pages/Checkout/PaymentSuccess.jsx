@@ -1,24 +1,56 @@
 import React, { useState } from "react";
 import MainLayout from "../../layouts/MainLayout";
+import axios from "axios";
 
 export default function PaymentSuccess() {
-    const [email, setEmail] = useState("");
-    const [message, setMessage] = useState("");
+    // Extraer la información pasada en la URL (no se muestra en pantalla)
+    const params = new URLSearchParams(window.location.search);
+    const infoParam = params.get("info");
+    let invoiceInfo = null;
+
+    try {
+        if (infoParam) {
+            invoiceInfo = JSON.parse(decodeURIComponent(infoParam));
+            console.log("Información recibida en PaymentSuccess:", invoiceInfo);
+            // Aquí podrías almacenar la información si lo requieres.
+        }
+    } catch (error) {
+        console.error("Error al parsear la información:", error);
+    }
+
+    const [showInvoiceForm, setShowInvoiceForm] = useState(false);
+    const [invoiceEmail, setInvoiceEmail] = useState("");
+    const [invoiceSent, setInvoiceSent] = useState(false);
 
     const handleSendInvoice = async () => {
-        if (!email.includes("@") || !email.endsWith(".com")) {
-            setMessage("Por favor, introduce un correo electrónico válido.");
+        if (!invoiceInfo) {
+            console.error("No hay información de factura guardada");
             return;
         }
 
-        setMessage("Enviando factura...");
+        // Filtrar la información: del carrito solo obtener nombre, descripción, cantidad, talla y precio; además los datos del formulario.
+        const filteredInvoiceData = {
+            formData: invoiceInfo.formData,
+            cart: invoiceInfo.cart.map(item => ({
+                name: item.name,
+                description: item.description, // Asegúrate de que 'description' exista en cada item
+                quantity: item.quantity,
+                size: item.size,
+                price: item.price
+            }))
+        };
+
         try {
-            // Simular envío de factura
-            await new Promise((resolve) => setTimeout(resolve, 2000));
-            setMessage("Factura enviada correctamente.");
+            const response = await axios.post("/api/send-invoice", {
+                email: invoiceEmail,
+                invoiceData: filteredInvoiceData
+            });
+            console.log("Factura enviada correctamente:", response.data);
         } catch (error) {
-            setMessage("Hubo un error al enviar la factura.");
+            console.error("Error al enviar factura:", error);
         }
+        setInvoiceSent(true);
+        setShowInvoiceForm(false);
     };
 
     return (
@@ -29,23 +61,40 @@ export default function PaymentSuccess() {
                     Tu pago ha sido procesado con éxito. Gracias por tu compra.
                 </p>
 
-                {/* Input para correo electrónico */}
                 <div className="mt-6">
-                    <input
-                        type="email"
-                        placeholder="Introduce tu correo electrónico"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="border border-gray-300 rounded-lg py-2 px-4 w-full max-w-md"
-                    />
                     <button
-                        onClick={handleSendInvoice}
-                        className="mt-4 bg-black text-white py-2 px-4 rounded-lg hover:bg-gray-800 transition"
+                        onClick={() => setShowInvoiceForm(prev => !prev)}
+                        className="mx-auto block bg-black text-white py-2 px-4 rounded-lg hover:bg-gray-900 transition active:border active:border-black"
+
                     >
-                        Enviar Factura
+                        {showInvoiceForm ? "Cancelar Factura" : "Enviar Factura por Correo"}
                     </button>
-                    {message && <p className="mt-4 text-gray-600">{message}</p>}
                 </div>
+
+                {showInvoiceForm && (
+                    <div className="mt-4">
+                        <input
+                            type="email"
+                            placeholder="Introduce tu correo electrónico"
+                            value={invoiceEmail}
+                            onChange={(e) => setInvoiceEmail(e.target.value)}
+                            className="mx-auto block w-1/2 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+
+                        />
+                        <button
+                            onClick={handleSendInvoice}
+                            className="mx-auto block mt-2 bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition active:border active:border-black"
+                        >
+                            Enviar Factura
+                        </button>
+                    </div>
+                )}
+
+                {invoiceSent && (
+                    <div className="mt-4 text-green-600 font-medium">
+                        ¡La factura ha sido enviada a tu correo!
+                    </div>
+                )}
 
                 <a
                     href="/products"
