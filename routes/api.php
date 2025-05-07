@@ -26,6 +26,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Endpoints para usuarios
     Route::get('/users', [UserController::class, 'apiIndex']);
+    Route::post('/users', [UserController::class, 'store']); // <-- NUEVA RUTA POST
     Route::put('/users/{id}', [UserController::class, 'update']);
     Route::delete('/users/{id}', [UserController::class, 'destroy']);
 

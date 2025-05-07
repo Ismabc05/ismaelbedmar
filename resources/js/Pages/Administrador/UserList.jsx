@@ -29,14 +29,43 @@ const CancelIcon = () => (
     </svg>
 );
 
+// Iconos de Ojo para contraseña
+const EyeIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+    </svg>
+);
+
+const EyeSlashIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+    </svg>
+);
+
 export default function UserList() {
     const [users, setUsers] = useState([]);
-    const [editingUserId, setEditingUserId] = useState(null); // ID del usuario que se está editando
-    const [editedUser, setEditedUser] = useState({}); // Datos del usuario editado
-    const [showModal, setShowModal] = useState(false); // Estado para mostrar/ocultar el modal
-    const [userToDelete, setUserToDelete] = useState(null); // Usuario que se va a eliminar
+    const [editingUserId, setEditingUserId] = useState(null);
+    const [editedUser, setEditedUser] = useState({});
+    const [showModal, setShowModal] = useState(false);
+    const [userToDelete, setUserToDelete] = useState(null);
 
-    // Obtener la lista de usuarios desde el backend
+    // Estados para añadir nuevo usuario
+    const [isAddingUser, setIsAddingUser] = useState(false);
+    const [newUserData, setNewUserData] = useState({
+        name: "",
+        email: "",
+        password: "",
+        password_confirmation: "",
+        rol: "usuario", // Default rol
+    });
+    const [newUserErrors, setNewUserErrors] = useState({});
+    const [successMessage, setSuccessMessage] = useState(""); // Estado para mensaje de éxito
+
+    // Estados para visibilidad de contraseña
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showNewPasswordConfirmation, setShowNewPasswordConfirmation] = useState(false);
+
     useEffect(() => {
         fetchUsers();
     }, []);
@@ -51,58 +80,152 @@ export default function UserList() {
             });
     };
 
-    // Confirmar eliminación del usuario
     const confirmDeleteUser = (id) => {
-        setUserToDelete(id); // Establecer el usuario que se va a eliminar
-        setShowModal(true); // Mostrar el modal
+        setUserToDelete(id);
+        setShowModal(true);
     };
 
-    // Eliminar un usuario
     const deleteUser = () => {
         axios.delete(`/api/users/${userToDelete}`)
             .then(() => {
-                setShowModal(false); // Ocultar el modal
-                setUserToDelete(null); // Limpiar el usuario a eliminar
-                fetchUsers(); // Actualizar la lista de usuarios
+                setShowModal(false);
+                setUserToDelete(null);
+                fetchUsers();
+                setSuccessMessage("Usuario eliminado correctamente."); // Mensaje de éxito para eliminación
+                setTimeout(() => setSuccessMessage(""), 3000); // Limpiar mensaje después de 3 segundos
             })
             .catch((error) => {
                 console.error("Error al eliminar el usuario:", error);
             });
     };
 
-    // Guardar los cambios del usuario
-    const saveUser = (id) => {
-        axios.put(`/api/users/${id}`, editedUser)
-            .then(() => {
-                setEditingUserId(null); // Salir del modo de edición
-                fetchUsers(); // Actualizar la lista de usuarios
-            })
-            .catch((error) => {
-                console.error("Error al actualizar el usuario:", error);
-            });
-    };
-
-    // Manejar cambios en los campos de entrada
-    const handleInputChange = (e) => {
+    const handleEditInputChange = (e) => {
         const { name, value } = e.target;
         setEditedUser({ ...editedUser, [name]: value });
     };
 
+    const saveEditedUser = (id) => {
+        const { password, password_confirmation, ...userDataToUpdate } = editedUser;
+        axios.put(`/api/users/${id}`, userDataToUpdate)
+            .then(() => {
+                setEditingUserId(null);
+                fetchUsers();
+                setSuccessMessage("Usuario actualizado correctamente.");
+                setTimeout(() => setSuccessMessage(""), 3000);
+            })
+            .catch((error) => {
+                console.error("Error al actualizar el usuario:", error.response ? error.response.data : error);
+            });
+    };
+
+    const handleNewUserInputChange = (e) => {
+        const { name, value } = e.target;
+        setNewUserData({ ...newUserData, [name]: value });
+        if (newUserErrors[name]) {
+            setNewUserErrors({ ...newUserErrors, [name]: null });
+        }
+        if (successMessage) setSuccessMessage(""); // Limpiar mensaje de éxito si se empieza a editar de nuevo
+    };
+
+    const saveNewUser = () => {
+        setNewUserErrors({});
+        setSuccessMessage("");
+
+        // Validaciones del lado del cliente
+        const currentErrors = {};
+        if (!newUserData.email.includes('@')) {
+            currentErrors.email = ['El correo debe contener una "@".'];
+        }
+        if (newUserData.password.length < 6) {
+            currentErrors.password = [...(currentErrors.password || []), 'La contraseña debe tener al menos 6 caracteres.'];
+        }
+        const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
+        if (!specialCharRegex.test(newUserData.password)) {
+            currentErrors.password = [...(currentErrors.password || []), 'La contraseña debe contener al menos un símbolo especial.'];
+        }
+        if (newUserData.password !== newUserData.password_confirmation) {
+            currentErrors.password = [...(currentErrors.password || []), 'La confirmación de contraseña no coincide.'];
+        }
+
+        if (Object.keys(currentErrors).length > 0) {
+            setNewUserErrors(currentErrors);
+            return;
+        }
+
+        axios.post("/api/users", newUserData)
+            .then(() => {
+                fetchUsers();
+                setIsAddingUser(false);
+                setNewUserData({ name: "", email: "", password: "", password_confirmation: "", rol: "usuario" });
+                setSuccessMessage("Usuario creado correctamente.");
+                setTimeout(() => setSuccessMessage(""), 3000);
+            })
+            .catch((error) => {
+                console.error("Error al crear el usuario:", error.response ? error.response.data : error);
+                if (error.response && error.response.data && error.response.data.errors) {
+                    // Traducir errores comunes del backend si es posible, o mostrar los que vienen
+                    const backendErrors = error.response.data.errors;
+                    const translatedErrors = {};
+                    for (const key in backendErrors) {
+                        translatedErrors[key] = backendErrors[key].map(err => {
+                            if (err.includes("The email has already been taken.")) {
+                                return "Este correo electrónico ya está registrado.";
+                            }
+                            if (err.includes("The password field confirmation does not match.")) {
+                                return "La confirmación de contraseña no coincide."; // Aunque ya lo validamos en cliente
+                            }
+                            // Añadir más traducciones si es necesario para otros errores comunes del backend
+                            return err; // Devolver el error original si no hay traducción
+                        });
+                    }
+                    setNewUserErrors(translatedErrors);
+                } else {
+                    setNewUserErrors({ form: ['No se pudo crear el usuario. Por favor, revisa los datos e inténtalo de nuevo.'] });
+                }
+            });
+    };
+
+    const cancelNewUser = () => {
+        setIsAddingUser(false);
+        setNewUserData({ name: "", email: "", password: "", password_confirmation: "", rol: "usuario" });
+        setNewUserErrors({});
+        setSuccessMessage(""); // Limpiar mensaje de éxito al cancelar
+    };
+
     return (
         <div className="min-h-screen bg-gray-200 p-8">
-            <div className="flex items-center mb-6">
-                {/* Flecha para volver al panel de administración */}
+            <div className="flex items-center justify-between mb-6">
                 <button
                     onClick={() => (window.location.href = "/admin/dashboard")}
-                    className="text-gray-800 hover:text-gray-600 transition mr-4 text-2xl"
+                    className="text-gray-800 hover:text-gray-600 transition text-3xl"
                 >
                     ←
                 </button>
-                {/* Título centrado */}
-                <h1 className="text-3xl font-bold text-gray-800 text-center flex-grow">
+                <h1 className="text-3xl font-bold text-gray-800">
                     Lista de Usuarios
                 </h1>
+                <button
+                    onClick={() => { setIsAddingUser(true); setNewUserErrors({}); setSuccessMessage(""); }}
+                    className="bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded transition"
+                >
+                    Añadir Usuario
+                </button>
             </div>
+
+            {/* Mensaje de éxito */}
+            {successMessage && (
+                <div className="mb-4 p-3 bg-green-100 text-green-700 rounded">
+                    {successMessage}
+                </div>
+            )}
+
+            {/* Mensaje de error general del formulario */}
+            {newUserErrors.form && !successMessage && (
+                <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">
+                    {newUserErrors.form.join(', ')}
+                </div>
+            )}
+
             <table className="w-full bg-white shadow-lg rounded-lg">
                 <thead>
                     <tr className="bg-gray-100 border-b">
@@ -110,89 +233,99 @@ export default function UserList() {
                         <th className="py-2 px-4 text-left">Nombre</th>
                         <th className="py-2 px-4 text-left">Correo</th>
                         <th className="py-2 px-4 text-left">Rol</th>
+                        <th className="py-2 px-4 text-left">Contraseña</th>
                         <th className="py-2 px-4 text-left">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
+                    {isAddingUser && (
+                        <tr className="border-b bg-green-50">
+                            <td className="py-2 px-4 italic text-gray-500">Nuevo</td>
+                            <td className="py-2 px-4">
+                                <input type="text" name="name" value={newUserData.name} onChange={handleNewUserInputChange} className={`border rounded px-2 py-1 w-full ${newUserErrors.name ? 'border-red-500' : ''}`} placeholder="Nombre"/>
+                                {newUserErrors.name && <p className="text-red-500 text-xs italic">{newUserErrors.name.join(', ')}</p>}
+                            </td>
+                            <td className="py-2 px-4">
+                                <input type="email" name="email" value={newUserData.email} onChange={handleNewUserInputChange} className={`border rounded px-2 py-1 w-full ${newUserErrors.email ? 'border-red-500' : ''}`} placeholder="Correo"/>
+                                {newUserErrors.email && <p className="text-red-500 text-xs italic">{newUserErrors.email.join(', ')}</p>}
+                            </td>
+                            <td className="py-2 px-4">
+                                <select name="rol" value={newUserData.rol} onChange={handleNewUserInputChange} className={`border rounded px-2 py-1 w-full ${newUserErrors.rol ? 'border-red-500' : ''}`}>
+                                    <option value="usuario">Usuario</option>
+                                    <option value="administrador">Administrador</option>
+                                </select>
+                                {newUserErrors.rol && <p className="text-red-500 text-xs italic">{newUserErrors.rol.join(', ')}</p>}
+                            </td>
+                            <td className="py-2 px-4">
+                                <div className="relative">
+                                    <input
+                                        type={showNewPassword ? "text" : "password"}
+                                        name="password"
+                                        value={newUserData.password}
+                                        onChange={handleNewUserInputChange}
+                                        className={`border rounded px-2 py-1 w-full pr-10 ${newUserErrors.password ? 'border-red-500' : ''}`} // pr-10 para espacio para el icono
+                                        placeholder="Contraseña"
+                                    />
+                                    <button type="button" onClick={() => setShowNewPassword(!showNewPassword)} className="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500 hover:text-gray-700">
+                                        {showNewPassword ? <EyeSlashIcon /> : <EyeIcon />}
+                                    </button>
+                                </div>
+                                {newUserErrors.password && <p className="text-red-500 text-xs italic mt-1">{newUserErrors.password.join(' ')}</p>}
+
+                                <div className="relative mt-1">
+                                    <input
+                                        type={showNewPasswordConfirmation ? "text" : "password"}
+                                        name="password_confirmation"
+                                        value={newUserData.password_confirmation}
+                                        onChange={handleNewUserInputChange}
+                                        className={`border rounded px-2 py-1 w-full pr-10 ${newUserErrors.password ? 'border-red-500' : ''}`} // pr-10 para espacio para el icono
+                                        placeholder="Confirmar Contraseña"
+                                    />
+                                    <button type="button" onClick={() => setShowNewPasswordConfirmation(!showNewPasswordConfirmation)} className="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500 hover:text-gray-700">
+                                        {showNewPasswordConfirmation ? <EyeSlashIcon /> : <EyeIcon />}
+                                    </button>
+                                </div>
+                            </td>
+                            <td className="py-2 px-4">
+                                <button onClick={saveNewUser} className="mr-2 text-green-600 hover:text-green-800 transition" title="Guardar Nuevo"><SaveIcon /></button>
+                                <button onClick={cancelNewUser} className="text-gray-600 hover:text-gray-800 transition" title="Cancelar"><CancelIcon /></button>
+                            </td>
+                        </tr>
+                    )}
                     {users.map((user) => (
                         <tr key={user.id} className="border-b hover:bg-gray-50">
                             <td className="py-2 px-4">{user.id}</td>
                             <td className="py-2 px-4">
                                 {editingUserId === user.id ? (
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        defaultValue={user.name}
-                                        onChange={handleInputChange}
-                                        className="border rounded px-2 py-1 w-full"
-                                    />
-                                ) : (
-                                    user.name
-                                )}
+                                    <input type="text" name="name" defaultValue={user.name} onChange={handleEditInputChange} className="border rounded px-2 py-1 w-full"/>
+                                ) : ( user.name )}
                             </td>
                             <td className="py-2 px-4">
                                 {editingUserId === user.id ? (
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        defaultValue={user.email}
-                                        onChange={handleInputChange}
-                                        className="border rounded px-2 py-1 w-full"
-                                    />
-                                ) : (
-                                    user.email
-                                )}
+                                    <input type="email" name="email" defaultValue={user.email} onChange={handleEditInputChange} className="border rounded px-2 py-1 w-full"/>
+                                ) : ( user.email )}
                             </td>
                             <td className="py-2 px-4">
                                 {editingUserId === user.id ? (
-                                    <input
-                                        type="text"
-                                        name="rol"
-                                        defaultValue={user.rol}
-                                        onChange={handleInputChange}
-                                        className="border rounded px-2 py-1 w-full"
-                                    />
-                                ) : (
-                                    user.rol
-                                )}
+                                     <select name="rol" defaultValue={user.rol} onChange={handleEditInputChange} className="border rounded px-2 py-1 w-full">
+                                        <option value="usuario">Usuario</option>
+                                        <option value="administrador">Administrador</option>
+                                    </select>
+                                ) : ( user.rol )}
+                            </td>
+                            <td className="py-2 px-4 italic text-gray-400">
+                                {editingUserId === user.id ? "No se edita aquí" : "********"}
                             </td>
                             <td className="py-2 px-4">
                                 {editingUserId === user.id ? (
                                     <>
-                                        <button
-                                            onClick={() => saveUser(user.id)}
-                                            className="mr-2 text-green-600 hover:text-green-800 transition"
-                                            title="Guardar"
-                                        >
-                                            <SaveIcon />
-                                        </button>
-                                        <button
-                                            onClick={() => setEditingUserId(null)}
-                                             className="mr-2 text-gray-600 hover:text-gray-800 transition"
-                                             title="Cancelar"
-                                        >
-                                            <CancelIcon />
-                                        </button>
+                                        <button onClick={() => saveEditedUser(user.id)} className="mr-2 text-green-600 hover:text-green-800 transition" title="Guardar"><SaveIcon /></button>
+                                        <button onClick={() => setEditingUserId(null)} className="mr-2 text-gray-600 hover:text-gray-800 transition" title="Cancelar"><CancelIcon /></button>
                                     </>
                                 ) : (
                                     <>
-                                        <button
-                                            onClick={() => {
-                                                setEditingUserId(user.id);
-                                                setEditedUser(user); // Establecer los datos actuales del usuario
-                                            }}
-                                            className="mr-2 text-blue-600 hover:text-blue-800 transition"
-                                            title="Modificar"
-                                        >
-                                            <EditIcon />
-                                        </button>
-                                        <button
-                                            onClick={() => confirmDeleteUser(user.id)}
-                                            className="mr-2 text-red-600 hover:text-red-800 transition"
-                                            title="Eliminar"
-                                        >
-                                            <DeleteIcon />
-                                        </button>
+                                        <button onClick={() => { setEditingUserId(user.id); setEditedUser(user); setSuccessMessage("");}} className="mr-2 text-blue-600 hover:text-blue-800 transition" title="Modificar"><EditIcon /></button>
+                                        <button onClick={() => confirmDeleteUser(user.id)} className="mr-2 text-red-600 hover:text-red-800 transition" title="Eliminar"><DeleteIcon /></button>
                                     </>
                                 )}
                             </td>
@@ -201,25 +334,14 @@ export default function UserList() {
                 </tbody>
             </table>
 
-            {/* Modal de confirmación */}
             {showModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                     <div className="bg-white p-6 rounded-lg shadow-lg">
                         <h2 className="text-center text-xl font-bold mb-4">Confirmar eliminación</h2>
                         <p className="mb-4">¿Estás seguro de que deseas eliminar este usuario?</p>
                         <div className="flex justify-between">
-                            <button
-                                onClick={() => setShowModal(false)}
-                                className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition"
-                            >
-                                Cancelar
-                            </button>
-                            <button
-                                onClick={deleteUser}
-                                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
-                            >
-                                Eliminar
-                            </button>
+                            <button onClick={() => setShowModal(false)} className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition">Cancelar</button>
+                            <button onClick={deleteUser} className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition">Eliminar</button>
                         </div>
                     </div>
                 </div>
