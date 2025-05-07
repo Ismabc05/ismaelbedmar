@@ -19,6 +19,6 @@ class Order extends Model
 
     public function orderLines()
     {
-        return $this->hasMany(OrderLine::class);
+        return $this->hasMany(OrderLine::class); // Asegúrate de que el namespace de OrderLine sea correcto
     }
 }

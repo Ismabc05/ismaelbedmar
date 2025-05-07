@@ -24,6 +24,6 @@ class OrderLine extends Model
      */
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class); // Asegúrate de que el namespace de Product sea correcto
     }
 }
