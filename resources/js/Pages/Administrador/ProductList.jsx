@@ -44,6 +44,7 @@ export default function ProductList() {
     const fetchProducts = () => {
         axios.get("/api/products")
             .then((response) => {
+                console.log("Productos recibidos:", response.data); // Añade este log para verificar
                 setProducts(response.data);
             })
             .catch((error) => {
@@ -85,6 +86,7 @@ export default function ProductList() {
     // Manejar cambios en los campos de entrada
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+        // Asegúrate de que los nombres aquí coincidan con los inputs y los datos del producto
         setEditedProduct({ ...editedProduct, [name]: value });
     };
 
@@ -110,8 +112,8 @@ export default function ProductList() {
                         <th className="py-2 px-4 text-left">Nombre</th>
                         <th className="py-2 px-4 text-left">Descripción</th>
                         <th className="py-2 px-4 text-left">Precio</th>
-                        <th className="py-2 px-4 text-left">Tallas</th>
-                        <th className="py-2 px-4 text-left">Colores</th>
+                        <th className="py-2 px-4 text-left">Tallas</th> {/* Cambiado de Tallas a Sizes si es necesario */}
+                        <th className="py-2 px-4 text-left">Colores</th> {/* Cambiado de Colores a Colors si es necesario */}
                         <th className="py-2 px-4 text-left">Acciones</th>
                     </tr>
                 </thead>
@@ -123,7 +125,7 @@ export default function ProductList() {
                                 {editingProductId === product.id ? (
                                     <input
                                         type="text"
-                                        name="name"
+                                        name="name" // Coincide con 'name'
                                         defaultValue={product.name}
                                         onChange={handleInputChange}
                                         className="border rounded px-2 py-1 w-full"
@@ -136,52 +138,55 @@ export default function ProductList() {
                                 {editingProductId === product.id ? (
                                     <input
                                         type="text"
-                                        name="descripcion"
-                                        defaultValue={product.descripcion}
+                                        name="description" // CORREGIDO
+                                        defaultValue={product.description} // CORREGIDO
                                         onChange={handleInputChange}
                                         className="border rounded px-2 py-1 w-full"
                                     />
                                 ) : (
-                                    product.descripcion
+                                    product.description // CORREGIDO
                                 )}
                             </td>
                             <td className="py-2 px-4">
                                 {editingProductId === product.id ? (
                                     <input
                                         type="number"
-                                        name="precio"
-                                        defaultValue={product.precio}
+                                        name="price" // CORREGIDO
+                                        defaultValue={product.price} // CORREGIDO
                                         onChange={handleInputChange}
                                         className="border rounded px-2 py-1 w-full"
                                     />
                                 ) : (
-                                    product.precio
+                                    product.price // CORREGIDO
                                 )}
                             </td>
                             <td className="py-2 px-4">
                                 {editingProductId === product.id ? (
                                     <input
                                         type="text"
-                                        name="tallas"
-                                        defaultValue={product.tallas}
+                                        name="sizes" // CORREGIDO
+                                        // Los campos JSON se devuelven como arrays/objetos, no strings directamente
+                                        // Si quieres editarlo como string, necesitarás JSON.stringify y JSON.parse
+                                        defaultValue={Array.isArray(product.sizes) ? product.sizes.join(', ') : product.sizes} // CORREGIDO y adaptado
                                         onChange={handleInputChange}
                                         className="border rounded px-2 py-1 w-full"
                                     />
                                 ) : (
-                                    product.tallas
+                                    // Mostrar como string separado por comas si es un array
+                                    Array.isArray(product.sizes) ? product.sizes.join(', ') : product.sizes // CORREGIDO y adaptado
                                 )}
                             </td>
                             <td className="py-2 px-4">
                                 {editingProductId === product.id ? (
                                     <input
                                         type="text"
-                                        name="colores"
-                                        defaultValue={product.colores}
+                                        name="colors" // CORREGIDO
+                                        defaultValue={Array.isArray(product.colors) ? product.colors.join(', ') : product.colors} // CORREGIDO y adaptado
                                         onChange={handleInputChange}
                                         className="border rounded px-2 py-1 w-full"
                                     />
                                 ) : (
-                                    product.colores
+                                    Array.isArray(product.colors) ? product.colors.join(', ') : product.colors // CORREGIDO y adaptado
                                 )}
                             </td>
                             <td className="py-2 px-4">
