@@ -31,16 +31,19 @@ export default function Favorite() {
                         {favorites.map(fav => (
                             <div
                                 key={fav.id}
-                                className="p-4 border rounded-lg shadow-md hover:shadow-lg transition"
+                                className="p-4 border rounded-lg shadow-md hover:shadow-lg transition-transform duration-300 ease-in-out hover:scale-105 cursor-pointer"
                             >
                                 <img
                                     src={fav.image || `https://picsum.photos/600?random=${Math.random()}`}
                                     alt={fav.name}
-                                    className="w-full h-96 object-cover mb-4" // Aumentar la altura a h-96
+                                    className="w-full h-96 object-cover mb-4"
                                 />
                                 <h2
-                                    className="text-lg font-semibold mb-2 text-black cursor-pointer hover:underline"
-                                    onClick={() => window.location.href = `/products/${fav.id}`}
+                                    className="text-lg font-semibold mb-2 text-black hover:underline"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        window.location.href = `/products/${fav.id}`;
+                                    }}
                                 >
                                     {fav.name}
                                 </h2>
