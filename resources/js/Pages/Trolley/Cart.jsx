@@ -25,97 +25,113 @@ export default function Cart() {
 
     return (
         <MainLayout>
-            <div className="p-6">
-                <Link
-                    href="/products"
-                    className="flex items-center mb-6 text-gray-600 hover:text-black transition"
-                >
-                    <LuArrowLeft size={28} className="mr-2" />
-                    <span>Volver a productos</span>
-                </Link>
+            <div className="p-6 min-h-screen bg-gradient-to-br from-gray-50 to-gray-200">
+                <div className="max-w-5xl mx-auto">
+                    <Link
+                        href="/products"
+                        className="inline-flex items-center mb-8 text-gray-600 hover:text-black transition font-medium"
+                    >
+                        <LuArrowLeft size={24} className="mr-2" />
+                        <span>Volver a productos</span>
+                    </Link>
 
-                <h1 className="text-3xl font-bold mb-6 text-center text-black">Mis Pedidos</h1>
+                    <h1 className="text-4xl font-extrabold mb-10 text-center text-black tracking-tight drop-shadow-sm">
+                        Mis Pedidos
+                    </h1>
 
-                {cart.length === 0 ? (
-                    <p className="text-center text-gray-500 text-lg">No tienes productos en el carrito.</p>
-                ) : (
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        {/* Lista de productos */}
-                        <div className="lg:col-span-2 space-y-6">
-                            {cart.map((item) => (
-                                <div
-                                    key={`${item.id}-${item.size}`}
-                                    className="flex items-center bg-white shadow-md rounded-lg p-4"
-                                >
-                                    <img
-                                        src={item.image || `https://picsum.photos/600?random=${Math.random()}`}
-                                        alt={item.name}
-                                        className="w-32 h-32 object-cover mr-4"
-                                    />
-                                    <div className="flex-1">
-                                        <h2
-                                            className="font-semibold text-lg text-black cursor-pointer hover:underline"
-                                            onClick={() => window.location.href = `/products/${item.id}`}
-                                        >
-                                            {item.name}
-                                        </h2>
-                                        <p className="text-sm text-gray-500">
-                                            Talla: {item.size} | Cantidad: {item.quantity}
-                                        </p>
-                                        <p className="font-bold text-gray-800 mt-2">
-                                            {new Intl.NumberFormat("es-ES", {
-                                                style: "currency",
-                                                currency: "EUR",
-                                            }).format(item.price * item.quantity)}
-                                        </p>
-                                    </div>
-                                    <button
-                                        onClick={() => removeFromCart(item.id)}
-                                        className="text-black hover:text-gray-800 transition"
-                                        title="Eliminar"
+                    {cart.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center py-24 bg-white rounded-xl shadow-lg">
+                            <p className="text-gray-400 text-5xl mb-2">🛒</p>
+                            <p className="text-gray-500 text-lg font-medium">No tienes productos en el carrito.</p>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                            {/* Lista de productos */}
+                            <div className="lg:col-span-2 space-y-6">
+                                {cart.map((item) => (
+                                    <div
+                                        key={`${item.id}-${item.size}`}
+                                        className="flex items-center bg-white shadow-xl rounded-2xl p-5 border border-gray-100 hover:shadow-2xl transition group"
                                     >
-                                        <FaTrash size={20} /> {/* Icono de papelera */}
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* Resumen del carrito */}
-                        <div className="bg-gray-100 p-6 rounded-lg shadow-md">
-                            <h2 className="text-2xl font-bold mb-4 text-black">Resumen del Pedido</h2>
-                            <div className="space-y-2">
-                                <div className="flex justify-between">
-                                    <span className="text-gray-600">Subtotal:</span>
-                                    <span className="font-bold text-gray-800">
-                                        {new Intl.NumberFormat("es-ES", {
-                                            style: "currency",
-                                            currency: "EUR",
-                                        }).format(calculateTotal())}
-                                    </span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span className="text-gray-600">Envío:</span>
-                                    <span className="font-bold text-gray-800">Gratis</span>
-                                </div>
-                                <div className="flex justify-between border-t pt-2">
-                                    <span className="text-lg font-bold">Total:</span>
-                                    <span className="text-lg font-bold text-gray-800">
-                                        {new Intl.NumberFormat("es-ES", {
-                                            style: "currency",
-                                            currency: "EUR",
-                                        }).format(calculateTotal())}
-                                    </span>
-                                </div>
+                                        <div className="relative">
+                                            <img
+                                                src={item.image || `https://picsum.photos/600?random=${Math.random()}`}
+                                                alt={item.name}
+                                                className="w-28 h-28 object-cover rounded-xl border border-gray-200 shadow-sm"
+                                            />
+                                        </div>
+                                        <div className="flex-1 ml-6">
+                                            <h2
+                                                className="font-bold text-lg text-black cursor-pointer hover:underline transition"
+                                                onClick={() => window.location.href = `/products/${item.id}`}
+                                            >
+                                                {item.name}
+                                            </h2>
+                                            <div className="flex items-center gap-4 mt-1">
+                                                <span className="text-xs bg-gray-200 text-gray-700 px-2 py-0.5 rounded-full">
+                                                    Talla: {item.size}
+                                                </span>
+                                                <span className="text-xs bg-gray-200 text-gray-700 px-2 py-0.5 rounded-full">
+                                                    Cantidad: {item.quantity}
+                                                </span>
+                                            </div>
+                                            <p className="font-bold text-xl text-gray-900 mt-3">
+                                                {new Intl.NumberFormat("es-ES", {
+                                                    style: "currency",
+                                                    currency: "EUR",
+                                                }).format(item.price * item.quantity)}
+                                            </p>
+                                        </div>
+                                        <button
+                                            onClick={() => removeFromCart(item.id)}
+                                            className="ml-4 text-gray-400 hover:text-red-500 transition p-2 rounded-full hover:bg-gray-100"
+                                            title="Eliminar"
+                                        >
+                                            <FaTrash size={20} />
+                                        </button>
+                                    </div>
+                                ))}
                             </div>
-                            <Link
-                                href="/checkout"
-                                className="w-full bg-black text-white py-3 rounded-md text-lg font-semibold hover:bg-gray-800 transition mt-6 text-center block"
-                            >
-                                Proceder al Pago
-                            </Link>
+
+                            {/* Resumen del carrito */}
+                            <div className="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 flex flex-col justify-between min-h-[340px]">
+                                <div>
+                                    <h2 className="text-2xl font-bold mb-6 text-black text-center">Resumen del Pedido</h2>
+                                    <div className="space-y-4">
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-gray-500">Subtotal</span>
+                                            <span className="font-bold text-gray-900">
+                                                {new Intl.NumberFormat("es-ES", {
+                                                    style: "currency",
+                                                    currency: "EUR",
+                                                }).format(calculateTotal())}
+                                            </span>
+                                        </div>
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-gray-500">Envío</span>
+                                            <span className="font-bold text-green-600">Gratis</span>
+                                        </div>
+                                        <div className="flex justify-between items-center border-t pt-4 mt-4">
+                                            <span className="text-lg font-bold">Total</span>
+                                            <span className="text-lg font-bold text-black">
+                                                {new Intl.NumberFormat("es-ES", {
+                                                    style: "currency",
+                                                    currency: "EUR",
+                                                }).format(calculateTotal())}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <Link
+                                    href="/checkout"
+                                    className="w-full bg-black text-white py-3 rounded-lg text-lg font-semibold hover:bg-gray-800 transition mt-8 text-center block shadow-md"
+                                >
+                                    Proceder al Pago
+                                </Link>
+                            </div>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
         </MainLayout>
     );
