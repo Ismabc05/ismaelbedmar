@@ -87,7 +87,7 @@ export default function Show({ product }) {
         )}
       </AnimatePresence>
 
-      <div className="flex flex-col items-center bg-gray-100 min-h-[calc(100vh-81px)] p-6">
+      <div className="flex flex-col items-center min-h-[calc(100vh-81px)] p-6">
         <Link
           href="/products"
           className="self-start mb-4 text-gray-600 hover:text-black flex items-center"
