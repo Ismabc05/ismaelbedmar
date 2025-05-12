@@ -64,30 +64,36 @@ export default function Checkout() {
             cart: cart.map((item) => ({
                 product_id: item.id,
                 quantity: item.quantity,
+                size: item.size,
+                name: item.name,
+                price: item.price,
+                image: item.image,
             })),
+            formData,
+            date: new Date().toISOString(),
         };
 
         try {
             setIsSaving(true);
             const response = await axios.post("/api/orders", orderPayload);
-            // Crear un objeto que incluya el pedido guardado, la información del formulario y el resumen del carrito
-            const completeInfo = {
-                order: response.data,
-                formData,
-                cart,
-            };
+
+            // Guardar el pedido localmente
+            const localOrders = JSON.parse(localStorage.getItem("orders")) || [];
+            localOrders.push(orderPayload);
+            localStorage.setItem("orders", JSON.stringify(localOrders));
 
             // Limpiar el carrito
             localStorage.removeItem("cart");
             setCart([]);
-
-            console.log("Información guardada y enviada:", completeInfo);
-
             setIsSaving(false);
             setIsSaved(true);
 
             // Redirigir a PaymentSuccess pasando la información como query parameter
-            const infoQuery = encodeURIComponent(JSON.stringify(completeInfo));
+            const infoQuery = encodeURIComponent(JSON.stringify({
+                order: response.data,
+                formData,
+                cart,
+            }));
             window.location.href = `/payment-success?info=${infoQuery}`;
         } catch (error) {
             console.error("Error al guardar el pedido:", error);
