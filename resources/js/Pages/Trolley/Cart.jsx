@@ -25,7 +25,7 @@ export default function Cart() {
 
     return (
         <MainLayout>
-            <div className="p-6 min-h-screen bg-gradient-to-br from-gray-50 to-gray-200">
+            <div className="p-6 min-h-screen">
                 <div className="max-w-5xl mx-auto">
                     <Link
                         href="/products"
@@ -45,9 +45,9 @@ export default function Cart() {
                             <p className="text-gray-500 text-lg font-medium">No tienes productos en el carrito.</p>
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                        <div className="flex flex-col lg:flex-row gap-10">
                             {/* Lista de productos */}
-                            <div className="lg:col-span-2 space-y-6">
+                            <div className="flex-1 space-y-6">
                                 {cart.map((item) => (
                                     <div
                                         key={`${item.id}-${item.size}`}
@@ -94,7 +94,7 @@ export default function Cart() {
                             </div>
 
                             {/* Resumen del carrito */}
-                            <div className="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 flex flex-col justify-between min-h-[340px]">
+                            <div className="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 flex flex-col justify-between min-h-[340px] w-full lg:w-[350px] mt-10 lg:mt-0">
                                 <div>
                                     <h2 className="text-2xl font-bold mb-6 text-black text-center">Resumen del Pedido</h2>
                                     <div className="space-y-4">
