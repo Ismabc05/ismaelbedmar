@@ -139,7 +139,7 @@ export default function Checkout() {
                                             className="flex items-center bg-gray-50 rounded-xl p-4 border border-gray-100 shadow group hover:shadow-lg transition"
                                         >
                                             <img
-                                                src={item.image || `https://picsum.photos/600?random=${Math.random()}`}
+                                                src={Array.isArray(item.images) ? item.images[0] : JSON.parse(item.images)[0]}
                                                 alt={item.name}
                                                 className="w-20 h-20 object-cover rounded-lg border border-gray-200 shadow-sm"
                                             />

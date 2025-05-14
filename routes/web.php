@@ -8,7 +8,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\PasswordResetController; // Actualizar la importación
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminProductController;
@@ -26,9 +26,7 @@ Route::prefix('users')->group(function () {
     Route::post('/password/update', [LoginController::class, 'updatePassword'])->name('users.update_password');
     Route::post('/logout', [LoginController::class, 'logout'])->name('users.logout');
 
-    // Ruta para mostrar la página de restablecimiento de contraseña
     Route::get('/password-reset', [PasswordResetController::class, 'showPasswordReset'])->name('users.password.reset');
-    // Ruta para enviar el correo de restablecimiento de contraseña
     Route::post('/password-reset', [PasswordResetController::class, 'sendResetEmail'])->name('users.password.sendReset');
 });
 
@@ -67,7 +65,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/users/password/update', [LoginController::class, 'editPassword'])->name('users.password.edit');
     Route::post('/users/password/update', [LoginController::class, 'updatePassword'])->name('users.password.update');
 
-    // Routes for user-specific cart and favorites
     Route::get('/cart', [CartController::class, 'Cart'])->name('cart.index');
     Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
     Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
@@ -76,7 +73,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/favourites', [FavouriteController::class, 'store'])->name('favourites.store');
     Route::delete('/favourites/{id}', [FavouriteController::class, 'destroy'])->name('favourites.destroy');
 
-    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 });
 
 Route::middleware(['auth', AdminMiddleware::class])->group(function () {

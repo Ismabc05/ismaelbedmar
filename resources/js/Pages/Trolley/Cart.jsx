@@ -77,7 +77,7 @@ export default function Cart() {
                                             >
                                                 <div className="relative">
                                                     <img
-                                                        src={item.image || `https://picsum.photos/600?random=${Math.random()}`}
+                                                        src={Array.isArray(item.images) ? item.images[0] : JSON.parse(item.images)[0]}
                                                         alt={item.name}
                                                         className="w-28 h-28 object-cover rounded-xl border border-gray-200 shadow-sm"
                                                     />
