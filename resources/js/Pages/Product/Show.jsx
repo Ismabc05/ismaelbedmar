@@ -79,7 +79,7 @@ export default function Show({ product }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9, transition: { duration: 0.2 } }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className={`fixed top-5 right-5 z-50 flex items-center p-3 rounded-lg shadow-xl text-sm font-medium
+            className={`fixed top-24 right-5 z-50 flex items-center p-3 rounded-lg shadow-xl text-sm font-medium
                         ${notification.includes('Por favor') || notification.includes('Error') ? 'bg-red-500 text-white' : 'bg-green-500 text-white'}`}
           >
             <span>{notification}</span>
