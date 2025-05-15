@@ -50,20 +50,15 @@ export default function Dashboard() {
                         <p>Gestión de productos disponibles en la tienda</p>
                     </button>
                     {/* Cuadrado 3 */}
-                    <button
-                         onClick={() => (window.location.href = "/admin/orders")}
-                        className="bg-white shadow-lg rounded-lg p-6 text-center hover:shadow-xl transition w-[300px] h-40 border hover:border-black hover:border-2"
-                    >
-                        <h2 className="text-2xl font-bold text-gray-800 mb-2">Pedidos</h2>
-                        <p>Revisión y control de pedidos realizados</p>
-                    </button>
-                    {/* Cuadrado 4 */}
-                    <button
-                        className="bg-white shadow-lg rounded-lg p-6 text-center hover:shadow-xl transition w-[300px] h-40 border hover:border-black hover:border-2"
-                    >
-                        <h2 className="text-2xl font-bold text-gray-800 mb-2">Pagos</h2>
-                        <p>Historial y verificación de pagos efectuados</p>
-                    </button>
+                    <div className="col-span-2 flex justify-center">
+                        <button
+                            onClick={() => (window.location.href = "/admin/orders")}
+                            className="bg-white shadow-lg rounded-lg p-6 text-center hover:shadow-xl transition w-[300px] h-40 border hover:border-black hover:border-2"
+                        >
+                            <h2 className="text-2xl font-bold text-gray-800 mb-2">Pedidos</h2>
+                            <p>Revisión y control de pedidos realizados</p>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
