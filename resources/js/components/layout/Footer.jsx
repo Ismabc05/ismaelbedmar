@@ -5,6 +5,8 @@ export default function Footer() {
           width: "100%",
           height: "80px",
           backgroundColor: "white",
+          borderTop: "1px solid #ccc", // Gray line at the top
+          paddingTop: "10px", // Added spacing above the footer content
         }}
       >
         <div style={containerStyle}>

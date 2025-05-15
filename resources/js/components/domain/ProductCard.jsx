@@ -15,11 +15,11 @@ export default function ProductCard({ product }) {
             </div>
 
             <Link href={`/products/${product.id}`} className="text-center group-hover:underline">
-                <h2>{product.name}</h2>
+                <h2 style={{ fontSize: '1rem' }}>{product.name}</h2>
             </Link>
 
             <div className="text-center">
-                <span className="text-[13px]">{new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(product.price)}</span>
+                <span className="text-[13px]" style={{ fontSize: '0.75rem' }}>{new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(product.price)}</span>
             </div>
         </div>
     );
