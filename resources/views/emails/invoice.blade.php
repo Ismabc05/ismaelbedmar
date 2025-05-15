@@ -60,8 +60,8 @@
                         @php $granTotal += ($item['quantity'] ?? 0) * ($item['price'] ?? 0); @endphp
                     @endforeach
                     <tr class="total-row">
-                        <td colspan="5" style="text-align: right;"><strong>Total General:</strong></td>
-                        <td><strong>{{ number_format($granTotal, 2, ',', '.') }} €</strong></td>
+                        <td colspan="5" style="text-align: right; width: 70%;"><strong>Total General:</strong></td>
+                        <td style="width: 30%;"><strong>{{ number_format($granTotal, 2, ',', '.') }} €</strong></td>
                     </tr>
                 </tbody>
             </table>
@@ -70,7 +70,7 @@
         @endif
 
         <p style="margin-top: 30px;">Gracias por tu compra,</p>
-        <p>Tu Empresa</p>
+        <p>Ismael Bedmar</p>
     </div>
 </body>
 </html>

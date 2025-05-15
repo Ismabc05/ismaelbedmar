@@ -172,7 +172,6 @@ export default function Cart() {
                                             <div className="space-y-2">
                                                 {order.cart.map((item, i) => (
                                                     <div key={i} className="flex items-center gap-4">
-                                                        <img src={item.image || `https://picsum.photos/600?random=${i}`} alt={item.name} className="w-14 h-14 object-cover rounded-lg border" />
                                                         <div className="flex-1">
                                                             <div className="font-semibold">{item.name}</div>
                                                             <div className="text-xs text-gray-500">Talla: {item.size} | Cantidad: {item.quantity}</div>
