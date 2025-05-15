@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Inertia } from '@inertiajs/inertia';
-import { LuArrowLeft } from "react-icons/lu";
+import { LuArrowLeft, LuEye, LuEyeOff } from "react-icons/lu";
 import { Link } from '@inertiajs/react';
 
 const ChangePassword = ({ user, success, errors }) => {
@@ -10,6 +10,8 @@ const ChangePassword = ({ user, success, errors }) => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [displayErrors, setDisplayErrors] = useState({});
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   useEffect(() => {
     if (errors && Object.keys(errors).length > 0) {
@@ -60,36 +62,52 @@ const ChangePassword = ({ user, success, errors }) => {
             {success && <div className="mb-4 p-2 bg-green-200 text-green-800 rounded">{success}</div>}
             <p className="mb-6 text-center">Bienvenid@, {user?.name}</p>
             <form onSubmit={handleSubmit}>
-              <div className="mb-4">
+              <div className="mb-4 relative">
                 <label htmlFor="new_password" className="block text-gray-700 mb-2">
                   Nueva Contraseña
                 </label>
                 <input
-                  type="password"
+                  type={showNewPassword ? "text" : "password"}
                   name="new_password"
                   id="new_password"
                   value={formData.new_password}
                   onChange={handleChange}
-                  className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                  className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black pr-10"
                   required
                 />
+                <span
+                  onClick={() => setShowNewPassword(!showNewPassword)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                  style={{ top: '36px' }}
+                  title={showNewPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                >
+                  {showNewPassword ? <LuEyeOff size={20} className="text-gray-500" /> : <LuEye size={20} className="text-gray-500" />}
+                </span>
                 {displayErrors.new_password && (
                   <p className="text-red-500 text-sm mt-1">{displayErrors.new_password}</p>
                 )}
               </div>
-              <div className="mb-6">
+              <div className="mb-6 relative">
                 <label htmlFor="new_password_confirmation" className="block text-gray-700 mb-2">
                   Confirmar Nueva Contraseña
                 </label>
                 <input
-                  type="password"
+                  type={showConfirmPassword ? "text" : "password"}
                   name="new_password_confirmation"
                   id="new_password_confirmation"
                   value={formData.new_password_confirmation}
                   onChange={handleChange}
-                  className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                  className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black pr-10"
                   required
                 />
+                <span
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                  style={{ top: '36px' }}
+                  title={showConfirmPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                >
+                  {showConfirmPassword ? <LuEyeOff size={20} className="text-gray-500" /> : <LuEye size={20} className="text-gray-500" />}
+                </span>
                 {displayErrors.new_password_confirmation && (
                   <p className="text-red-500 text-sm mt-1">{displayErrors.new_password_confirmation}</p>
                 )}
