@@ -83,6 +83,20 @@ export default function Ismael() {
         height: '150px',
         objectFit: 'cover',
         zIndex: 3,
+        transition: 'transform 0.3s ease', // Smooth transition for scaling
+        cursor: 'pointer', // Pointer cursor to indicate clickability
+    };
+
+    const handleLogoHover = (e) => {
+        e.target.style.transform = 'translate(-50%, -50%) scale(1.1)'; // Enlarge the logo on hover
+    };
+
+    const handleLogoLeave = (e) => {
+        e.target.style.transform = 'translate(-50%, -50%) scale(1)'; // Reset the logo size on mouse leave
+    };
+
+    const handleLogoClick = () => {
+        window.location.href = '/users'; // Redirect to the desired view on click
     };
 
     return (
@@ -91,34 +105,21 @@ export default function Ismael() {
                 <div style={backgroundStyle}></div>
                 <img src="/images/mujer-removebg-preview.png" alt="Sección Izquierda" style={imageStyle} />
                 <div style={textStyle}>ROPA MUJER</div>
-                <div
-                    style={linkStyle}
-                    onMouseEnter={handleLinkHover}
-                    onMouseLeave={handleLinkLeave}
-                    onClick={handleDiscoverClick} // Redirige al hacer clic
-                >
-                    Descubrir
-                </div>
             </div>
 
             <img
                 src="/images/logo1_1.png"
                 alt="Imagen Central"
                 style={centralImageStyle}
+                onMouseEnter={handleLogoHover}
+                onMouseLeave={handleLogoLeave}
+                onClick={handleLogoClick} // Redirect on click
             />
 
             <div style={sectionStyle}>
                 <div style={backgroundStyle}></div>
                 <img src="/images/hombre.png" alt="Sección Derecha" style={imageStyle} />
                 <div style={textStyle}>ROPA HOMBRE</div>
-                <div
-                    style={linkStyle}
-                    onMouseEnter={handleLinkHover}
-                    onMouseLeave={handleLinkLeave}
-                    onClick={handleDiscoverClick} // Redirige al hacer clic
-                >
-                    Descubrir
-                </div>
             </div>
         </div>
     );
