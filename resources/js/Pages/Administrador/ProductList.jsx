@@ -85,26 +85,19 @@ export default function ProductList() {
 
     const saveEditedProduct = (id) => {
         const productDataToSave = { ...editedProduct };
+
+        // Exclude the 'images' field if it hasn't been modified
+        if (!editedProduct.images) {
+            delete productDataToSave.images;
+        }
+
         if (typeof productDataToSave.sizes === 'string') {
             productDataToSave.sizes = productDataToSave.sizes.split(',').map(s => s.trim()).filter(s => s);
-        } else if (!Array.isArray(productDataToSave.sizes)) {
-            productDataToSave.sizes = [];
         }
 
         if (typeof productDataToSave.colors === 'string') {
             productDataToSave.colors = productDataToSave.colors.split(',').map(s => s.trim()).filter(s => s);
-        } else if (!Array.isArray(productDataToSave.colors)) {
-            productDataToSave.colors = [];
         }
-        // Asegurar que images sea un array JSON válido, incluso si está vacío o es un string
-        try {
-            let imagesArray = typeof productDataToSave.images === 'string' ? JSON.parse(productDataToSave.images) : productDataToSave.images;
-            if (!Array.isArray(imagesArray)) imagesArray = [];
-            productDataToSave.images = JSON.stringify(imagesArray);
-        } catch (e) {
-            productDataToSave.images = '[]'; // Default a array vacío si hay error de parseo
-        }
-
 
         axios.put(`/api/products/${id}`, productDataToSave)
             .then(() => {
@@ -112,7 +105,7 @@ export default function ProductList() {
                 fetchProducts();
             })
             .catch((error) => {
-                console.error("Error al actualizar el producto:", error);
+                console.error("Error al guardar el producto editado:", error);
             });
     };
 

@@ -40,7 +40,14 @@ class AdminProductController extends Controller
     {
         try {
             $product = Product::findOrFail($id); // Buscar el producto por ID
-            $product->update($request->all()); // Actualizar los datos del producto
+
+            // Exclude the 'images' field if it's not present in the request
+            $dataToUpdate = $request->except(['images']);
+            if ($request->has('images')) {
+                $dataToUpdate['images'] = $request->input('images');
+            }
+
+            $product->update($dataToUpdate); // Actualizar los datos del producto
             return response()->json($product, 200); // Devolver el producto actualizado
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error al actualizar el producto'], 500);
