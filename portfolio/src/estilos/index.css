@@ -5,6 +5,7 @@ body {
   height: 100%;
   justify-content: space-around;
   font-family: 'Inter', system-ui, sans-serif; /* ✔ forma correcta */
+  background-color: #fbfbfb;
 }
 
 #root {
