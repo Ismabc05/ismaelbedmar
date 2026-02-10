@@ -13,3 +13,7 @@ body {
     display: flex;
     flex-direction: column; /* Para poder apilar navbar y contenido debajo */
 }
+
+html{
+  scroll-behavior: smooth;
+}

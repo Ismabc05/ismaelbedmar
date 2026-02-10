@@ -10,17 +10,17 @@
     color: #3bb5f6;
 }
 
-.titulo-inicio{
+.titulo-nombre{
     font-size: 50px;
 }
 
-.segundo-titulo-inicio{
+.titulo-cargo{
     margin-top: -21px;
     font-size: 25px;
     color: #3c3c3c;
 }
 
-.tercer-titulo-inicio{
+.titulo-frase{
     margin-top: -10px;
     color:  #3c3c3c;
 }

@@ -3,12 +3,12 @@ import '../estilos/inicio.css';
 
 function Inicio() {
     return(
-        <section className="section-inicio">
+        <section className="section-inicio" id="inicio">
 
             <div className="titulos-inicio">
-                <h1 className="titulo-inicio">Hola, soy <span className="nombre">Ismael Bedmar</span></h1>
-                <p className="segundo-titulo-inicio">Desarrollador web junior</p>
-                <p className="tercer-titulo-inicio">Apasionado por crear experiencias web limpias y funcionales</p>
+                <h1 className="titulo-nombre">Hola, soy <span className="nombre">Ismael Bedmar</span></h1>
+                <p className="titulo-cargo">Desarrollador web junior</p>
+                <p className="titulo-frase">Apasionado por crear experiencias web limpias y funcionales</p>
             </div>
 
             <div className="cuadrado">
