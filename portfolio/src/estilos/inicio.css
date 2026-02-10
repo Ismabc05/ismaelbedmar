@@ -1,6 +1,7 @@
 .section-inicio{
     display: flex;
     flex-direction: column;
+    background: #f8fbfd;
     align-items: center;
     text-align: center;
     margin-top: 150px;

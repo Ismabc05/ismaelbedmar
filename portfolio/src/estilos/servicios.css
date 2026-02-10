@@ -1,0 +1,105 @@
+.seccion-servicios {
+  padding: 80px 20px;
+  background: #f8fbfd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.titulos-servicios h2 {
+    font-size: 30px;
+  margin-bottom: 30px;
+}
+
+.titulos-servicios p {
+  max-width: 650px;
+  color: #555;
+  margin-bottom: 50px;
+}
+
+/* GRID */
+.rectangulos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  width: 100%;
+  max-width: 1100px;
+}
+
+/* TARJETAS */
+.contenido-rectangulos {
+  background: white;
+  border-radius: 14px;
+  padding: 30px;
+  text-align: left;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  transition: all 0.25s ease;
+}
+
+.contenido-rectangulos:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1);
+}
+
+/* ICONO */
+.icono-servicio {
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+
+/* TITULO TARJETA */
+.parrafos-rectangualos p:first-child {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.parrafos-rectangualos p:last-child {
+  color: #666;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+/* LISTA */
+.lista-rectngulos p {
+  font-size: 13px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.lista-rectngulos ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.lista-rectngulos li {
+  margin-bottom: 6px;
+  padding-left: 20px;
+  position: relative;
+  font-size: 11px;
+  color: #444;
+}
+
+.lista-rectngulos li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  color: #2bb3f3;
+  font-size: 11px;
+}
+
+/* LINK FINAL */
+.solicitar-info {
+  color: #2bb3f3;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  display: inline-block;
+}
+
+.solicitar-info:hover {
+  text-decoration: underline;
+}
