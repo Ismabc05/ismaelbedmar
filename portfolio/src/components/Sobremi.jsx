@@ -1,6 +1,7 @@
 import React from "react";
 import "../estilos/sobremi.css";
 import foto from "../assets/foto-perfil.jpeg";
+import { GrDocumentDownload } from "react-icons/gr";
 
 function Sobremi() {
     return (
@@ -60,7 +61,12 @@ function Sobremi() {
 
                     {/* Botón AQUÍ */}
                     <div className="contenedor-boton">
-                        <button className="boton-cv">Descargar CV</button>
+                        <button className="boton-cv" onClick={() => {
+                            const link = document.createElement("a"); // crea una a
+                            link.href = "/Currículum.pdf" // le decimos la ruta
+                            link.download = "MiCV.pdf" // el nommbre de la descarga
+                            link.click(); // Disparar la descarga
+                        }}> <GrDocumentDownload className="icono-descargar" /> Descargar CV</button>
                     </div>
 
                 </div>
