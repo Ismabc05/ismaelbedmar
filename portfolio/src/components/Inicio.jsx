@@ -16,8 +16,14 @@ function Inicio() {
             </div>
 
             <div className="contenedor-botones">
-                <button className="boton1">Trabajemos juntos</button>
-                <button className="boton2">Conoce más sobre mi</button>
+                <button className="boton1" onClick={() => {
+                    const seccionContacto = document.getElementById("contacto")
+                    seccionContacto.scrollIntoView({behavior: "smooth"})
+                }}>Trabajemos juntos</button>
+                <button className="boton2" onClick={() => {
+                    const seccionSobreMi = document.getElementById("sobremi")
+                    seccionSobreMi.scrollIntoView({behavior: "smooth"})
+                }}>Conoce más sobre mi</button>
             </div>
             
             <div className="contenedor-tecno">

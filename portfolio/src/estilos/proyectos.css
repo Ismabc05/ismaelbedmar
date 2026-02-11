@@ -37,7 +37,7 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
 
-  min-height: 360px; /* Antes: 430px */
+  min-height: 300px; /* Antes: 430px */
   display: flex;
   flex-direction: column;
 }

@@ -6,6 +6,7 @@ import { Inicio } from "./components/Inicio"
 import { Sobremi } from "./components/Sobremi"
 import { Servicios } from './components/Servicios'
 import { Proyectos } from './components/Proyectos'
+import { Contacto } from './components/Contacto'
 
 function App() {
   
@@ -17,6 +18,7 @@ function App() {
       <Sobremi/>
       <Servicios/>
       <Proyectos/>
+      <Contacto/>
     </>
   )
 }

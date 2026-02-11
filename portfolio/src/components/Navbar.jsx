@@ -3,8 +3,10 @@ import '../estilos/navbar.css';
 
 function Navbar() {
     return (
-        <nav className="navbar">
-            <div className="logo">Ismael Bedmar</div>
+        <nav className="navbar"> 
+            <div className="logo" onClick={() => {
+                window.location.reload()
+            }}>Ismael Bedmar</div>
             <ul className="lista-navbar">
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#sobremi">Sobre mi</a></li>

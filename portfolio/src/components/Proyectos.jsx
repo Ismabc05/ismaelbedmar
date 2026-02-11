@@ -52,13 +52,17 @@ function Proyectos() {
       <div className="more-projects">
         <h3 className="more-projects--title">¿Quieres ver más proyectos?</h3>
         <p className="more-projects--text">
-            Estos son solo algunos ejemplos. Tengo experiencia en una amplia variedad de sectores
-            y tecnologías. Puedo compartir más detalles y casos de estudio específicos según tu
-            área de interés.
+            Estos son solo algunos ejemplos. Tengo muchas mas practicas realizadas
+            durante mi proceso de aprendizaje
         </p>
         <div className="more-projects--actions">
-            <button className="btn btn--primary">Ver más proyectos</button>
-            <button className="btn btn--ghost">Github</button>
+            <button className="btn btn--primary" onClick={() => {
+              const seccionContacto = document.getElementById("contacto")
+              seccionContacto.scrollIntoView({behavior: "smooth"})
+            }}>Ver más proyectos</button>
+            <button className="btn btn--ghost" onClick={() =>{
+              window.open("https://github.com/Ismabc05", "_blank", "noopener,noreferrer");
+            }}>Github</button>
         </div>
         </div>
 

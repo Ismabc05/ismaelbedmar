@@ -28,7 +28,10 @@ function Servicios () {
                             <li>JavaScript</li>
                         </ul>
                     </div>
-                    <p className="solicitar-info">Solicitar información →</p>
+                    <p className="solicitar-info" onClick={() => {
+                        const seccionContacto = document.getElementById("contacto")
+                        seccionContacto.scrollIntoView({behavior: "smooth"})
+                    }}>Solicitar información →</p>
                 </div>
 
                 <div className="contenido-rectangulos">
@@ -46,7 +49,10 @@ function Servicios () {
                             <li>Prototipos funcionales</li>
                         </ul>
                     </div>
-                    <p className="solicitar-info">Solicitar información →</p>
+                    <p className="solicitar-info" onClick={() => {
+                        const seccionContacto = document.getElementById("contacto")
+                        seccionContacto.scrollIntoView({behavior: "smooth"})
+                    }}>Solicitar información →</p>
                 </div>
 
                 <div className="contenido-rectangulos">
@@ -64,7 +70,10 @@ function Servicios () {
                             <li>Optimización</li>
                         </ul>
                     </div>
-                    <p className="solicitar-info">Solicitar información →</p>
+                    <p className="solicitar-info" onClick={() => {
+                        const seccionContacto = document.getElementById("contacto")
+                        seccionContacto.scrollIntoView({behavior: "smooth"})
+                    }}>Solicitar información →</p>
                 </div>
 
             </div>
