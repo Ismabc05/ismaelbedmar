@@ -17,7 +17,7 @@ function Servicios () {
                     <div className="icono-servicio">🌐</div>
                     <div className="parrafos-rectangualos">
                         <p>Desarrollo Web</p>
-                        <p>Aplicaciones web modernas y escalables con las últimas tecnologías</p>
+                        <p>Creación de sitios web y aplicaciones web sencillas, con enfoque en funcionalidad y experiencia de usuario.</p>
                     </div>
                     <div className="lista-rectngulos">
                         <p>Incluye:</p>
@@ -25,7 +25,7 @@ function Servicios () {
                             <li>React</li>
                             <li>API Rest</li>
                             <li>Progressive Web Apps</li>
-                            <li>Laravel</li>
+                            <li>JavaScript</li>
                         </ul>
                     </div>
                     <p className="solicitar-info">Solicitar información →</p>
@@ -35,15 +35,15 @@ function Servicios () {
                     <div className="icono-servicio">🎨</div>
                     <div className="parrafos-rectangualos">
                         <p>Diseño & Experiencia de Usuario</p>
-                        <p>Diseño de interfaces intuitivas y atractivas</p>
+                        <p>Diseño de interfaces básicas y prototipos interactivos, centrados en la usabilidad y la experiencia del usuario.</p>
                     </div>
                     <div className="lista-rectngulos">
                         <p>Incluye:</p>
                         <ul>
                             <li>UI Design</li>
-                            <li>UX Research</li>
-                            <li>Wireframes</li>
-                            <li>Prototipos</li>
+                            <li>UX Research inicial</li>
+                            <li>Wireframes simpless</li>
+                            <li>Prototipos funcionales</li>
                         </ul>
                     </div>
                     <p className="solicitar-info">Solicitar información →</p>
@@ -53,14 +53,14 @@ function Servicios () {
                     <div className="icono-servicio">⚙️</div>
                     <div className="parrafos-rectangualos">
                         <p>Automatización</p>
-                        <p>Optimización de procesos digitales y flujos de trabajo</p>
+                        <p>Pequeñas soluciones para automatizar tareas repetitivas y mejorar flujos de trabajo de manera práctica.</p>
                     </div>
                     <div className="lista-rectngulos">
                         <p>Incluye:</p>
                         <ul>
                             <li>APIs</li>
-                            <li>Integraciones</li>
-                            <li>Scripts</li>
+                            <li>Node.js básico</li>
+                            <li>Scripts simples</li>
                             <li>Optimización</li>
                         </ul>
                     </div>

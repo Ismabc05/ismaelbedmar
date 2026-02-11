@@ -5,6 +5,7 @@ import { Navbar } from "./components/Navbar"
 import { Inicio } from "./components/Inicio"
 import { Sobremi } from "./components/Sobremi"
 import { Servicios } from './components/Servicios'
+import { Proyectos } from './components/Proyectos'
 
 function App() {
   
@@ -15,6 +16,7 @@ function App() {
       <Inicio/>
       <Sobremi/>
       <Servicios/>
+      <Proyectos/>
     </>
   )
 }
