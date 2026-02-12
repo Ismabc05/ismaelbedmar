@@ -1,12 +1,10 @@
-/* Contenedor principal de la navbar */
 .navbar {
-    position: sticky;
+    position: sticky; /* Tanto sticky como top 0 hace que mi navbar aparezca incluso cuando baje*/
     top: 0;
     display: flex;
     align-items: center;
-    padding: 10px 20px;
-    height: 25px;
-    color: #000;
+    padding: 10px 20px; /* Espacio entre el borde y el contenido */
+    height: 25px; /* Define que tan alto es el elemento en total*/
     background-color: white;
     border-bottom: 1px solid #cccccc; 
     z-index: 1000;
@@ -26,9 +24,9 @@
 }
 
 .lista-navbar {
-    position: absolute;
+    position: absolute; /* Tanto absolute como left 50% sirve para que mi lista de item este en el centro*/
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%); /* Desplaza el elemento un 50% hacia la izquierda de su propio tamaño */
     display: flex;
     gap: 40px;
     list-style: none;

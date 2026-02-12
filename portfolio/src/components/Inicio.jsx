@@ -5,7 +5,7 @@ function Inicio() {
     return(
         <section className="section-inicio" id="inicio">
 
-            <div className="titulos-inicio">
+            <div className="contenedor-inicio">
                 <h1 className="titulo-nombre">Hola, soy <span className="nombre">Ismael Bedmar</span></h1>
                 <p className="titulo-cargo">Desarrollador web junior</p>
                 <p className="titulo-frase">Apasionado por crear experiencias web limpias y funcionales</p>

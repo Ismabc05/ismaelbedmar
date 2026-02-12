@@ -8,8 +8,8 @@
 }
 
 .titulos-servicios h2 {
-    font-size: 30px;
-    margin-bottom: 30px;
+  font-size: 30px;
+  margin-bottom: 30px;
 }
 
 .titulos-servicios p {
@@ -20,7 +20,7 @@
 
 /* GRID */
 .rectangulos {
-  display: grid;
+  display: grid; /* se usa cuando flex se queda corta */
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
   gap: 30px;
   width: 100%;
@@ -40,7 +40,6 @@ Cada columna se expande para llenar el espacio restante proporcionalmente (1fr).
 Si la pantalla se hace más pequeña, automáticamente bajará a 2 columnas, luego a 1 columna, adaptándose a cualquier tamaño.
 */
 
-/* TARJETAS */
 .contenido-rectangulos {
   background: white;
   border-radius: 14px;
@@ -55,13 +54,10 @@ Si la pantalla se hace más pequeña, automáticamente bajará a 2 columnas, lue
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1);
 }
 
-/* ICONO */
 .icono-servicio {
   font-size: 28px;
-  margin-bottom: 15px;
 }
 
-/* TITULO TARJETA */
 .parrafos-rectangualos p:first-child {
   font-weight: 700;
   font-size: 1rem;
@@ -74,7 +70,6 @@ Si la pantalla se hace más pequeña, automáticamente bajará a 2 columnas, lue
   margin-bottom: 20px;
 }
 
-/* LISTA */
 .lista-rectngulos p {
   font-size: 13px;
   margin-bottom: 10px;
@@ -103,14 +98,13 @@ Si la pantalla se hace más pequeña, automáticamente bajará a 2 columnas, lue
   font-size: 11px;
 }
 
-/* LINK FINAL */
 .solicitar-info {
   color: #2bb3f3;
   font-size: 13px;
   font-weight: bold;
   cursor: pointer;
   margin-top: 10px;
-  display: inline-block;
+  display: inline-block; /* permite que un elemento esté en línea con otros pero aún así tenga ancho y alto definidos. */
 }
 
 .solicitar-info:hover {

@@ -10,14 +10,8 @@ function Sobremi() {
 
             <div className="contenedor-sobre-mi">
 
-                {/* Imagen */}
-                <img
-                    src={foto}
-                    alt="Foto perfil"
-                    className="foto-sobre-mi"
-                />
+                <img src={foto} alt="Foto perfil" className="foto-sobre-mi"/>
 
-                {/* Texto + botón */}
                 <div className="contenedor-parrafos">
 
                     <p>Pasión por el desarrollo web y la innovación digital</p>

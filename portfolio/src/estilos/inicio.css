@@ -27,20 +27,18 @@
 }
 
 .cuadrado {
-    background-color: #ffffff; /* color de fondo del cuadro */
-    border: 2px solid  #3bb5f6; /* borde azul */
-    border-radius: 12px; /* esquinas redondeadas */
-    padding: 20px; /* espacio interno */
+    background-color: #ffffff;
+    border: 2px solid  #3bb5f6;
+    border-radius: 12px;
+    padding: 20px;
     max-width: 500px; /* ancho máximo */
-    margin: 20px auto; /* centrado horizontal */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* sombra sutil */
-    font-family: 'Inter', system-ui, sans-serif;
-    line-height: 1.6; /* mejor lectura */
+    margin: 20px auto; /* con este margin decimos 20 arriba y 20 abajo y los laterales auto */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* primer elemento es para mover la sombre izquiera o derecha, el segundo arriba o abajo y el ultimo que tal difuminado es */
+    line-height: 1.6; /* espaciado entre lineas */
     font-size: 13px;
     color:  #3c3c3c;
 }
 
-/* Contenedor de botones en fila */
 .contenedor-botones {
     display: flex;
     gap: 20px; /* espacio entre los botones */
@@ -48,9 +46,8 @@
     margin-top: 20px;
 }
 
-/* Estilo botón principal */
 .boton1 {
-    background-color:#3bb5f6; /* azul */
+    background-color:#3bb5f6;
     color: #fff;
     border: none;
     padding: 12px 24px;
@@ -62,11 +59,10 @@
 }
 
 .boton1:hover {
-    background-color: #2f97cf; /* azul más oscuro */
+    background-color: #2f97cf;
     transform: scale(1.05);
 }
 
-/* Estilo botón secundario */
 .boton2 {
     background-color: transparent;
     color: #000000;
@@ -74,7 +70,7 @@
     padding: 12px 24px;
     border-radius: 8px;
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: 500; /* la hace mas negrita */
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s, transform 0.2s;
 }
