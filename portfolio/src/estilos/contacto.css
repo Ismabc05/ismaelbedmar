@@ -124,3 +124,15 @@
   font-size: 1.3rem;
 }
 
+.mensaje-exito {
+  font-size: 13px;
+  text-align: center;
+  margin-top: 25px;
+  color: #3bb5f6;
+}
+
+.error{
+  font-size: 10px;
+  color: red;
+  margin-top: 1px;
+}
