@@ -17,3 +17,16 @@ body {
 html{
   scroll-behavior: smooth;
 }
+
+@media (max-width: 600px) {
+  
+  /* BODY Y ROOT */
+  body {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  #root {
+    width: 100%;
+  }
+}

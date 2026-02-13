@@ -101,3 +101,52 @@
     color: #000;                
 }
 
+@media (max-width: 600px) {
+
+  /* SECCIÓN INICIO */
+  .section-inicio {
+    margin-top: 80px;
+    padding: 0 10px;
+  }
+
+  .titulo-nombre {
+    font-size: 32px;
+  }
+
+  .titulo-cargo {
+    font-size: 18px;
+    margin-top: -10px;
+  }
+
+  .titulo-frase {
+    font-size: 14px;
+    margin-top: -5px;
+  }
+
+  .cuadrado {
+    max-width: 90%;
+    font-size: 12px;
+    padding: 15px;
+  }
+
+  .contenedor-botones {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .boton1, .boton2 {
+    width: 100%;
+    text-align: center;
+  }
+
+  .contenedor-aptitudes {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .contenedor-aptitudes span {
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+}
+

@@ -96,7 +96,6 @@
   margin-top: 30px;
   padding-top: 25px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -124,4 +123,23 @@
 .contenedor-creditos span {
   font-size: 11px;
   color: #9ca3af;
+}
+
+@media (max-width: 600px) {
+
+  .contenedores {
+    grid-template-columns: 1fr; /* Una columna */
+    gap: 20px;
+    text-align: center;
+  }
+
+  .contenedor-creditos {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .contenedor-iconos{
+    justify-content: center;
+  }
+
 }

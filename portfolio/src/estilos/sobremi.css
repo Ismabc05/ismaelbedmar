@@ -115,3 +115,41 @@
 .icono-descargar{
     gap: 10px;
 }
+
+@media (max-width: 600px) {
+
+  /* SOBRE MI */
+  .seccion-sobremi {
+    padding: 40px 20px;
+    margin-top: 100px;
+    text-align: center;
+  }
+
+  .seccion-sobremi h2 {
+    font-size: 24px;
+    margin-bottom: 40px;
+  }
+
+  .contenedor-sobre-mi {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .foto-sobre-mi {
+    width: 200px;
+    height: 200px;
+  }
+
+  .contenedor-parrafos {
+    max-width: 100%;
+  }
+
+  .lista-especialidades {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .contenedor-boton {
+    margin-left: 0;
+  }
+}

@@ -183,3 +183,43 @@
   background: #000000;
   color: white;
 }
+
+@media (max-width: 600px) {
+
+  /* PROYECTOS */
+  .seccion-proyecto {
+    padding: 40px 20px;
+  }
+
+  .seccion-proyecto h2 {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+
+  .parrafo-proyecto {
+    font-size: 12px;
+    margin-bottom: 30px;
+  }
+
+  .contenedor-tarjetas {
+    grid-template-columns: 1fr; /* Una columna */
+    gap: 20px;
+  }
+
+  .tarjeta-header h3 {
+    font-size: 14px;
+  }
+
+  .tarjeta-body h4 {
+    font-size: 14px;
+  }
+
+  .tarjeta-body p {
+    font-size: 12px;
+  }
+
+  .tecnologias span {
+    font-size: 9px;
+    padding: 2px 6px;
+  }
+}

@@ -45,3 +45,37 @@
     color:  #3bb5f6;
     transform: scale(1.05);
 }
+
+@media (max-width: 600px) {
+  /* NAVBAR MÓVIL */
+  .navbar {
+    flex-direction: column; /* logo arriba, links abajo */
+    align-items: center;    /* centra logo y lista */
+    padding: 10px 1rem;
+    height: auto;
+  }
+
+  .logo {
+    margin-left: 0;
+    font-size: 16px;
+    margin-bottom: 10px; /* separa del menú */
+  }
+
+  .lista-navbar {
+    position: static;   /* ya no absoluto */
+    transform: none;    /* eliminar translate */
+    display: flex;      /* horizontal */
+    flex-direction: row; 
+    gap: 15px;          /* espacio entre links */
+    justify-content: center; /* centrado dentro del contenedor */
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    flex-wrap: wrap;    /* si no caben, saltan a la siguiente fila */
+  }
+
+  .lista-navbar li a {
+    font-size: 14px;
+    display: block;
+  }
+}

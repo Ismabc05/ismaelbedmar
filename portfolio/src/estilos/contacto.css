@@ -136,3 +136,48 @@
   color: red;
   margin-top: 1px;
 }
+
+@media (max-width: 600px) {
+
+  /* CONTACTO */
+  .seccion-contacto {
+    padding: 2rem -1rem;
+  }
+
+  .titulo-contacto {
+    font-size: 1.5rem;
+  }
+
+  .contacto-subtitulo {
+    font-size: 12px;
+    margin-left: 0;
+    text-align: center;
+  }
+
+  .contacto-contenedor {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contacto-form {
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  .campo input,
+  .campo textarea {
+    font-size: 11px;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .btn-enviar {
+    font-size: 12px;
+    padding: 0.7rem 1rem;
+  }
+
+  .contacto-info {
+    margin-top: 20px;
+    height: auto;
+  }
+}

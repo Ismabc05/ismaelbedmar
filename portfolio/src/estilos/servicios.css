@@ -110,3 +110,42 @@ Si la pantalla se hace más pequeña, automáticamente bajará a 2 columnas, lue
 .solicitar-info:hover {
   text-decoration: underline;
 }
+
+@media (max-width: 600px) {
+  
+  /* SERVICIOS */
+  .seccion-servicios {
+    padding: 40px 20px;
+  }
+
+  .titulos-servicios h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .titulos-servicios p {
+    font-size: 13px;
+    margin-bottom: 30px;
+  }
+
+  .rectangulos {
+    grid-template-columns: 1fr; /* Una columna */
+    gap: 20px;
+  }
+
+  .contenido-rectangulos {
+    padding: 20px;
+  }
+
+  .icono-servicio {
+    font-size: 24px;
+  }
+
+  .parrafos-rectangualos p:first-child {
+    font-size: 0.9rem;
+  }
+
+  .parrafos-rectangualos p:last-child {
+    font-size: 12px;
+  }
+}
