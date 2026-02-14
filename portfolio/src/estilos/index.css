@@ -1,8 +1,12 @@
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+  box-sizing: border-box; 
 }
+
+/* Sirve para que todos los elementos calculen su tamaño incluyendo el padding y el borde, evitando que se hagan más grandes de lo que deberían y rompan el diseño, sobre todo en móvil. 📱✅ */
+
+
 
 html, body {
   width: 100%;
@@ -15,7 +19,7 @@ html, body {
 
 body {
   display: flex;
-  justify-content: center; /* NO space-around */
+  justify-content: center;
   min-height: 100vh;
   font-family: 'Inter', system-ui, sans-serif;
   background-color: #fbfbfb;

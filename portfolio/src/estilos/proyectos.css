@@ -202,7 +202,7 @@
   }
 
   .contenedor-tarjetas {
-    grid-template-columns: 1fr; /* Una columna */
+    grid-template-columns: 1fr;
     gap: 20px;
   }
 

@@ -54,7 +54,7 @@
 .campo textarea {
   border-radius: 8px;
   border: 1px solid #e5e7eb;
-  padding: 0.55rem 0.8rem;  /* Padding más pequeño */
+  padding: 0.55rem 0.8rem;
   font-size: 11px;
   outline: none;
   resize: none;
@@ -139,7 +139,6 @@
 
 @media (max-width: 704px) {
 
-  /* CONTACTO */
   .seccion-contacto {
     padding: 2rem -1rem;
   }
@@ -183,10 +182,9 @@
 }
 
 @media (max-width: 480px) {
-  /* CONTACTO - MÓVIL PEQUEÑO */
 
   .seccion-contacto {
-    padding: 1.5rem 0.8rem; /* menos espacio lateral */
+    padding: 1.5rem 0.8rem;
   }
 
   .titulo-contacto {

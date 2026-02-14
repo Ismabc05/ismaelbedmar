@@ -1,10 +1,10 @@
 .navbar {
-    position: sticky; /* Tanto sticky como top 0 hace que mi navbar aparezca incluso cuando baje*/
+    position: sticky; 
     top: 0;
     display: flex;
     align-items: center;
-    padding: 10px 20px; /* Espacio entre el borde y el contenido */
-    height: 25px; /* Define que tan alto es el elemento en total*/
+    padding: 10px 20px; 
+    height: 45px; 
     background-color: white;
     border-bottom: 1px solid #cccccc; 
     z-index: 1000;
@@ -24,9 +24,9 @@
 }
 
 .lista-navbar {
-    position: absolute; /* Tanto absolute como left 50% sirve para que mi lista de item este en el centro*/
+    position: absolute; 
     left: 50%;
-    transform: translateX(-50%); /* Desplaza el elemento un 50% hacia la izquierda de su propio tamaño */
+    transform: translateX(-50%);
     display: flex;
     gap: 40px;
     list-style: none;
@@ -47,10 +47,10 @@
 }
 
 @media (max-width: 971px) {
-  /* NAVBAR MÓVIL */
+
   .navbar {
-    flex-direction: column; /* logo arriba, links abajo */
-    align-items: center;    /* centra logo y lista */
+    flex-direction: column; 
+    align-items: center;    
     padding: 10px 1rem;
     height: auto;
   }
@@ -58,20 +58,20 @@
   .logo {
     margin-left: 0;
     font-size: 16px;
-    margin-bottom: 10px; /* separa del menú */
+    margin-bottom: 10px; 
   }
 
   .lista-navbar {
-    position: static;   /* ya no absoluto */
-    transform: none;    /* eliminar translate */
-    display: flex;      /* horizontal */
+    position: static;   
+    transform: none;    
+    display: flex;     
     flex-direction: row; 
-    gap: 15px;          /* espacio entre links */
-    justify-content: center; /* centrado dentro del contenedor */
+    gap: 15px;          
+    justify-content: center; 
     width: 100%;
     padding: 0;
     margin: 0;
-    flex-wrap: wrap;    /* si no caben, saltan a la siguiente fila */
+    flex-wrap: wrap;    
   }
 
   .lista-navbar li a {

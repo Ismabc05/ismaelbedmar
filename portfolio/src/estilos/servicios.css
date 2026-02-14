@@ -18,7 +18,6 @@
   margin-bottom: 50px;
 }
 
-/* GRID */
 .rectangulos {
   display: grid; /* se usa cuando flex se queda corta */
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
@@ -113,7 +112,6 @@ Si la pantalla se hace más pequeña, automáticamente bajará a 2 columnas, lue
 
 @media (max-width: 600px) {
   
-  /* SERVICIOS */
   .seccion-servicios {
     padding: 40px 20px;
   }
@@ -129,7 +127,7 @@ Si la pantalla se hace más pequeña, automáticamente bajará a 2 columnas, lue
   }
 
   .rectangulos {
-    grid-template-columns: 1fr; /* Una columna */
+    grid-template-columns: 1fr;
     gap: 20px;
   }
 
