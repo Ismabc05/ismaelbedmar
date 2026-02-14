@@ -2,6 +2,8 @@
 
 Un portfolio web desarrollado con **React** para mostrar mis proyectos, habilidades y experiencia como desarrollador/a.
 
+sitio web: www.ismaelbedmarcejas.com
+
 ## 🚀 Funcionalidades
 
 - Sección “Sobre mí”
