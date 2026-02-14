@@ -11,7 +11,7 @@ function Footer () {
                 <div className="contenedores">
                     <div className="contenedor-info">
                         <h3>Ismael Bedmar</h3>
-                        <p>Ingeniero de software especializado en desarrollo web y móvil a medida, automatización de procesos y consultoría técnica.</p>
+                        <p> Desarrollador web junior especializado en fronted, backend y ajuste responsivo.</p>
                         <div className="contenedor-iconos">
                         <a className="gmail-footer"><CgMail/></a>
                         <a href="https://www.linkedin.com/in/ismaelbedmar/" target="_blank" rel="noreferrer" className="linkedin-footer"><IoLogoLinkedin/></a>
