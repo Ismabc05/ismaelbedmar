@@ -137,7 +137,7 @@
   margin-top: 1px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 704px) {
 
   /* CONTACTO */
   .seccion-contacto {
@@ -179,5 +179,49 @@
   .contacto-info {
     margin-top: 20px;
     height: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  /* CONTACTO - MÓVIL PEQUEÑO */
+
+  .seccion-contacto {
+    padding: 1.5rem 0.8rem; /* menos espacio lateral */
+  }
+
+  .titulo-contacto {
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .contacto-subtitulo {
+    font-size: 11px;
+    margin-bottom: 1.5rem;
+  }
+
+  .contacto-form,
+  .contacto-info {
+    padding: 0.9rem;       /* cajas más pequeñas */
+    border-radius: 10px;
+  }
+
+  .campo label {
+    font-size: 11px;
+  }
+
+  .campo input,
+  .campo textarea {
+    font-size: 10px;
+    padding: 0.35rem 0.5rem;
+  }
+
+  .btn-enviar {
+    font-size: 11px;
+    padding: 0.6rem;
+  }
+
+  .contacto-info p,
+  .contacto-info a {
+    font-size: 11px;
   }
 }

@@ -46,7 +46,7 @@
     transform: scale(1.05);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 971px) {
   /* NAVBAR MÓVIL */
   .navbar {
     flex-direction: column; /* logo arriba, links abajo */
