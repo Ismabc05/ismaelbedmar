@@ -33,7 +33,7 @@ function Inicio() {
                     <span className="react">React</span>
                     <span className="html">Html</span>
                     <span className="css">CSS</span>
-                    <span className="laravel">Laravel</span>
+                    <span className="laravel">TypeScript</span>
                     <span className="php">Php</span>
                 </div>
             </div>
