@@ -55,7 +55,6 @@ function Proyectos() {
               <span>JavaScript</span>
             </div>
           </div>
-        </div>
       </div>
 
       <div className="tarjeta">
@@ -80,6 +79,7 @@ function Proyectos() {
           </div>
         </div>
       </div>
+    </div>
 
       <div className="more-projects">
         <h3 className="more-projects--title">¿Quieres ver más proyectos?</h3>
