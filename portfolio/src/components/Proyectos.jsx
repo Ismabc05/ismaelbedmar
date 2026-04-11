@@ -58,6 +58,29 @@ function Proyectos() {
         </div>
       </div>
 
+      <div className="tarjeta">
+        <div className="tarjeta-header">
+          <span className="tag">Web</span>
+          <h3>Cine-Total</h3>
+        </div>
+
+        <div className="tarjeta-body">
+          <h4>Series y Peliculas</h4>
+          <p>
+            Página web donde podras ver información sobre tus peliculas y series
+          </p>
+          <p>
+            <strong>Tecnologías:</strong>
+          </p>
+
+          <div className="tecnologias">
+            <span>CSS</span>
+            <span>React</span>
+            <span>TypeScript</span>
+          </div>
+        </div>
+      </div>
+
       <div className="more-projects">
         <h3 className="more-projects--title">¿Quieres ver más proyectos?</h3>
         <p className="more-projects--text">
