@@ -34,7 +34,7 @@ function Inicio() {
                     <span className="html">Html</span>
                     <span className="css">CSS</span>
                     <span className="laravel">TypeScript</span>
-                    <span className="php">Php</span>
+                    <span className="php">NodeJS</span>
                 </div>
             </div>
 
