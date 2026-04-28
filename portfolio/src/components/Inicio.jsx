@@ -31,7 +31,7 @@ function Inicio() {
                 <div className="contenedor-aptitudes">
                     <span className="java">JavaScript</span>
                     <span className="react">React</span>
-                    <span className="html">Html</span>
+                    <span className="html">ExpressJS</span>
                     <span className="css">CSS</span>
                     <span className="laravel">TypeScript</span>
                     <span className="php">NodeJS</span>

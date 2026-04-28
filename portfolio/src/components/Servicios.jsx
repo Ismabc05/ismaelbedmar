@@ -24,7 +24,7 @@ function Servicios () {
                         <ul>
                             <li>React</li>
                             <li>API Rest</li>
-                            <li>Progressive Web Apps</li>
+                            <li>TypeScript</li>
                             <li>JavaScript</li>
                         </ul>
                     </div>
@@ -67,7 +67,7 @@ function Servicios () {
                             <li>APIs</li>
                             <li>Node.js básico</li>
                             <li>Scripts simples</li>
-                            <li>Optimización</li>
+                            <li>Express.js</li>
                         </ul>
                     </div>
                     <p className="solicitar-info" onClick={() => {

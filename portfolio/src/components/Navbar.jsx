@@ -4,6 +4,7 @@ import '../estilos/navbar.css';
 function Navbar() {
     return (
         <nav className="navbar"> 
+            <div className="navbar-container">
             <div className="logo" onClick={() => {
                 window.location.reload()
             }}>Ismael Bedmar</div>
@@ -14,6 +15,7 @@ function Navbar() {
                 <li><a href="#proyectos">Proyectos</a></li>
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
+            </div>
         </nav>
     )
 }
